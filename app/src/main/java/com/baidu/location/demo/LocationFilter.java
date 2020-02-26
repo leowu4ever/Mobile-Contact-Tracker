@@ -18,6 +18,7 @@ import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.utils.DistanceUtil;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -41,16 +42,20 @@ public class LocationFilter extends Activity {
 	private LocationService locService;
 	private LinkedList<LocationEntity> locationList = new LinkedList<LocationEntity>(); // 存放历史定位结果的链表，最大存放当前结果的前5次定位结果
 
+	private Button btnReport;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.locationfilter);
 		mMapView = (MapView) findViewById(R.id.bmapView);
-		reset = (Button) findViewById(R.id.clear);
+		mMapView.showZoomControls(false);
+		mMapView.showScaleControl(false);
+//		reset = (Button) findViewById(R.id.clear);
 		mBaiduMap = mMapView.getMap();
 		mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
-		mBaiduMap.setMapStatus(MapStatusUpdateFactory.zoomTo(15));
+		mBaiduMap.setMapStatus(MapStatusUpdateFactory.zoomTo(17));
 		locService = ((LocationApplication) getApplication()).locationService;
 		LocationClientOption mOption = locService.getDefaultLocationClientOption();
 		mOption.setLocationMode(LocationClientOption.LocationMode.Battery_Saving); 
@@ -58,6 +63,17 @@ public class LocationFilter extends Activity {
 		locService.setLocationOption(mOption);
 		locService.registerListener(listener);
 		locService.start();
+
+		btnReport = findViewById(R.id.btn_report);
+		btnReport.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+				Class<?> TargetClass = RecordActivity.class;
+				Intent intent = new Intent(LocationFilter.this, TargetClass);
+				startActivity(intent);
+			}
+		});
 	}
 
 	/***
@@ -179,15 +195,15 @@ public class LocationFilter extends Activity {
 		super.onResume();
 		// 在activity执行onResume时执行mMapView. onResume ()，实现地图生命周期管理
 		mMapView.onResume();
-		reset.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				if (mBaiduMap != null)
-					mBaiduMap.clear();
-			}
-		});
+//		reset.setOnClickListener(new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//				// TODO Auto-generated method stub
+//				if (mBaiduMap != null)
+//					mBaiduMap.clear();
+//			}
+//		});
 	}
 
 	@Override
