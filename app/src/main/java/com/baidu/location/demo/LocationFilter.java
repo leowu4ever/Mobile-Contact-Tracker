@@ -52,7 +52,6 @@ public class LocationFilter extends Activity {
 		mMapView = (MapView) findViewById(R.id.bmapView);
 		mMapView.showZoomControls(false);
 		mMapView.showScaleControl(false);
-//		reset = (Button) findViewById(R.id.clear);
 		mBaiduMap = mMapView.getMap();
 		mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
 		mBaiduMap.setMapStatus(MapStatusUpdateFactory.zoomTo(17));
