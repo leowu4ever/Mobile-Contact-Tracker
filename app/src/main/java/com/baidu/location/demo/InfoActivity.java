@@ -23,7 +23,7 @@ public class InfoActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                Class<?> TargetClass = LocaActivity.class;
+                Class<?> TargetClass = LocationActivity.class;
                 Intent intent = new Intent(InfoActivity.this, TargetClass);
                 startActivity(intent);
             }

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="GoogleAppIndexingWarning"
     package="com.baidu.baidulocationdemo">
     <!-- 这个权限用于进行网络定位 -->
     <!-- 这个权限用于进行网络定位-->
@@ -43,7 +45,7 @@
 
         <activity android:name="com.baidu.location.demo.RecordActivity"/>
         <activity android:name="com.baidu.location.demo.InfoActivity" />
-        <activity android:name="com.baidu.location.demo.LocaActivity" />
+        <activity android:name="com.baidu.location.demo.LocationActivity" />
     </application>
 
 </manifest>
