@@ -55,7 +55,6 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/btn_agree"
         android:layout_marginTop="63dp"
-        android:fontFamily="@font/hind_light"
         android:gravity="center"
         android:text="用户协议文件与研究目的"
         android:textAllCaps="false"
@@ -70,7 +69,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="100dp"
         android:background="@drawable/buttonshape"
-        android:fontFamily="@font/hind_light"
         android:text="同意并参与"
         android:textColor="@android:color/background_light"
         android:textSize="14sp" />

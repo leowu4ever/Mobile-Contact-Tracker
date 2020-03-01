@@ -2,7 +2,6 @@ package com.baidu.location.demo;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,7 +23,7 @@ public class InfoActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                Class<?> TargetClass = LocationFilter.class;
+                Class<?> TargetClass = LocaActivity.class;
                 Intent intent = new Intent(InfoActivity.this, TargetClass);
                 startActivity(intent);
             }
