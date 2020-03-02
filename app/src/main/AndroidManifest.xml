@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.baidu.baidulocationdemo"
-    tools:ignore="GoogleAppIndexingWarning">
+    tools:ignore="GoogleAppIndexingWarning"
+    android:installLocation="internalOnly">
     <!-- 这个权限用于进行网络定位 -->
     <!-- 这个权限用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -44,10 +45,12 @@
         <activity android:name="com.baidu.location.demo.LocationActivity" />
 
         <receiver android:name="com.baidu.location.demo.MyBroadcastReceiver"
+            android:enabled="true"
             android:exported="true">
-
             <intent-filter>
-                <action android:name="android.intent.action.Boot" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
 
