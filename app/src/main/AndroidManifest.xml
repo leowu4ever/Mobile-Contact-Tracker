@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="GoogleAppIndexingWarning"
-    package="com.baidu.baidulocationdemo">
+    package="com.baidu.baidulocationdemo"
+    tools:ignore="GoogleAppIndexingWarning">
     <!-- 这个权限用于进行网络定位 -->
-    <!-- 这个权限用于进行网络定位-->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <!-- 这个权限用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:name="com.baidu.location.demo.LocationApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:theme="@android:style/Theme.NoTitleBar">
+        <activity android:name="com.baidu.location.demo.MyBroadcastReceiver"></activity>
 
         <service
             android:name="com.baidu.location.f"
@@ -38,10 +39,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name="com.baidu.location.demo.RecordActivity"/>
+        <activity android:name="com.baidu.location.demo.RecordActivity" />
         <activity android:name="com.baidu.location.demo.InfoActivity" />
         <activity android:name="com.baidu.location.demo.LocationActivity" />
+
+        <receiver android:name="com.baidu.location.demo.MyBroadcastReceiver"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.Boot" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="com.baidu.location.demo.MyBroadcastReceiver"/>
+
     </application>
 
 </manifest>
