@@ -133,7 +133,7 @@ public class LocationActivity extends Activity {
 		if (isShowLoc) {
 			LatLng ll = new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude());
 			MapStatus.Builder builder = new MapStatus.Builder();
-			builder.target(ll).zoom(10f);
+			builder.target(ll).zoom(18f);
 			map.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
 		}
 	}
