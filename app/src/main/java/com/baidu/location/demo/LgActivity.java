@@ -33,7 +33,6 @@ public class LgActivity extends Activity {
                 startActivity(intent);
             }
         });
-
         getLocationPermission(this);
     }
 
@@ -46,7 +45,6 @@ public class LgActivity extends Activity {
                 && ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.ACCESS_WIFI_STATE) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-
 
         } else {
             String[] permissions = {android.Manifest.permission.ACCESS_COARSE_LOCATION,

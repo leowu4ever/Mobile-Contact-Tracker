@@ -55,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="采集地理位置倒计时"
+                android:text="距下一次采集地理位置所剩时间"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -76,7 +76,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="89"
+                android:text="95%"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="60sp"
                 android:textStyle="bold" />
@@ -86,7 +86,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="当前区域健康指数"
+                android:text="当前区域的健康指数"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -103,18 +103,40 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
 
-            <Button
-                android:id="@+id/btn_report"
-                android:layout_width="250dp"
-                android:layout_height="50dp"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/buttonshape"
-                android:text="上报接触人员"
-                android:textColor="@android:color/background_light"
-                android:textSize="14sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_upload"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonshape"
+                    android:text="开启后台定位采集"
+                    android:textColor="@android:color/background_light"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/btn_report"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonshape"
+                    android:text="上报已接触人员"
+                    android:textColor="@android:color/background_light"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
         </RelativeLayout>
     </LinearLayout>
 

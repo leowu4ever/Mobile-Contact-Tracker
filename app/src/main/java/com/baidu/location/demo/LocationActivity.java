@@ -24,67 +24,77 @@ import android.widget.Button;
 public class LocationActivity extends Activity {
 
 	private Button btnReport;
+	private Button btnUpload;
 
 	private MapView mapView = null;
 	private BaiduMap baiduMap = null;
 	private LocationClient locationClient = null;
+	private LocationClient uploadClient = null;
 
 	private NotificationUtils mNotificationUtils;
 	private Notification notification;
 
 	private boolean isEnableLocInForeground = false;
+	public static final int LOCATION_UPLOAD_INTERVAL = 1;	//in min
 
+	private BDAbstractLocationListener locationListener = null;
+	private BDAbstractLocationListener uploadListener = null;
+
+	private String DEBUG_TAG = "loa1";
 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		Log.d("locationAc", "start");
+		Log.d(DEBUG_TAG, "create");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_loca);
+		initMap();
+		initLocationClient();
+		initUploadClient();
+		initNotification();
+		initUIs();
+	}
 
-		mapView = findViewById(R.id.bmapView);
-		mapView.showZoomControls(false);
-		mapView.showScaleControl(false);
-
-		baiduMap = mapView.getMap();
-		baiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
-		baiduMap.setMapStatus(MapStatusUpdateFactory.zoomTo(5));
-		baiduMap.setMyLocationEnabled(true);
-
-		locationClient = new LocationClient(this);
-		LocationClientOption option = new LocationClientOption();
-		option.setOpenGps(true);
-		option.setScanSpan(2000);
-		option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
-		option.setCoorType("bd09ll");
-
-		BDAbstractLocationListener listener = new BDAbstractLocationListener() {
+	private void initUIs() {
+		btnReport = findViewById(R.id.btn_report);
+		btnReport.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onReceiveLocation(BDLocation location) {
-				// TODO Auto-generated method stub
+			public void onClick(View v) {
+				Class<?> TargetClass = RecordActivity.class;
+				Intent intent = new Intent(LocationActivity.this, TargetClass);
+				startActivity(intent);
+			}
+		});
 
-				if(location != null) {
-					double latitude = location.getLatitude();
-					double longitude = location.getLongitude();
-
-					Log.d("locationAc",  Double.toString(latitude) + "," + Double.toString(longitude));
-					setPosition2Center(baiduMap, location, true);
-
+		btnUpload = findViewById(R.id.btn_upload);
+		btnUpload.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(isEnableLocInForeground){
+					Log.d(DEBUG_TAG, "endback");
+					uploadClient.disableLocInForeground(true);
+					isEnableLocInForeground = false;
+					btnUpload.setText("关闭后台定位采集");
+					uploadClient.unRegisterLocationListener(uploadListener);
+					uploadClient.stop();
 				} else {
-					Log.d("locationAc", "Cant find your location");
+					//开启后台定位
+					Log.d(DEBUG_TAG, "startback");
+					uploadClient.enableLocInForeground(1001, notification);// 调起前台定位
+					isEnableLocInForeground = true;
+					btnUpload.setText("关闭后台定位采集");
+					uploadClient.registerLocationListener(uploadListener);
+					uploadClient.start();
 				}
 			}
-		};
+		});
+	}
 
-		locationClient.registerLocationListener(listener);
-		locationClient.setLocOption(option);
-		locationClient.start();
-
-
+	private void initNotification() {
 		if (Build.VERSION.SDK_INT >= 26) {
 			mNotificationUtils = new NotificationUtils(this);
 			Notification.Builder builder2 = mNotificationUtils.getAndroidChannelNotification
-					("适配android 8限制后台定位功能", "正在后台定位");
+					("疫迹 - 你也可以为扼制疫情发展出一份力", "已开启后台定位采集");
 			notification = builder2.build();
 		} else {
 			//获取一个Notification构造器
@@ -93,76 +103,110 @@ public class LocationActivity extends Activity {
 
 			builder.setContentIntent(PendingIntent.
 					getActivity(LocationActivity.this, 0, nfIntent, 0)) // 设置PendingIntent
-					.setContentTitle("适配android 8限制后台定位功能") // 设置下拉列表里的标题
+					.setContentTitle("疫迹 - 你也可以为扼制疫情发展出一份力") // 设置下拉列表里的标题
 					.setSmallIcon(R.drawable.ic_launcher) // 设置状态栏内的小图标
-					.setContentText("正在后台定位") // 设置上下文内容
+					.setContentText("已开启后台定位采集") // 设置上下文内容
 					.setWhen(System.currentTimeMillis()); // 设置该通知发生的时间
 			notification = builder.build(); // 获取构建好的Notification
 		}
 		notification.defaults = Notification.DEFAULT_SOUND; //设置为默认的声音
+	}
 
+	private void initUploadClient() {
+		uploadClient = new LocationClient(this);
 
-		btnReport = findViewById(R.id.btn_report);
-		btnReport.setOnClickListener(new View.OnClickListener() {
+		LocationClientOption uploadOption = new LocationClientOption();
+		uploadOption.setOpenGps(true);
+		uploadOption.setScanSpan(LOCATION_UPLOAD_INTERVAL * 60 * 1000);
+		uploadOption.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
+		uploadOption.setCoorType("bd09ll");
+
+		uploadListener = new BDAbstractLocationListener() {
 			@Override
-			public void onClick(View v) {
+			public void onReceiveLocation(BDLocation location) {
+				// TODO Auto-generated method stub
 
-//				Class<?> TargetClass = RecordActivity.class;
-//				Intent intent = new Intent(LocationActivity.this, TargetClass);
-//				startActivity(intent);
+				if(location != null) {
+					double latitude = location.getLatitude();
+					double longitude = location.getLongitude();
 
-				if(isEnableLocInForeground){
-					//关闭后台定位（true：通知栏消失；false：通知栏可手动划除）
-					Log.d("locationAc", "endback");
-					locationClient.disableLocInForeground(true);
-					isEnableLocInForeground = false;
-					locationClient.stop();
+					Log.d(DEBUG_TAG,  "upload client" + Double.toString(latitude) + "," + Double.toString(longitude));
+					setPosition2Center(baiduMap, location, true);
+
 				} else {
-					//开启后台定位
-					Log.d("locationAc", "startback");
-					locationClient.enableLocInForeground(1001, notification);// 调起前台定位
-					isEnableLocInForeground = true;
-					locationClient.start();
+					Log.d(DEBUG_TAG, "Cant find your location");
 				}
 			}
-		});
+		};
+		uploadClient.setLocOption(uploadOption);
+	}
+
+	private void initLocationClient() {
+		locationClient = new LocationClient(this);
+
+		LocationClientOption locationOption = new LocationClientOption();
+		locationOption.setOpenGps(true);
+		locationOption.setScanSpan(5000);
+		locationOption.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
+		locationOption.setCoorType("bd09ll");
+
+		locationListener = new BDAbstractLocationListener() {
+			@Override
+			public void onReceiveLocation(BDLocation location) {
+				// TODO Auto-generated method stub
+
+				if(location != null) {
+					double latitude = location.getLatitude();
+					double longitude = location.getLongitude();
+					Log.d(DEBUG_TAG,  "location client" + Double.toString(latitude) + "," + Double.toString(longitude));
+					setPosition2Center(baiduMap, location, true);
+
+				} else {
+					Log.d(DEBUG_TAG, "Cant find your location");
+				}
+			}
+		};
+		locationClient.setLocOption(locationOption);
+	}
+
+	private void initMap() {
+		mapView = findViewById(R.id.bmapView);
+		mapView.showZoomControls(false);
+		mapView.showScaleControl(false);
+		baiduMap = mapView.getMap();
+		baiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
+		baiduMap.setMyLocationEnabled(true);
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		locationClient.registerLocationListener(locationListener);
+		locationClient.start();
+		Log.d(DEBUG_TAG, "start");
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		//在activity执行onResume时必须调用mMapView. onResume ()
 		mapView.onResume();
-		locationClient.start();
-		Log.d("locationAc", "resume");
-
-//		locationClient.disableLocInForeground(true);
-//		locationClient.stop();
-
-
+		Log.d(DEBUG_TAG, "resume");
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		//在activity执行onPause时必须调用mMapView. onPause ()
 		mapView.onPause();
-//		locationClient.stop();
-		Log.d("locationAc", "stop");
-
-//		locationClient.enableLocInForeground(1, notification);
-//		locationClient.start();
-
+		Log.d(DEBUG_TAG, "pause");
+		locationClient.stop();
+		locationClient.unRegisterLocationListener(locationListener);
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		//在activity执行onDestroy时必须调用mMapView.onDestroy()
 		mapView.onDestroy();
-//		locationClient.stop();
-		Log.d("locationAc", "destory");
-
+		Log.d(DEBUG_TAG, "destory");
 	}
 
 	public void setPosition2Center(BaiduMap map, BDLocation bdLocation, Boolean isShowLoc) {
