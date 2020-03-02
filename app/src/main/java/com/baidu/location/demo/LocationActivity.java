@@ -3,28 +3,20 @@ package com.baidu.location.demo;
 import com.baidu.baidulocationdemo.R;
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.baidu.location.service.LocationService;
 import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.BitmapDescriptor;
-import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
-import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
-import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
-
 import android.app.Activity;
-import android.content.Context;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Intent;
-import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -36,6 +28,13 @@ public class LocationActivity extends Activity {
 	private MapView mapView = null;
 	private BaiduMap baiduMap = null;
 	private LocationClient locationClient = null;
+
+	private NotificationUtils mNotificationUtils;
+	private Notification notification;
+
+	private boolean isEnableLocInForeground = false;
+
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +51,10 @@ public class LocationActivity extends Activity {
 		baiduMap.setMapStatus(MapStatusUpdateFactory.zoomTo(5));
 		baiduMap.setMyLocationEnabled(true);
 
-		locationClient = new LocationClient(getApplicationContext());
+		locationClient = new LocationClient(this);
 		LocationClientOption option = new LocationClientOption();
 		option.setOpenGps(true);
+		option.setScanSpan(2000);
 		option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
 		option.setCoorType("bd09ll");
 
@@ -66,14 +66,13 @@ public class LocationActivity extends Activity {
 				if(location != null) {
 					double latitude = location.getLatitude();
 					double longitude = location.getLongitude();
-					String place = location.getCity();
-					Log.d("locationAc", Double.toString(latitude) + "," + Double.toString(longitude) + place);
+
+					Log.d("locationAc",  Double.toString(latitude) + "," + Double.toString(longitude));
 					setPosition2Center(baiduMap, location, true);
 
 				} else {
 					Log.d("locationAc", "Cant find your location");
 				}
-
 			}
 		};
 
@@ -81,14 +80,50 @@ public class LocationActivity extends Activity {
 		locationClient.setLocOption(option);
 		locationClient.start();
 
+
+		if (Build.VERSION.SDK_INT >= 26) {
+			mNotificationUtils = new NotificationUtils(this);
+			Notification.Builder builder2 = mNotificationUtils.getAndroidChannelNotification
+					("适配android 8限制后台定位功能", "正在后台定位");
+			notification = builder2.build();
+		} else {
+			//获取一个Notification构造器
+			Notification.Builder builder = new Notification.Builder(LocationActivity.this);
+			Intent nfIntent = new Intent(LocationActivity.this, LocationActivity.class);
+
+			builder.setContentIntent(PendingIntent.
+					getActivity(LocationActivity.this, 0, nfIntent, 0)) // 设置PendingIntent
+					.setContentTitle("适配android 8限制后台定位功能") // 设置下拉列表里的标题
+					.setSmallIcon(R.drawable.ic_launcher) // 设置状态栏内的小图标
+					.setContentText("正在后台定位") // 设置上下文内容
+					.setWhen(System.currentTimeMillis()); // 设置该通知发生的时间
+			notification = builder.build(); // 获取构建好的Notification
+		}
+		notification.defaults = Notification.DEFAULT_SOUND; //设置为默认的声音
+
+
 		btnReport = findViewById(R.id.btn_report);
 		btnReport.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 
-				Class<?> TargetClass = RecordActivity.class;
-				Intent intent = new Intent(LocationActivity.this, TargetClass);
-				startActivity(intent);
+//				Class<?> TargetClass = RecordActivity.class;
+//				Intent intent = new Intent(LocationActivity.this, TargetClass);
+//				startActivity(intent);
+
+				if(isEnableLocInForeground){
+					//关闭后台定位（true：通知栏消失；false：通知栏可手动划除）
+					Log.d("locationAc", "endback");
+					locationClient.disableLocInForeground(true);
+					isEnableLocInForeground = false;
+					locationClient.stop();
+				} else {
+					//开启后台定位
+					Log.d("locationAc", "startback");
+					locationClient.enableLocInForeground(1001, notification);// 调起前台定位
+					isEnableLocInForeground = true;
+					locationClient.start();
+				}
 			}
 		});
 	}
@@ -98,8 +133,12 @@ public class LocationActivity extends Activity {
 		super.onResume();
 		//在activity执行onResume时必须调用mMapView. onResume ()
 		mapView.onResume();
-		locationClient.restart();
+		locationClient.start();
 		Log.d("locationAc", "resume");
+
+//		locationClient.disableLocInForeground(true);
+//		locationClient.stop();
+
 
 	}
 
@@ -108,8 +147,11 @@ public class LocationActivity extends Activity {
 		super.onPause();
 		//在activity执行onPause时必须调用mMapView. onPause ()
 		mapView.onPause();
-		locationClient.stop();
+//		locationClient.stop();
 		Log.d("locationAc", "stop");
+
+//		locationClient.enableLocInForeground(1, notification);
+//		locationClient.start();
 
 	}
 
@@ -118,7 +160,7 @@ public class LocationActivity extends Activity {
 		super.onDestroy();
 		//在activity执行onDestroy时必须调用mMapView.onDestroy()
 		mapView.onDestroy();
-		locationClient.stop();
+//		locationClient.stop();
 		Log.d("locationAc", "destory");
 
 	}
