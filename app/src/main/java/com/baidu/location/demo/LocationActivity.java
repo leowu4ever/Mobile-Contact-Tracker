@@ -74,7 +74,7 @@ public class LocationActivity extends Activity {
 					Log.d(DEBUG_TAG, "endback");
 					uploadClient.disableLocInForeground(true);
 					isEnableLocInForeground = false;
-					btnUpload.setText("关闭后台定位采集");
+					btnUpload.setText("开启后台定位采集");
 					uploadClient.unRegisterLocationListener(uploadListener);
 					uploadClient.stop();
 				} else {
