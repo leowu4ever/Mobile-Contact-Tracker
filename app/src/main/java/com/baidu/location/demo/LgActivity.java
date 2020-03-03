@@ -10,12 +10,15 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.Toast;
 
 import com.baidu.baidulocationdemo.R;
 
 public class LgActivity extends Activity {
 
     private Button btnAgree;
+    private CheckBox cbAck;
 
     public static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
 
@@ -23,14 +26,20 @@ public class LgActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lg);
+
+        cbAck = findViewById(R.id.cb_Ack);
+
         btnAgree = findViewById(R.id.btn_agree);
         btnAgree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Class<?> TargetClass = InfoActivity.class;
-                Intent intent = new Intent(LgActivity.this, TargetClass);
-                startActivity(intent);
+                if (cbAck.isChecked()) {
+                    Class<?> TargetClass = InfoActivity.class;
+                    Intent intent = new Intent(LgActivity.this, TargetClass);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(LgActivity.this, "請閱讀並同意用戶協議", Toast.LENGTH_LONG).show();
+                }
             }
         });
         getLocationPermission(this);

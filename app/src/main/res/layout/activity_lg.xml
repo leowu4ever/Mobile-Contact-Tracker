@@ -69,8 +69,20 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="100dp"
         android:background="@drawable/buttonshape"
-        android:text="同意并参与"
+        android:text="参与"
         android:textColor="@android:color/background_light"
+        android:textSize="14sp" />
+
+    <CheckBox
+        android:id="@+id/cb_Ack"
+        style="@android:style/Widget.CompoundButton.CheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="150dp"
+        android:text="我已閱讀並同意用戶協議"
+        android:textColorHighlight="#5c5cff"
         android:textSize="14sp" />
 
 </RelativeLayout>

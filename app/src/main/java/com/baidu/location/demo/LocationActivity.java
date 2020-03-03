@@ -32,7 +32,7 @@ public class LocationActivity extends Activity {
     private LocationClient locationClient = null;
     private LocationClient uploadClient = null;
 
-    private NotificationUtils mNotificationUtils;
+    //private NotificationUtils mNotificationUtils;
     private Notification notification;
 
     private boolean isEnableLocInForeground = false;
