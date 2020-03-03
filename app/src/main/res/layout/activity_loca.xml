@@ -51,7 +51,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView16"
+                android:id="@+id/textView1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -72,7 +72,7 @@
             android:paddingBottom="10dp">
 
             <TextView
-                android:id="@+id/tv_timer"
+                android:id="@+id/tv_index"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -101,34 +101,8 @@
             android:alpha="0.1"
             android:background="@android:color/darker_gray" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
 
-<<<<<<< HEAD
-            <Button
-                android:id="@+id/btn_report"
-                android:layout_width="250dp"
-                android:layout_height="50dp"
-                android:layout_marginBottom="20dp"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/buttonshape"
-                android:text="上报接触人员"
-                android:textColor="@android:color/background_light"
-                android:textSize="14sp" />
 
-            <Button
-                android:id="@+id/btn_viewReport"
-                android:layout_width="250dp"
-                android:layout_height="50dp"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/buttonshape"
-                android:layout_below="@+id/btn_report"
-                android:text="查看已上报接触人员"
-                android:textColor="@android:color/background_light"
-                android:textSize="14sp" />
-=======
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -160,8 +134,23 @@
 
             </LinearLayout>
 
->>>>>>> 5725307f0d156f6459ac38262237fb05d14c7601
-        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+            <Button
+                android:id="@+id/btn_viewReport"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_gravity="center"
+                android:background="@drawable/buttonshape"
+                android:text="查看已上报接触人员"
+                android:textColor="@android:color/background_light"
+                android:textSize="14sp" />
+
+        </LinearLayout>
     </LinearLayout>
 
 
