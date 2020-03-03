@@ -5,3 +5,4 @@ output
 *.iml
 build/*
 app/build/*
+local.properties
