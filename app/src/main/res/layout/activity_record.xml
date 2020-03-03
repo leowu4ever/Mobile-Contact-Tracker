@@ -27,10 +27,10 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="600dp"
+        android:layout_height="700dp"
         android:layout_centerInParent="true"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/windowshape"
         android:orientation="vertical">
 
@@ -75,11 +75,12 @@
                 android:textColor="@android:color/darker_gray" />
 
             <EditText
-                android:id="@+id/nameinput"
+                android:id="@+id/et_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:imeOptions="actionDone"/>
 
             <TextView
                 android:id="@+id/textView15"
@@ -89,6 +90,7 @@
                 android:textColor="@android:color/darker_gray" />
 
             <RadioGroup
+                android:id="@+id/rg_gender"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -150,11 +152,12 @@
                 android:textColor="@android:color/darker_gray" />
 
             <EditText
-                android:id="@+id/editText2"
+                android:id="@+id/et_job"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:imeOptions="actionDone"/>
 
             <TextView
                 android:id="@+id/textView17"
@@ -176,11 +179,12 @@
                 android:textColor="@android:color/darker_gray" />
 
             <EditText
-                android:id="@+id/editText3"
+                android:id="@+id/et_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:imeOptions="actionDone"/>
 
             <TextView
                 android:id="@+id/textView14"
@@ -189,12 +193,12 @@
                 android:text="接触日期"
                 android:textColor="@android:color/darker_gray" />
 
-            <EditText
-                android:id="@+id/editText4"
+            <DatePicker
+                android:id="@+id/dp_date"
+                style="@android:style/Widget.DatePicker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="date" />
+                android:datePickerMode="spinner" />
 
             <TextView
                 android:id="@+id/textView19"
@@ -217,7 +221,7 @@
 
                 <TextView
                     android:id="@+id/tv_duration"
-                    android:gravity="center"
+                    android:gravity="center | right"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:text="30分鐘或以下"
@@ -247,7 +251,7 @@
 
                 <TextView
                     android:id="@+id/tv_members"
-                    android:gravity="center"
+                    android:gravity="center | right"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:text="無"
@@ -262,7 +266,7 @@
                 android:layout_marginTop="20dp">
 
                 <Button
-                    android:id="@+id/btn_submit"
+                    android:id="@+id/btn_RecordSubmit"
                     android:layout_width="250dp"
                     android:layout_height="50dp"
                     android:layout_centerHorizontal="true"
@@ -272,11 +276,8 @@
                     android:textSize="14sp" />
             </RelativeLayout>
 
-
-
         </LinearLayout>
 
     </ScrollView>
-
 
 </RelativeLayout>

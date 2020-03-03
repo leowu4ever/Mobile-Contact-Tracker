@@ -31,7 +31,7 @@ import android.widget.Button;
 
 public class LocationActivity extends Activity {
 
-	private Button btnReport;
+	private Button btnReport, btnViewReport;
 
 	private MapView mapView = null;
 	private BaiduMap baiduMap = null;
@@ -87,6 +87,17 @@ public class LocationActivity extends Activity {
 			public void onClick(View v) {
 
 				Class<?> TargetClass = RecordActivity.class;
+				Intent intent = new Intent(LocationActivity.this, TargetClass);
+				startActivity(intent);
+			}
+		});
+
+		btnViewReport = findViewById(R.id.btn_viewReport);
+		btnViewReport.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+				Class<?> TargetClass = ViewRecordActivity.class;
 				Intent intent = new Intent(LocationActivity.this, TargetClass);
 				startActivity(intent);
 			}
