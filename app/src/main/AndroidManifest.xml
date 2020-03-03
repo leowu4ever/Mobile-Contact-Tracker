@@ -43,6 +43,9 @@
         <activity android:name="com.baidu.location.demo.RecordActivity" />
         <activity android:name="com.baidu.location.demo.InfoActivity" />
         <activity android:name="com.baidu.location.demo.LocationActivity" />
+        <activity android:name="com.baidu.location.demo.ViewRecordActivity" />
+        <activity android:name="com.baidu.location.demo.ViewPastRecordDetails" />
+
 
         <receiver android:name="com.baidu.location.demo.MyBroadcastReceiver"
             android:enabled="true"
@@ -55,6 +58,7 @@
         </receiver>
 
         <service android:name="com.baidu.location.demo.MyBroadcastReceiver"/>
+
 
     </application>
 

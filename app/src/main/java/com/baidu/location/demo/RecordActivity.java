@@ -1,37 +1,70 @@
 package com.baidu.location.demo;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.baidu.baidulocationdemo.R;
 import com.google.gson.Gson;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 
 public class RecordActivity extends Activity {
     private Button btn_submit;
     private SeekBar sb_age, sb_duration, sb_members;
     private TextView tv_age, tv_duration, tv_members;
+    private EditText et_name, et_job, et_area;
+    private DatePicker dp_date;
+    private RadioGroup rg_gender;
     private Spinner sp_edu;
     private String[] sp_item_education = {"小學或以下", "初中", "高中", "大學"};
-    private Gson gson;
+    private String gender;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        context = this;
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_record);
-        btn_submit = findViewById(R.id.btn_submit);
+
+        gender = "男";
+
+        btn_submit = findViewById(R.id.btn_RecordSubmit);
         btn_submit.setOnClickListener(new View.OnClickListener() {
-            @Override
+
             public void onClick(View v) {
                 dataCollection();
             }
         });
+
+
+        et_name = findViewById(R.id.et_name);
+        et_job = findViewById(R.id.et_job);
+        et_area = findViewById(R.id.et_area);
+        dp_date = findViewById(R.id.dp_date);
+        dp_date.setMaxDate(System.currentTimeMillis());
 
         sb_age = findViewById(R.id.sb_age);
         sb_age.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -56,14 +89,14 @@ public class RecordActivity extends Activity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 String text = "";
-                if (progress==0){
+                if (progress == 0) {
                     text = "30分鐘或以下";
-                }else if(progress>0 && progress<19) {
+                } else if (progress > 0 && progress < 19) {
                     text = (progress + 1) / 2 + "小時";
                     if ((progress + 1) % 2 == 1) {
                         text += "30分鐘";
                     }
-                }else if(progress==19){
+                } else if (progress == 19) {
                     text = "10小時或以上";
                 }
 
@@ -86,11 +119,11 @@ public class RecordActivity extends Activity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 String text = "";
-                if (progress == 0 ){
+                if (progress == 0) {
                     text = "無";
-                }else if (progress>=1&&progress<=9){
-                    text = progress+"名";
-                }else if (progress>=10){
+                } else if (progress >= 1 && progress <= 9) {
+                    text = progress + "名";
+                } else if (progress >= 10) {
                     text = progress + "名或以上";
                 }
                 tv_members.setText(text);
@@ -108,9 +141,24 @@ public class RecordActivity extends Activity {
         });
 
         sp_edu = findViewById(R.id.sp_edu);
-        ArrayAdapter aa_edu = new ArrayAdapter(this,android.R.layout.simple_spinner_item,sp_item_education);
+        ArrayAdapter aa_edu = new ArrayAdapter(this, android.R.layout.simple_spinner_item, sp_item_education);
         aa_edu.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sp_edu.setAdapter(aa_edu);
+
+        rg_gender = findViewById(R.id.rg_gender);
+        rg_gender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (rg_gender.indexOfChild(rg_gender.findViewById(checkedId))) {
+                    case 0:
+                        gender = "男";
+                        break;
+                    case 1:
+                        gender = "女";
+                        break;
+                }
+            }
+        });
 
         tv_age = findViewById(R.id.tv_age);
         tv_duration = findViewById(R.id.tv_duration);
@@ -118,9 +166,45 @@ public class RecordActivity extends Activity {
 
 
     }
-    private void dataCollection(){
 
+    private void dataCollection() {
+        String name = et_name.getText().toString();
+        int age = sb_age.getProgress();
+        String job = et_job.getText().toString();
+        String edu = sp_edu.getSelectedItem().toString();
+        String area = et_area.getText().toString();
+        String date = dp_date.getDayOfMonth() + "-" + dp_date.getMonth()+1 + "-" + dp_date.getYear();
+        int duration = sb_duration.getProgress();
+        int members = sb_members.getProgress();
+        Log.d("FUNCTION", "EVAEVAEVA");
+        if (!(name.equals("")) && gender != null && !(edu.equals("")) && !(area.equals(""))) {
+            RecordManager rcm = new RecordManager();
+            Gson gson = new Gson();
+            rcm.createRecord(name, gender, age, job, edu, area, date, duration, members);
+
+            String json = gson.toJson(rcm);
+            Log.d("JSON", json);
+
+            DateFormat formatter = new SimpleDateFormat("ddMMyyyyHHmmss");
+            String sysDate = formatter.format(Calendar.getInstance().getTime());
+            new File(this.getFilesDir(), "record_" + sysDate);
+
+            try {
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("record_" + sysDate + name, Context.MODE_PRIVATE));
+                outputStreamWriter.write(json);
+                outputStreamWriter.close();
+            }
+            catch (IOException e) {
+                Log.e("Exception", "File write failed: " + e.toString());
+            }
+
+            finish();
+
+        } else {
+            Log.d("JSON", "json");
+            Toast t = Toast.makeText(getApplicationContext(), "請填寫所有欄位", Toast.LENGTH_LONG);
+            t.show();
+        }
     }
-
 
 }

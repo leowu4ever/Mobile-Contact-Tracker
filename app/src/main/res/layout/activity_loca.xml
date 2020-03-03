@@ -17,7 +17,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="360dp"
+        android:layout_height="420dp"
         android:layout_alignParentBottom="true"
         android:layout_margin="30dp"
         android:layout_marginStart="20dp"
@@ -51,7 +51,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView16"
+                android:id="@+id/textView1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -72,7 +72,7 @@
             android:paddingBottom="10dp">
 
             <TextView
-                android:id="@+id/tv_timer"
+                android:id="@+id/tv_index"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -101,10 +101,7 @@
             android:alpha="0.1"
             android:background="@android:color/darker_gray" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -137,7 +134,23 @@
 
             </LinearLayout>
 
-        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+            <Button
+                android:id="@+id/btn_viewReport"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_gravity="center"
+                android:background="@drawable/buttonshape"
+                android:text="查看已上报接触人员"
+                android:textColor="@android:color/background_light"
+                android:textSize="14sp" />
+
+        </LinearLayout>
     </LinearLayout>
 
 
