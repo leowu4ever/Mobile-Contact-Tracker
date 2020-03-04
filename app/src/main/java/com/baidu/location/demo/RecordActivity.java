@@ -65,7 +65,7 @@ public class RecordActivity extends Activity {
         sb_age.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                tv_age.setText("" + progress);
+                tv_age.setText(progress + " 岁");
             }
 
             @Override

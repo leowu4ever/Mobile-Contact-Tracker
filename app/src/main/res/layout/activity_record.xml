@@ -125,7 +125,7 @@
                     android:layout_margin="1dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="0"
+                    android:text="0岁"
                     android:textColor="@android:color/darker_gray" />
             </LinearLayout>
 
