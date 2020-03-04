@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="03:54"
-                android:textColor="@android:color/darker_gray"
+                android:textColor="#55578A "
                 android:textSize="60sp"
                 android:textStyle="bold" />
 
@@ -77,7 +77,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="95%"
-                android:textColor="@android:color/darker_gray"
+                android:textColor="#3B4FDE"
                 android:textSize="60sp"
                 android:textStyle="bold" />
 
