@@ -8,14 +8,14 @@ import android.widget.Button;
 
 import com.baidu.baidulocationdemo.R;
 
-public class InfoActivity extends Activity {
+public class RegisterActivity extends Activity {
 
     private Button btnSubmit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_info);
+        setContentView(R.layout.activity_register);
 
         btnSubmit = findViewById(R.id.btn_submit);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
@@ -23,7 +23,7 @@ public class InfoActivity extends Activity {
             public void onClick(View v) {
 
                 Class<?> TargetClass = LocationActivity.class;
-                Intent intent = new Intent(InfoActivity.this, TargetClass);
+                Intent intent = new Intent(RegisterActivity.this, TargetClass);
                 startActivity(intent);
             }
         });

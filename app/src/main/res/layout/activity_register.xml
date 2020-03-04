@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/background_light"
     android:orientation="vertical"
-    tools:context="com.baidu.location.demo.InfoActivity">
+    tools:context="com.baidu.location.demo.RegisterActivity">
 
     <ImageView
         android:id="@+id/imageView3"
@@ -68,6 +68,33 @@
                 android:background="@android:color/darker_gray" />
 
 
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="账号"
+                android:textColor="@android:color/darker_gray" />
+
+            <EditText
+                android:id="@+id/editText6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="密码"
+                android:textColor="@android:color/darker_gray" />
+
+            <EditText
+                android:id="@+id/editText7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName" />
 
             <TextView
                 android:id="@+id/textView15"
@@ -176,15 +203,32 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="20dp">
 
-                <Button
-                    android:id="@+id/btn_submit"
-                    android:layout_width="250dp"
-                    android:layout_height="50dp"
-                    android:layout_centerHorizontal="true"
-                    android:background="@drawable/buttonshape"
-                    android:text="提交"
-                    android:textColor="@android:color/background_light"
-                    android:textSize="14sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_submit"
+                        android:layout_width="250dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/buttonshape"
+                        android:text="同意并提交"
+                        android:textColor="@android:color/background_light"
+                        android:textSize="14sp" />
+
+                    <Button
+                        android:id="@+id/btn_submit2"
+                        android:layout_width="250dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/buttonshape"
+                        android:text="用户协议"
+                        android:textColor="@android:color/background_light"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
             </RelativeLayout>
 
 
