@@ -114,7 +114,7 @@
                     android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:max="100"
-                    android:progress="1"
+                    android:progress="0"
                     android:layout_weight="10"/>
 
                 <TextView

@@ -167,10 +167,10 @@ public class RecordActivity extends Activity {
         String job = et_job.getText().toString();
         String edu = sp_edu.getSelectedItem().toString();
         String area = et_area.getText().toString();
-        DecimalFormat datemonthformatter = new DecimalFormat("00");
-        DecimalFormat yearformatter = new DecimalFormat("0000");
-        String date = datemonthformatter.format(dp_date.getDayOfMonth()) + "-" + datemonthformatter.format(dp_date.getMonth()+1) + "-" + yearformatter.format(dp_date.getYear());
-        String dateForFile = datemonthformatter.format(dp_date.getDayOfMonth()) + datemonthformatter.format(dp_date.getMonth()+1) + yearformatter.format(dp_date.getYear());
+        DecimalFormat dateMonthFormatter = new DecimalFormat("00");
+        DecimalFormat yearFormatter = new DecimalFormat("0000");
+        String date = dateMonthFormatter.format(dp_date.getDayOfMonth()) + "-" + dateMonthFormatter.format(dp_date.getMonth()+1) + "-" + yearFormatter.format(dp_date.getYear());
+        String dateForFile = dateMonthFormatter.format(dp_date.getDayOfMonth()) + dateMonthFormatter.format(dp_date.getMonth()+1) + yearFormatter.format(dp_date.getYear());
 
         int duration = sb_duration.getProgress();
         int members = sb_members.getProgress();

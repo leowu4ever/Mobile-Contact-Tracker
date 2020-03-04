@@ -17,15 +17,20 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import java.text.DecimalFormat;
 
 public class LocationActivity extends Activity {
 
 
     private Button btnReport, btnViewReport, btnUpload;
 
+private TextView tvCountDown, tvIndex;
 
     private MapView mapView = null;
     private BaiduMap baiduMap = null;
@@ -43,6 +48,13 @@ public class LocationActivity extends Activity {
 
     private String DEBUG_TAG = "loa1";
 
+    private int countDown = 0;
+    private final int defaultCountDown = 65000;
+
+    public static Runnable countdownRunnbale;
+
+    public static Handler handler;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +66,9 @@ public class LocationActivity extends Activity {
         initUploadClient();
         initNotification();
         initUIs();
+        handler = new Handler();
+        initRunnables();
+        handler.postDelayed(countdownRunnbale, 0);
     }
 
     private void initUIs() {
@@ -101,6 +116,10 @@ public class LocationActivity extends Activity {
                 startActivity(intent);
             }
         });
+
+        tvCountDown = findViewById(R.id.tv_timer);
+        tvIndex = findViewById(R.id.tv_index);
+
     }
 
     private void initNotification() {
@@ -191,6 +210,23 @@ public class LocationActivity extends Activity {
         baiduMap.setMyLocationEnabled(true);
     }
 
+    private void initRunnables(){
+        countdownRunnbale = new Runnable() {
+            @Override
+            public void run() {
+                if (countDown > 0000 && countDown <= defaultCountDown) {
+                    DecimalFormat secFormatter = new DecimalFormat("00");
+                    countDown -= 1000;
+                    tvCountDown.setText( secFormatter.format(countDown % 3600000 / 60000) + ":" + secFormatter.format(countDown % 60000 / 1000));
+                    handler.postDelayed(this, 1000);
+                } else {
+                    countDown = defaultCountDown;
+                    handler.postDelayed(this, 0);
+                }
+            }
+        };
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -236,5 +272,7 @@ public class LocationActivity extends Activity {
             map.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
         }
     }
+
+
 }
 
