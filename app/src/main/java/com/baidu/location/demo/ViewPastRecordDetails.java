@@ -2,7 +2,6 @@ package com.baidu.location.demo;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.baidu.baidulocationdemo.R;
@@ -22,8 +21,6 @@ public class ViewPastRecordDetails extends Activity {
         RecordManager rcm = gson.fromJson(rawdata, RecordManager.class);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_past_record_view);
-        tv_name = findViewById(R.id.tv_pr_name);
-        tv_name.setText(rcm.getName());
 
         tv_gender = findViewById(R.id.tv_pr_gender);
         tv_gender.setText(rcm.getGender());

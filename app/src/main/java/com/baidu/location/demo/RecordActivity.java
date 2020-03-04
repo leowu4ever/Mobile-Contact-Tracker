@@ -19,22 +19,19 @@ import com.baidu.baidulocationdemo.R;
 import com.google.gson.Gson;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 
 public class RecordActivity extends Activity {
     private Button btn_submit;
     private SeekBar sb_age, sb_duration, sb_members;
     private TextView tv_age, tv_duration, tv_members;
-    private EditText et_name, et_job, et_area;
+    private EditText et_job, et_area;
     private DatePicker dp_date;
     private RadioGroup rg_gender;
     private Spinner sp_edu;
@@ -59,8 +56,6 @@ public class RecordActivity extends Activity {
             }
         });
 
-
-        et_name = findViewById(R.id.et_name);
         et_job = findViewById(R.id.et_job);
         et_area = findViewById(R.id.et_area);
         dp_date = findViewById(R.id.dp_date);
@@ -168,19 +163,22 @@ public class RecordActivity extends Activity {
     }
 
     private void dataCollection() {
-        String name = et_name.getText().toString();
         int age = sb_age.getProgress();
         String job = et_job.getText().toString();
         String edu = sp_edu.getSelectedItem().toString();
         String area = et_area.getText().toString();
-        String date = dp_date.getDayOfMonth() + "-" + dp_date.getMonth()+1 + "-" + dp_date.getYear();
+        DecimalFormat datemonthformatter = new DecimalFormat("00");
+        DecimalFormat yearformatter = new DecimalFormat("0000");
+        String date = datemonthformatter.format(dp_date.getDayOfMonth()) + "-" + datemonthformatter.format(dp_date.getMonth()+1) + "-" + yearformatter.format(dp_date.getYear());
+        String dateForFile = datemonthformatter.format(dp_date.getDayOfMonth()) + datemonthformatter.format(dp_date.getMonth()+1) + yearformatter.format(dp_date.getYear());
+
         int duration = sb_duration.getProgress();
         int members = sb_members.getProgress();
         Log.d("FUNCTION", "EVAEVAEVA");
-        if (!(name.equals("")) && gender != null && !(edu.equals("")) && !(area.equals(""))) {
+        if (gender != null && !(edu.equals("")) && !(area.equals(""))) {
             RecordManager rcm = new RecordManager();
             Gson gson = new Gson();
-            rcm.createRecord(name, gender, age, job, edu, area, date, duration, members);
+            rcm.createRecord(gender, age, job, edu, area, date, duration, members);
 
             String json = gson.toJson(rcm);
             Log.d("JSON", json);
@@ -190,7 +188,7 @@ public class RecordActivity extends Activity {
             new File(this.getFilesDir(), "record_" + sysDate);
 
             try {
-                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("record_" + sysDate + name, Context.MODE_PRIVATE));
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("record_" + dateForFile + sysDate , Context.MODE_PRIVATE));
                 outputStreamWriter.write(json);
                 outputStreamWriter.close();
             }

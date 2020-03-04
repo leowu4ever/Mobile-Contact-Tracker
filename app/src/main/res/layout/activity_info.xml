@@ -67,19 +67,7 @@
                 android:alpha="0.1"
                 android:background="@android:color/darker_gray" />
 
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="姓名"
-                android:textColor="@android:color/darker_gray" />
 
-            <EditText
-                android:id="@+id/editText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName" />
 
             <TextView
                 android:id="@+id/textView15"
