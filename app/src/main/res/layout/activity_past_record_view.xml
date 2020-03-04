@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="接触人员记录"
-                android:textColor="@android:color/darker_gray"
+                android:textColor="#55578A"
                 android:textSize="36sp"
                 android:textStyle="bold" />
 
@@ -86,8 +86,7 @@
                         android:gravity="start"
                         android:text="姓別"
                         android:textColor="@android:color/darker_gray"
-                        android:textSize="36sp"
-                        android:textStyle="bold"/>
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tv_pr_age"
@@ -97,17 +96,8 @@
                         android:gravity="end"
                         android:text="年龄"
                         android:textColor="@android:color/darker_gray"
-                        android:textSize="36sp"
-                        android:textStyle="bold"/>
+                        android:textSize="14sp" />
                 </LinearLayout>
-
-                <View
-                    android:id="@+id/view1"
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dp"
-                    android:layout_margin="10dp"
-                    android:alpha="0.1"
-                    android:background="@android:color/darker_gray" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -124,7 +114,7 @@
                         android:gravity="start"
                         android:text="职业"
                         android:textColor="@android:color/darker_gray"
-                        android:textSize="24sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
 
@@ -142,8 +132,7 @@
                         android:gravity="center"
                         android:text="教育水平"
                         android:textColor="@android:color/darker_gray"
-                        android:textSize="18sp"
-                        />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tv_pr_edu"
@@ -171,8 +160,7 @@
                         android:gravity="center"
                         android:text="接触日期"
                         android:textColor="@android:color/darker_gray"
-                        android:textSize="18sp"
-                        />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tv_pr_date"
@@ -199,8 +187,7 @@
                         android:gravity="center"
                         android:text="接触地区"
                         android:textColor="@android:color/darker_gray"
-                        android:textSize="18sp"
-                        />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tv_pr_area"
@@ -227,8 +214,7 @@
                         android:gravity="center"
                         android:text="接触时长"
                         android:textColor="@android:color/darker_gray"
-                        android:textSize="18sp"
-                        />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tv_pr_duration"
@@ -255,8 +241,7 @@
                         android:gravity="center"
                         android:text="家庭人数"
                         android:textColor="@android:color/darker_gray"
-                        android:textSize="18sp"
-                        />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tv_pr_members"
@@ -267,7 +252,20 @@
                         android:text=" "
                         android:textColor="@android:color/darker_gray"
                         android:textSize="18sp" />
+
                 </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_viewReport2"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/buttonshape"
+                    android:text="知道了"
+                    android:textColor="@android:color/background_light"
+                    android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="初始信息采集"
-                android:textColor="@android:color/darker_gray"
+                android:textColor="#55578A"
                 android:textSize="36sp"
                 android:textStyle="bold" />
 
@@ -73,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="账号"
-                android:textColor="@android:color/darker_gray" />
+                android:textColor="#55578A " />
 
             <EditText
                 android:id="@+id/editText6"
@@ -87,7 +87,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="密码"
-                android:textColor="@android:color/darker_gray" />
+                android:textColor="#55578A" />
 
             <EditText
                 android:id="@+id/editText7"
@@ -101,7 +101,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="性别"
-                android:textColor="@android:color/darker_gray" />
+                android:textColor="#55578A" />
 
             <RadioGroup
                 android:layout_width="match_parent"
@@ -131,7 +131,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="年龄"
-                android:textColor="@android:color/darker_gray" />
+                android:textColor="#55578A" />
 
 
 
@@ -163,7 +163,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="职业"
-                android:textColor="@android:color/darker_gray" />
+                android:textColor="#55578A" />
 
             <EditText
                 android:id="@+id/editText2"
@@ -177,7 +177,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="日常活动区域"
-                android:textColor="@android:color/darker_gray" />
+                android:textColor="#55578A" />
 
             <EditText
                 android:id="@+id/editText3"
@@ -186,18 +186,6 @@
                 android:ems="10"
                 android:inputType="textPersonName" />
 
-            <TextView
-                android:id="@+id/textView14"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="今日健康状态"
-                android:textColor="@android:color/darker_gray" />
-
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -205,13 +193,14 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <Button
                         android:id="@+id/btn_submit"
                         android:layout_width="250dp"
                         android:layout_height="50dp"
+                        android:layout_marginRight="10dp"
                         android:layout_weight="1"
                         android:background="@drawable/buttonshape"
                         android:text="同意并提交"
