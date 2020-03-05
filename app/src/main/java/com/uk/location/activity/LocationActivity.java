@@ -261,7 +261,7 @@ public class LocationActivity extends Activity {
         map.setMyLocationData(locData);
 
         if (isShowLoc) {
-            LatLng ll = new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude());
+            LatLng ll = new LatLng(bdLocation.getLatitude()-0.01, bdLocation.getLongitude());
             MapStatus.Builder builder = new MapStatus.Builder();
             builder.target(ll).zoom(15);
             map.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
