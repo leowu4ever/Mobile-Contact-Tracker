@@ -21,6 +21,7 @@ import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.map.UiSettings;
 import com.baidu.mapapi.model.LatLng;
 
 import java.text.DecimalFormat;
@@ -203,7 +204,11 @@ public class LocationActivity extends Activity {
         baiduMap = mapView.getMap();
         baiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
         baiduMap.setMyLocationEnabled(true);
+        UiSettings uiSetting = baiduMap.getUiSettings();
+        uiSetting.setZoomGesturesEnabled(false);
+        uiSetting.setOverlookingGesturesEnabled(false);
     }
+
 
     private void initRunnables() {
         countdownRunnbale = new Runnable() {
