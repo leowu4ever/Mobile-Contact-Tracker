@@ -152,19 +152,20 @@
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/textView13"
+                android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="接触地区"
+                android:text="接触日期"
                 android:textColor="#55578A" />
 
             <EditText
-                android:id="@+id/et_area"
+                android:id="@+id/et_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:imeOptions="actionDone"
-                android:inputType="textPersonName" />
+                android:hint="年/月/日 (比如 28/06/2019)"
+                android:inputType="date"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/textView14"
@@ -180,22 +181,6 @@
                 android:ems="10"
                 android:hint="小时:分钟 (比如 18:34)"
                 android:inputType="time"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="接触日期"
-                android:textColor="#55578A" />
-
-            <EditText
-                android:id="@+id/et_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="年/月/日 (比如 28/06/2019)"
-                android:inputType="date"
                 android:textSize="14sp" />
 
             <TextView
@@ -227,6 +212,21 @@
                     android:text="30分钟以内"
                     android:textColor="@android:color/darker_gray" />
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="接触地区"
+                android:textColor="#55578A" />
+
+            <EditText
+                android:id="@+id/et_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:imeOptions="actionDone"
+                android:inputType="textPersonName" />
 
             <TextView
                 android:id="@+id/textView18"
