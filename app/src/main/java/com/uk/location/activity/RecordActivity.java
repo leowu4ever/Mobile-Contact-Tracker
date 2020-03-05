@@ -24,16 +24,17 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.regex.Pattern;
 
 public class RecordActivity extends Activity {
     private Button btn_submit;
     private SeekBar sb_age, sb_duration, sb_members;
     private TextView tv_age, tv_duration, tv_members;
-    private EditText et_job, et_area;
-    private DatePicker dp_date;
+    private EditText et_area, et_date, et_time;
     private RadioGroup rg_gender;
-    private Spinner sp_edu;
+    private Spinner sp_edu, sp_occupation;
     private String[] sp_item_education = {"小学或以下", "初中", "高中", "大学"};
+    private String[] sp_item_job = {"Placeholder1", "Placeholder2", "Placeholder3", "Placeholder4"};
     private String gender;
     private Context context;
 
@@ -48,16 +49,29 @@ public class RecordActivity extends Activity {
 
         btn_submit = findViewById(R.id.btn_RecordSubmit);
         btn_submit.setOnClickListener(new View.OnClickListener() {
-
             public void onClick(View v) {
-                dataCollection();
+                int age = sb_age.getProgress();
+                String job = sp_occupation.getSelectedItem().toString();
+                String edu = sp_edu.getSelectedItem().toString();
+                String area = et_area.getText().toString();
+                String date = et_date.getText().toString();
+                String dateForFile = date.replace("-", "");
+                int duration = sb_duration.getProgress();
+                int members = sb_members.getProgress();
+                if (gender != null && !(edu.equals("")) && !(area.equals("")) ) { //TODO: INPUT Validation, Replace "/" in file name
+                    Record record = new Record();
+                    record.createRecord(gender, age, job, edu, area, date, duration, members);
+                    record.objectToFile(record, dateForFile);
+                    Toast.makeText(getApplicationContext(), "已储存记录", Toast.LENGTH_LONG).show();
+                    finish();
+                } else {
+                    Toast.makeText(getApplicationContext(), "請填寫所有欄位", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
-        et_job = findViewById(R.id.et_job);
         et_area = findViewById(R.id.et_area);
-//        dp_date = findViewById(R.id.dp_date);
-//        dp_date.setMaxDate(System.currentTimeMillis());
+        et_date = findViewById(R.id.et_date);
 
         sb_age = findViewById(R.id.sb_age);
         sb_age.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -137,6 +151,11 @@ public class RecordActivity extends Activity {
         aa_edu.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sp_edu.setAdapter(aa_edu);
 
+        sp_occupation = findViewById(R.id.sp_occupation);
+        ArrayAdapter aa_job = new ArrayAdapter(this, android.R.layout.simple_spinner_item, sp_item_job);
+        aa_job.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sp_occupation.setAdapter(aa_job);
+
         rg_gender = findViewById(R.id.rg_gender);
         rg_gender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -158,47 +177,4 @@ public class RecordActivity extends Activity {
 
 
     }
-
-    private void dataCollection() {
-        int age = sb_age.getProgress();
-        String job = et_job.getText().toString();
-        String edu = sp_edu.getSelectedItem().toString();
-        String area = et_area.getText().toString();
-        DecimalFormat dateMonthFormatter = new DecimalFormat("00");
-        DecimalFormat yearFormatter = new DecimalFormat("0000");
-        String date = dateMonthFormatter.format(dp_date.getDayOfMonth()) + "-" + dateMonthFormatter.format(dp_date.getMonth() + 1) + "-" + yearFormatter.format(dp_date.getYear());
-        String dateForFile = dateMonthFormatter.format(dp_date.getDayOfMonth()) + dateMonthFormatter.format(dp_date.getMonth() + 1) + yearFormatter.format(dp_date.getYear());
-
-        int duration = sb_duration.getProgress();
-        int members = sb_members.getProgress();
-        Log.d("FUNCTION", "EVAEVAEVA");
-        if (gender != null && !(edu.equals("")) && !(area.equals(""))) {
-            RecordManager rcm = new RecordManager();
-            Gson gson = new Gson();
-            rcm.createRecord(gender, age, job, edu, area, date, duration, members);
-
-            String json = gson.toJson(rcm);
-            Log.d("JSON", json);
-
-            DateFormat formatter = new SimpleDateFormat("ddMMyyyyHHmmss");
-            String sysDate = formatter.format(Calendar.getInstance().getTime());
-            new File(this.getFilesDir(), "record_" + sysDate);
-
-            try {
-                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("record_" + dateForFile + sysDate, Context.MODE_PRIVATE));
-                outputStreamWriter.write(json);
-                outputStreamWriter.close();
-            } catch (IOException e) {
-                Log.e("Exception", "File write failed: " + e.toString());
-            }
-
-            finish();
-
-        } else {
-            Log.d("JSON", "json");
-            Toast t = Toast.makeText(getApplicationContext(), "請填寫所有欄位", Toast.LENGTH_LONG);
-            t.show();
-        }
-    }
-
 }

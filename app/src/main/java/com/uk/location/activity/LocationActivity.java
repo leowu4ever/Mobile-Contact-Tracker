@@ -109,8 +109,6 @@ public class LocationActivity extends Activity {
         });
 
         tvCountDown = findViewById(R.id.tv_timer);
-        tvIndex = findViewById(R.id.tv_index);
-
     }
 
     private void initNotification() {

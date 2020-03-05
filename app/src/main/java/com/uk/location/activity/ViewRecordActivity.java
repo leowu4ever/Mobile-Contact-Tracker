@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -12,8 +13,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,7 +35,8 @@ public class ViewRecordActivity extends Activity {
         context = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_past_record_list);
-        String[] files = this.fileList();
+        File rootDircectory = new File(Environment.getExternalStorageDirectory() + "/VirTrack/");
+        String[] files = rootDircectory.list();
         List<String> colList = new ArrayList(Arrays.asList(files));
         Collections.sort(colList);
         LinearLayout parentLayout = findViewById(R.id.layout_RecordView);
@@ -43,7 +48,6 @@ public class ViewRecordActivity extends Activity {
                 LinearLayout recordContainer = new LinearLayout(this);
                 Button btnTag = new Button(this);
                 TextView tvRecord = new TextView(this);
-
 
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
@@ -67,7 +71,6 @@ public class ViewRecordActivity extends Activity {
 
                     View vSep = new View(this);
                     vSep.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-                    //vSep.setAlpha((float) 0.1);
                     vSep.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
                     parentLayout.addView(vSep);
                 }
@@ -89,33 +92,39 @@ public class ViewRecordActivity extends Activity {
                     @Override
                     public void onClick(View v) {
                         Button b = (Button) v;
+                        String readings = "";
+                        FileInputStream fis = null;
                         try {
-                            InputStream inputStream = context.openFileInput(b.getTag().toString());
-                            if (inputStream != null) {
-                                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                                String receiveString = "";
-                                StringBuilder stringBuilder = new StringBuilder();
+                            fis = new FileInputStream(new File(Environment.getExternalStorageDirectory() + "/VirTrack/" + b.getTag().toString()));  // 2nd line
+                            InputStreamReader isr = new InputStreamReader(fis);
+                            BufferedReader br = new BufferedReader(isr);
+                            StringBuilder sb = new StringBuilder();
+                            String readinText = "";
 
-                                while ((receiveString = bufferedReader.readLine()) != null) {
-                                    stringBuilder.append("\n").append(receiveString);
-                                }
-
-                                inputStream.close();
-                                String ret = stringBuilder.toString();
-
-                                Class<?> TargetClass = ViewPastRecordDetails.class;
-                                Intent intent = new Intent(ViewRecordActivity.this, TargetClass);
-                                intent.putExtra("PASTDATA", ret);
-
-                                startActivity(intent);
+                            while ((readinText = br.readLine()) != null) {
+                                sb.append(readinText);
                             }
+                            readings = sb.toString();
+
+                            Class<?> TargetClass = ViewPastRecordDetails.class;
+                            Intent intent = new Intent(ViewRecordActivity.this, TargetClass);
+                            intent.putExtra("PASTDATA", readings);
+
+                            startActivity(intent);
+
                         } catch (FileNotFoundException e) {
                             Log.e("login activity", "File not found: " + e.toString());
                         } catch (IOException e) {
                             Log.e("login activity", "Can not read file: " + e.toString());
+                        } finally {
+                            if (fis != null) {
+                                try {
+                                    fis.close();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
                         }
-
                     }
                 });
                 recordContainer.addView(tvRecord);

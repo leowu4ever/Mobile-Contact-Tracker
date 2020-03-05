@@ -113,13 +113,13 @@
                     android:id="@+id/sb_age"
                     android:layout_width="0dp"
                     android:layout_height="30dp"
-                    android:layout_weight="8"
+                    android:layout_weight="5"
                     android:max="100"
                     android:progress="0" />
 
                 <TextView
                     android:id="@+id/tv_age"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_margin="1dp"
                     android:layout_weight="1"
@@ -176,7 +176,7 @@
                 android:textColor="#55578A" />
 
             <EditText
-                android:id="@+id/editText9"
+                android:id="@+id/et_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -192,7 +192,7 @@
                 android:textColor="#55578A" />
 
             <EditText
-                android:id="@+id/editText5"
+                android:id="@+id/et_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
