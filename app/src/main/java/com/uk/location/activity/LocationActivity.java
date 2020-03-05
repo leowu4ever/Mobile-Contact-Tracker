@@ -21,6 +21,7 @@ import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.map.UiSettings;
 import com.baidu.mapapi.model.LatLng;
 
 import java.text.DecimalFormat;
@@ -28,12 +29,11 @@ import java.text.DecimalFormat;
 public class LocationActivity extends Activity {
 
 
-    public static final int LOCATION_UPLOAD_INTERVAL = 1;    //in min
     public static Runnable countdownRunnbale;
     public static Handler handler;
-    private final int defaultCountDown = 65000;
+    public static final int LOCATION_UPLOAD_INTERVAL = 1 * 1000 * 60; //1min
     private Button btnReport, btnViewReport, btnUpload;
-    private TextView tvCountDown, tvIndex;
+    private TextView tvCountDown;
     private MapView mapView = null;
     private BaiduMap baiduMap = null;
     private LocationClient locationClient = null;
@@ -57,9 +57,9 @@ public class LocationActivity extends Activity {
         initUploadClient();
         initNotification();
         initUIs();
+
         handler = new Handler();
-        initRunnables();
-        handler.postDelayed(countdownRunnbale, 0);
+
     }
 
     private void initUIs() {
@@ -84,6 +84,9 @@ public class LocationActivity extends Activity {
                     btnUpload.setText("开启后台定位采集");
                     uploadClient.unRegisterLocationListener(uploadListener);
                     uploadClient.stop();
+                    btnUpload.setBackgroundResource(R.drawable.buttonshape);
+                    handler.removeCallbacks(countdownRunnbale);
+
                 } else {
                     //开启后台定位
                     Log.d(DEBUG_TAG, "startback");
@@ -92,6 +95,9 @@ public class LocationActivity extends Activity {
                     btnUpload.setText("关闭后台定位采集");
                     uploadClient.registerLocationListener(uploadListener);
                     uploadClient.start();
+                    btnUpload.setBackgroundResource(R.drawable.buttonshape_red);
+                    initRunnables();
+                    handler.postDelayed(countdownRunnbale, 0);
                 }
             }
         });
@@ -109,6 +115,7 @@ public class LocationActivity extends Activity {
         });
 
         tvCountDown = findViewById(R.id.tv_timer);
+
     }
 
     private void initNotification() {
@@ -197,19 +204,23 @@ public class LocationActivity extends Activity {
         baiduMap = mapView.getMap();
         baiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
         baiduMap.setMyLocationEnabled(true);
+        UiSettings uiSetting = baiduMap.getUiSettings();
+        uiSetting.setZoomGesturesEnabled(false);
+        uiSetting.setOverlookingGesturesEnabled(false);
     }
+
 
     private void initRunnables() {
         countdownRunnbale = new Runnable() {
             @Override
             public void run() {
-                if (countDown > 0000 && countDown <= defaultCountDown) {
+                if (countDown > 0 && countDown <= LOCATION_UPLOAD_INTERVAL) {
                     DecimalFormat secFormatter = new DecimalFormat("00");
-                    countDown -= 1000;
                     tvCountDown.setText(secFormatter.format(countDown % 3600000 / 60000) + ":" + secFormatter.format(countDown % 60000 / 1000));
+                    countDown -= 1000;
                     handler.postDelayed(this, 1000);
                 } else {
-                    countDown = defaultCountDown;
+                    countDown = LOCATION_UPLOAD_INTERVAL;
                     handler.postDelayed(this, 0);
                 }
             }
@@ -255,13 +266,11 @@ public class LocationActivity extends Activity {
         map.setMyLocationData(locData);
 
         if (isShowLoc) {
-            LatLng ll = new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude());
+            LatLng ll = new LatLng(bdLocation.getLatitude()-0.01, bdLocation.getLongitude());
             MapStatus.Builder builder = new MapStatus.Builder();
-            builder.target(ll).zoom(18f);
+            builder.target(ll).zoom(15);
             map.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
         }
     }
-
-
 }
 
