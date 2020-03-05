@@ -1,4 +1,4 @@
-package com.baidu.location.demo;
+package com.uk.location.activity;
 
 
 import android.app.Notification;

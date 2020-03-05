@@ -1,4 +1,4 @@
-package com.baidu.location.demo;
+package com.uk.location.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,7 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.baidu.baidulocationdemo.R;
+import com.uk.location.activity.R;
 import com.google.gson.Gson;
 
 import java.io.File;

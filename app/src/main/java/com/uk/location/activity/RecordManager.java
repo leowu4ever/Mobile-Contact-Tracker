@@ -1,4 +1,4 @@
-package com.baidu.location.demo;
+package com.uk.location.activity;
 
 public class RecordManager {
     private String gender, job, education, area, date;

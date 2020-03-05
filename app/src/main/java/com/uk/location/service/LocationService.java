@@ -1,4 +1,4 @@
-package com.baidu.location.service;
+package com.uk.location.service;
 
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.LocationClient;

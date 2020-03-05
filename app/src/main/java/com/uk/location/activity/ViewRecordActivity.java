@@ -1,4 +1,4 @@
-package com.baidu.location.demo;
+package com.uk.location.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
-import com.baidu.baidulocationdemo.R;
+import com.uk.location.activity.R;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

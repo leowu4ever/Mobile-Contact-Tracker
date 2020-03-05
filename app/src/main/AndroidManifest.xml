@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.baidu.baidulocationdemo"
+    package="com.uk.location.activity"
     tools:ignore="GoogleAppIndexingWarning"
     android:installLocation="internalOnly">
 
@@ -16,11 +16,11 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
-        android:name="com.baidu.location.demo.LocationApplication"
+        android:name="com.uk.location.activity.LocationApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:theme="@android:style/Theme.NoTitleBar">
-        <activity android:name="com.baidu.location.demo.MyBroadcastReceiver"></activity>
+        <activity android:name="com.uk.location.activity.MyBroadcastReceiver"></activity>
 
         <service
             android:name="com.baidu.location.f"
@@ -31,7 +31,7 @@
             android:value="4EsITjqZDYhM5cpoz1X8MsSAlIMh9GhC" />
 
         <activity
-            android:name="com.baidu.location.demo.LgActivity"
+            android:name="com.uk.location.activity.LgActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,14 +39,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.baidu.location.demo.RecordActivity" />
-        <activity android:name="com.baidu.location.demo.RegisterActivity" />
-        <activity android:name="com.baidu.location.demo.LocationActivity" />
-        <activity android:name="com.baidu.location.demo.ViewRecordActivity" />
-        <activity android:name="com.baidu.location.demo.ViewPastRecordDetails" />
+        <activity android:name="com.uk.location.activity.RecordActivity" />
+        <activity android:name="com.uk.location.activity.RegisterActivity" />
+        <activity android:name="com.uk.location.activity.LocationActivity" />
+        <activity android:name="com.uk.location.activity.ViewRecordActivity" />
+        <activity android:name="com.uk.location.activity.ViewPastRecordDetails" />
 
 
-        <receiver android:name="com.baidu.location.demo.MyBroadcastReceiver"
+        <receiver android:name="com.uk.location.activity.MyBroadcastReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -56,7 +56,7 @@
             </intent-filter>
         </receiver>
 
-        <service android:name="com.baidu.location.demo.MyBroadcastReceiver"/>
+        <service android:name="com.uk.location.activity.MyBroadcastReceiver"/>
 
 
     </application>

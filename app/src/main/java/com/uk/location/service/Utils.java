@@ -1,4 +1,4 @@
-package com.baidu.location.service;
+package com.uk.location.service;
 
 public class Utils {
 	public final static String CoorType_GCJ02 = "gcj02";

@@ -7,7 +7,7 @@ android {
     ndkVersion "21.0.6113669"
 
     defaultConfig {
-        applicationId "com.baidu.baidulocationdemo"
+        applicationId "com.uk.location.activity"
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 1

@@ -1,4 +1,4 @@
-package com.baidu.location.demo;
+package com.uk.location.activity;
 
 import android.Manifest;
 import android.app.Activity;
@@ -11,34 +11,43 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 
-import com.baidu.baidulocationdemo.R;
+import com.uk.location.activity.R;
 
-public class RegisterActivity extends Activity {
+public class LgActivity extends Activity {
 
-    private Button btnSubmit;
-
+    private Button btnLogin, btnRegister;
     public static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
-    private Context context;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
-        context = this;
-        btnSubmit = findViewById(R.id.btn_submit);
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
+        setContentView(R.layout.activity_lg);
+        getLocationPermission(this);
+        initUIs();
+    }
+
+    private void initUIs() {
+        btnLogin = findViewById(R.id.btn_login);
+        btnRegister = findViewById(R.id.btn_register);
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // password check
+                Intent intent = new Intent(LgActivity.this, LocationActivity.class);
+                startActivity(intent);
+            }
+        });
 
-                getLocationPermission(context);
-                Class<?> TargetClass = LocationActivity.class;
-                Intent intent = new Intent(RegisterActivity.this, TargetClass);
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LgActivity.this, RegisterActivity.class);
                 startActivity(intent);
             }
         });
     }
-
-
     public static void getLocationPermission(Context context) {
         // TO DO need permission check on later screens
         if (ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED

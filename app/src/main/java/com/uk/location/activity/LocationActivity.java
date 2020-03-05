@@ -1,6 +1,6 @@
-package com.baidu.location.demo;
+package com.uk.location.activity;
 
-import com.baidu.baidulocationdemo.R;
+import com.uk.location.activity.R;
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
@@ -11,13 +11,19 @@ import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+
+import android.Manifest;
 import android.app.Activity;
 import android.app.Notification;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -30,7 +36,8 @@ public class LocationActivity extends Activity {
 
     private Button btnReport, btnViewReport, btnUpload;
 
-private TextView tvCountDown, tvIndex;
+
+    private TextView tvCountDown, tvIndex;
 
     private MapView mapView = null;
     private BaiduMap baiduMap = null;
@@ -61,6 +68,7 @@ private TextView tvCountDown, tvIndex;
         Log.d(DEBUG_TAG, "create");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loca);
+
         initMap();
         initLocationClient();
         initUploadClient();

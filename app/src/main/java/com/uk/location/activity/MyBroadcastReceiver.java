@@ -1,10 +1,8 @@
-package com.baidu.location.demo;
+package com.uk.location.activity;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 
 public class MyBroadcastReceiver extends BroadcastReceiver {
 
