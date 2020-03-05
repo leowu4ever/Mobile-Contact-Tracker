@@ -178,7 +178,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="比如 18:34"
+                android:hint="小时:分钟 (比如 18:34)"
                 android:inputType="time"
                 android:textSize="14sp" />
 
@@ -194,7 +194,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="比如 28/06/2019"
+                android:hint="年/月/日 (比如 28/06/2019)"
                 android:inputType="date"
                 android:textSize="14sp" />
 
