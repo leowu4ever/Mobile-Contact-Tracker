@@ -88,14 +88,15 @@
                 android:textSize="14sp" />
 
             <Button
-                android:id="@+id/btn_report"
+                android:id="@+id/btn_viewReport"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
+                android:layout_gravity="center"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="15dp"
                 android:layout_weight="1"
                 android:background="@drawable/buttonshape"
-                android:text="上报已接触人员"
+                android:text="查看已上报接触人员"
                 android:textColor="@android:color/background_light"
                 android:textSize="14sp" />
 
@@ -107,14 +108,14 @@
             android:layout_marginTop="10dp">
 
             <Button
-                android:id="@+id/btn_viewReport"
-                android:layout_width="match_parent"
+                android:id="@+id/btn_report"
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:layout_gravity="center"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
+                android:layout_weight="1"
                 android:background="@drawable/buttonshape"
-                android:text="查看已上报接触人员"
+                android:text="上报已接触人员"
                 android:textColor="@android:color/background_light"
                 android:textSize="14sp" />
 
