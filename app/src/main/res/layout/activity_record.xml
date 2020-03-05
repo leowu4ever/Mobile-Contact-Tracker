@@ -252,15 +252,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <Button
-                    android:id="@+id/btn_RecordSubmit"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_centerHorizontal="true"
-                    android:background="@drawable/buttonshape"
-                    android:text="提交并保存"
-                    android:textColor="@android:color/background_light"
-                    android:textSize="14sp" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_RecordSubmit"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/buttonshape"
+                        android:text="提交并保存"
+                        android:textColor="@android:color/background_light"
+                        android:textSize="14sp" />
+
+                    <Button
+                        android:id="@+id/btn_RecordSubmit2"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/buttonshape"
+                        android:text="放弃编辑"
+                        android:textColor="@android:color/background_light"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
             </RelativeLayout>
 
         </LinearLayout>
