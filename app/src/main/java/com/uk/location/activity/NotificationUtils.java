@@ -10,9 +10,9 @@ import android.graphics.Color;
 
 public class NotificationUtils extends ContextWrapper {
 
-    private NotificationManager mManager;
     public static final String ANDROID_CHANNEL_ID = "com.baidu.baidulocationdemo";
     public static final String ANDROID_CHANNEL_NAME = "ANDROID CHANNEL";
+    private NotificationManager mManager;
 
     public NotificationUtils(Context base) {
         super(base);

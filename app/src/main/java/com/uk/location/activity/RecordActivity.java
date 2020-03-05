@@ -15,7 +15,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.uk.location.activity.R;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -25,7 +24,6 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-
 
 public class RecordActivity extends Activity {
     private Button btn_submit;
@@ -168,8 +166,8 @@ public class RecordActivity extends Activity {
         String area = et_area.getText().toString();
         DecimalFormat dateMonthFormatter = new DecimalFormat("00");
         DecimalFormat yearFormatter = new DecimalFormat("0000");
-        String date = dateMonthFormatter.format(dp_date.getDayOfMonth()) + "-" + dateMonthFormatter.format(dp_date.getMonth()+1) + "-" + yearFormatter.format(dp_date.getYear());
-        String dateForFile = dateMonthFormatter.format(dp_date.getDayOfMonth()) + dateMonthFormatter.format(dp_date.getMonth()+1) + yearFormatter.format(dp_date.getYear());
+        String date = dateMonthFormatter.format(dp_date.getDayOfMonth()) + "-" + dateMonthFormatter.format(dp_date.getMonth() + 1) + "-" + yearFormatter.format(dp_date.getYear());
+        String dateForFile = dateMonthFormatter.format(dp_date.getDayOfMonth()) + dateMonthFormatter.format(dp_date.getMonth() + 1) + yearFormatter.format(dp_date.getYear());
 
         int duration = sb_duration.getProgress();
         int members = sb_members.getProgress();
@@ -187,11 +185,10 @@ public class RecordActivity extends Activity {
             new File(this.getFilesDir(), "record_" + sysDate);
 
             try {
-                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("record_" + dateForFile + sysDate , Context.MODE_PRIVATE));
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("record_" + dateForFile + sysDate, Context.MODE_PRIVATE));
                 outputStreamWriter.write(json);
                 outputStreamWriter.close();
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 Log.e("Exception", "File write failed: " + e.toString());
             }
 

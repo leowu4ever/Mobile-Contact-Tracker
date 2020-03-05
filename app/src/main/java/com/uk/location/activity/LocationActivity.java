@@ -1,6 +1,17 @@
 package com.uk.location.activity;
 
-import com.uk.location.activity.R;
+import android.app.Activity;
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
@@ -12,56 +23,28 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 
-import android.Manifest;
-import android.app.Activity;
-import android.app.Notification;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-
 import java.text.DecimalFormat;
 
 public class LocationActivity extends Activity {
 
 
+    public static final int LOCATION_UPLOAD_INTERVAL = 1;    //in min
+    public static Runnable countdownRunnbale;
+    public static Handler handler;
+    private final int defaultCountDown = 65000;
     private Button btnReport, btnViewReport, btnUpload;
-
-
     private TextView tvCountDown, tvIndex;
-
     private MapView mapView = null;
     private BaiduMap baiduMap = null;
     private LocationClient locationClient = null;
     private LocationClient uploadClient = null;
-
     private NotificationUtils mNotificationUtils;
     private Notification notification;
-
     private boolean isEnableLocInForeground = false;
-    public static final int LOCATION_UPLOAD_INTERVAL = 1;    //in min
-
     private BDAbstractLocationListener locationListener = null;
     private BDAbstractLocationListener uploadListener = null;
-
     private String DEBUG_TAG = "loa1";
-
     private int countDown = 0;
-    private final int defaultCountDown = 65000;
-
-    public static Runnable countdownRunnbale;
-
-    public static Handler handler;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,7 +153,7 @@ public class LocationActivity extends Activity {
                     double latitude = location.getLatitude();
                     double longitude = location.getLongitude();
 
-                    Log.d(DEBUG_TAG, "upload client" + Double.toString(latitude) + "," + Double.toString(longitude));
+                    Log.d(DEBUG_TAG, "upload client" + latitude + "," + longitude);
                     setPosition2Center(baiduMap, location, true);
 
                 } else {
@@ -198,7 +181,7 @@ public class LocationActivity extends Activity {
                 if (location != null) {
                     double latitude = location.getLatitude();
                     double longitude = location.getLongitude();
-                    Log.d(DEBUG_TAG, "location client" + Double.toString(latitude) + "," + Double.toString(longitude));
+                    Log.d(DEBUG_TAG, "location client" + latitude + "," + longitude);
                     setPosition2Center(baiduMap, location, true);
 
                 } else {
@@ -218,14 +201,14 @@ public class LocationActivity extends Activity {
         baiduMap.setMyLocationEnabled(true);
     }
 
-    private void initRunnables(){
+    private void initRunnables() {
         countdownRunnbale = new Runnable() {
             @Override
             public void run() {
                 if (countDown > 0000 && countDown <= defaultCountDown) {
                     DecimalFormat secFormatter = new DecimalFormat("00");
                     countDown -= 1000;
-                    tvCountDown.setText( secFormatter.format(countDown % 3600000 / 60000) + ":" + secFormatter.format(countDown % 60000 / 1000));
+                    tvCountDown.setText(secFormatter.format(countDown % 3600000 / 60000) + ":" + secFormatter.format(countDown % 60000 / 1000));
                     handler.postDelayed(this, 1000);
                 } else {
                     countDown = defaultCountDown;

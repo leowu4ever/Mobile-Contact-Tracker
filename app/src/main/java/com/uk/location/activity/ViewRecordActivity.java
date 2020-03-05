@@ -13,8 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
-import com.uk.location.activity.R;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -34,7 +32,7 @@ public class ViewRecordActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_past_record_list);
         String[] files = this.fileList();
-        List <String> colList = new ArrayList(Arrays.asList(files));
+        List<String> colList = new ArrayList(Arrays.asList(files));
         Collections.sort(colList);
         LinearLayout parentLayout = findViewById(R.id.layout_RecordView);
         parentLayout.removeAllViews();
@@ -51,20 +49,20 @@ public class ViewRecordActivity extends Activity {
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.MATCH_PARENT
                 );
-                params.setMargins((int)(10 * context.getResources().getDisplayMetrics().density),(int)(8 * context.getResources().getDisplayMetrics().density),0,0);
+                params.setMargins((int) (10 * context.getResources().getDisplayMetrics().density), (int) (8 * context.getResources().getDisplayMetrics().density), 0, 0);
 
                 recordContainer.setLayoutParams(params);
                 recordContainer.setWeightSum(1);
                 recordContainer.setGravity(Gravity.CENTER_VERTICAL);
 
                 btnTag.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                if (!(str.substring(7,15).equals(date))){
-                    date=str.substring(7,15);
-                    seq=0;
+                if (!(str.substring(7, 15).equals(date))) {
+                    date = str.substring(7, 15);
+                    seq = 0;
                     TextView tvDateSep = new TextView(this);
-                    tvDateSep.setText(str.substring(7,9) + "-" + str.substring(9,11) + "-" +str.substring(11,15));
-                    tvDateSep.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
-                    tvDateSep.setPadding(0,(int)(8 * context.getResources().getDisplayMetrics().density),0,(int)(-5 * context.getResources().getDisplayMetrics().density));
+                    tvDateSep.setText(str.substring(7, 9) + "-" + str.substring(9, 11) + "-" + str.substring(11, 15));
+                    tvDateSep.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+                    tvDateSep.setPadding(0, (int) (8 * context.getResources().getDisplayMetrics().density), 0, (int) (-5 * context.getResources().getDisplayMetrics().density));
                     parentLayout.addView(tvDateSep);
 
                     View vSep = new View(this);
@@ -73,24 +71,24 @@ public class ViewRecordActivity extends Activity {
                     vSep.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
                     parentLayout.addView(vSep);
                 }
-                seq+=1;
+                seq += 1;
 
                 tvRecord.setText("記錄" + seq);
                 tvRecord.setLayoutParams(new TableLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
-                tvRecord.setTextSize(TypedValue.COMPLEX_UNIT_SP,30);
+                tvRecord.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
 
-                btnTag.setTextSize(TypedValue.COMPLEX_UNIT_SP,30);
+                btnTag.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
                 btnTag.setText("𝑖");
                 btnTag.setTag(str);
                 btnTag.setBackgroundResource(R.drawable.buttonround);
                 btnTag.setTextColor(getResources().getColor(android.R.color.background_light));
-                btnTag.setLayoutParams(new LinearLayout.LayoutParams((int)(30 * context.getResources().getDisplayMetrics().density), (int)(30 * context.getResources().getDisplayMetrics().density)));
-                btnTag.setTextSize(TypedValue.COMPLEX_UNIT_SP,20);
+                btnTag.setLayoutParams(new LinearLayout.LayoutParams((int) (30 * context.getResources().getDisplayMetrics().density), (int) (30 * context.getResources().getDisplayMetrics().density)));
+                btnTag.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
                 btnTag.setGravity(Gravity.CENTER);
                 btnTag.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Button b = (Button)v;
+                        Button b = (Button) v;
                         try {
                             InputStream inputStream = context.openFileInput(b.getTag().toString());
                             if (inputStream != null) {
