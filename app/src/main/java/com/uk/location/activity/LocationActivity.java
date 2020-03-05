@@ -98,6 +98,7 @@ public class LocationActivity extends Activity {
                     btnUpload.setBackgroundResource(R.drawable.buttonshape_red);
                     initRunnables();
                     handler.postDelayed(countdownRunnbale, 0);
+                    LocationActivity.this.moveTaskToBack(true);
                 }
             }
         });
@@ -145,7 +146,7 @@ public class LocationActivity extends Activity {
 
         LocationClientOption uploadOption = new LocationClientOption();
         uploadOption.setOpenGps(true);
-        uploadOption.setScanSpan(LOCATION_UPLOAD_INTERVAL * 60 * 1000);
+        uploadOption.setScanSpan(LOCATION_UPLOAD_INTERVAL);
         uploadOption.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
         uploadOption.setCoorType("bd09ll");
 
