@@ -42,17 +42,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="∞:∞"
                 android:textColor="#55578A "
                 android:textSize="60sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/tv_location_helper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="距下一次采集地理位置所剩时间"
+                android:text="请点击以下按钮开启定位采集，开启后将每隔一小时上报一次你的地理位置。我们的APP已经过优化，会在后台以低功耗持续工作。"
                 android:textColor="#55578A"
                 android:textSize="14sp" />
         </LinearLayout>

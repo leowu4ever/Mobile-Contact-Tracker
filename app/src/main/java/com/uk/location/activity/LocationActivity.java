@@ -45,12 +45,13 @@ public class LocationActivity extends Activity {
     private BDAbstractLocationListener uploadListener = null;
     private String DEBUG_TAG = "loa1";
     private int countDown = 0;
+    private TextView tvLocationHelper = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(DEBUG_TAG, "create");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_loca);
+        setContentView(R.layout.activity_location);
 
         initMap();
         initLocationClient();
@@ -63,6 +64,7 @@ public class LocationActivity extends Activity {
     }
 
     private void initUIs() {
+        tvLocationHelper = findViewById(R.id.tv_location_helper);
         btnReport = findViewById(R.id.btn_report);
         btnReport.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,6 +79,7 @@ public class LocationActivity extends Activity {
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tvLocationHelper.setText("距下一次采集地理位置所剩时间");
                 if (isEnableLocInForeground) {
                     Log.d(DEBUG_TAG, "endback");
                     uploadClient.disableLocInForeground(true);
