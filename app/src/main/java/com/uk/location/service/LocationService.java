@@ -1,12 +1,12 @@
 package com.uk.location.service;
 
+import android.content.Context;
+import android.webkit.WebView;
+
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.LocationClientOption.LocationMode;
-
-import android.content.Context;
-import android.webkit.WebView;
 
 /**
  * 定位服务LocationClient 相关
@@ -16,7 +16,7 @@ import android.webkit.WebView;
 public class LocationService {
     private static LocationClient client = null;
     private static LocationClientOption mOption;
-    private static LocationClientOption  DIYoption;
+    private static LocationClientOption DIYoption;
     private Object objLock;
 
     /***
@@ -32,6 +32,24 @@ public class LocationService {
                 client.setLocOption(getDefaultLocationClientOption());
             }
         }
+    }
+
+    /***
+     * 设置定位参数
+     *
+     * @param option
+     * @return isSuccessSetOption
+     */
+    public static boolean setLocationOption(LocationClientOption option) {
+        boolean isSuccess = false;
+        if (option != null) {
+            if (client.isStarted()) {
+                client.stop();
+            }
+            DIYoption = option;
+            client.setLocOption(option);
+        }
+        return isSuccess;
     }
 
     /***
@@ -67,24 +85,6 @@ public class LocationService {
         return null;
     }
 
-    /***
-     * 设置定位参数
-     *
-     * @param option
-     * @return isSuccessSetOption
-     */
-    public static boolean setLocationOption(LocationClientOption option) {
-        boolean isSuccess = false;
-        if (option != null) {
-            if (client.isStarted()) {
-                client.stop();
-            }
-            DIYoption = option;
-            client.setLocOption(option);
-        }
-        return isSuccess;
-    }
-
     /**
      * 开发者应用如果有H5页面使用了百度JS接口，该接口可以辅助百度JS更好的进行定位
      *
@@ -113,7 +113,7 @@ public class LocationService {
         if (mOption == null) {
             mOption = new LocationClientOption();
             mOption.setLocationMode(LocationMode.Hight_Accuracy); // 可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
-            mOption.setCoorType( "bd09ll" ); // 可选，默认gcj02，设置返回的定位结果坐标系，如果配合百度地图使用，建议设置为bd09ll;
+            mOption.setCoorType("bd09ll"); // 可选，默认gcj02，设置返回的定位结果坐标系，如果配合百度地图使用，建议设置为bd09ll;
             mOption.setScanSpan(3000); // 可选，默认0，即仅定位一次，设置发起连续定位请求的间隔需要大于等于1000ms才是有效的
             mOption.setIsNeedAddress(true); // 可选，设置是否需要地址信息，默认不需要
             mOption.setIsNeedLocationDescribe(true); // 可选，设置是否需要地址描述

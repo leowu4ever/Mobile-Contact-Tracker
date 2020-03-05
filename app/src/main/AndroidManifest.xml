@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.uk.location.activity"
-    tools:ignore="GoogleAppIndexingWarning"
-    android:installLocation="internalOnly">
+    android:installLocation="internalOnly"
+    tools:ignore="GoogleAppIndexingWarning">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -46,17 +46,19 @@
         <activity android:name="com.uk.location.activity.ViewPastRecordDetails" />
 
 
-        <receiver android:name="com.uk.location.activity.MyBroadcastReceiver"
+        <receiver
+            android:name="com.uk.location.activity.MyBroadcastReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
 
-        <service android:name="com.uk.location.activity.MyBroadcastReceiver"/>
+        <service android:name="com.uk.location.activity.MyBroadcastReceiver" />
 
 
     </application>
