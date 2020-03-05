@@ -276,5 +276,9 @@ public class LocationActivity extends Activity {
             map.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
         }
     }
+
+    @Override
+    public void onBackPressed() {
+    }
 }
 
