@@ -37,100 +37,112 @@ public class ViewRecordActivity extends Activity {
         setContentView(R.layout.activity_past_record_list);
         File rootDircectory = new File(Environment.getExternalStorageDirectory() + "/VirTrack/");
         String[] files = rootDircectory.list();
-        List<String> colList = new ArrayList(Arrays.asList(files));
-        Collections.sort(colList);
         LinearLayout parentLayout = findViewById(R.id.layout_RecordView);
         parentLayout.removeAllViews();
+        
+        if (files != null) {
+        List<String> colList = new ArrayList(Arrays.asList(files));
+        Collections.sort(colList);
+
         String date = "";
         int seq = 0;
-        for (String str : colList) {
-            if (str.startsWith("record_")) {
-                LinearLayout recordContainer = new LinearLayout(this);
-                Button btnTag = new Button(this);
-                TextView tvRecord = new TextView(this);
 
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.MATCH_PARENT
-                );
-                params.setMargins((int) (10 * context.getResources().getDisplayMetrics().density), (int) (8 * context.getResources().getDisplayMetrics().density), 0, 0);
+            for (String str : colList) {
+                if (str.startsWith("record_")) {
+                    LinearLayout recordContainer = new LinearLayout(this);
+                    Button btnTag = new Button(this);
+                    TextView tvRecord = new TextView(this);
 
-                recordContainer.setLayoutParams(params);
-                recordContainer.setWeightSum(1);
-                recordContainer.setGravity(Gravity.CENTER_VERTICAL);
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.MATCH_PARENT
+                    );
+                    params.setMargins((int) (10 * context.getResources().getDisplayMetrics().density), (int) (8 * context.getResources().getDisplayMetrics().density), 0, 0);
 
-                btnTag.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                if (!(str.substring(7, 15).equals(date))) {
-                    date = str.substring(7, 15);
-                    seq = 0;
-                    TextView tvDateSep = new TextView(this);
-                    tvDateSep.setText(str.substring(7, 9) + "-" + str.substring(9, 11) + "-" + str.substring(11, 15));
-                    tvDateSep.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-                    tvDateSep.setPadding(0, (int) (8 * context.getResources().getDisplayMetrics().density), 0, (int) (-5 * context.getResources().getDisplayMetrics().density));
-                    parentLayout.addView(tvDateSep);
+                    recordContainer.setLayoutParams(params);
+                    recordContainer.setWeightSum(1);
+                    recordContainer.setGravity(Gravity.CENTER_VERTICAL);
 
-                    View vSep = new View(this);
-                    vSep.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-                    vSep.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
-                    parentLayout.addView(vSep);
-                }
-                seq += 1;
+                    btnTag.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                    if (!(str.substring(7, 15).equals(date))) {
+                        date = str.substring(7, 15);
+                        seq = 0;
+                        TextView tvDateSep = new TextView(this);
+                        tvDateSep.setText(str.substring(7, 9) + "-" + str.substring(9, 11) + "-" + str.substring(11, 15));
+                        tvDateSep.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+                        tvDateSep.setPadding(0, (int) (8 * context.getResources().getDisplayMetrics().density), 0, (int) (-5 * context.getResources().getDisplayMetrics().density));
+                        parentLayout.addView(tvDateSep);
 
-                tvRecord.setText("記錄" + seq);
-                tvRecord.setLayoutParams(new TableLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
-                tvRecord.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
+                        View vSep = new View(this);
+                        vSep.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                        vSep.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
+                        parentLayout.addView(vSep);
+                    }
+                    seq += 1;
 
-                btnTag.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
-                btnTag.setText("𝑖");
-                btnTag.setTag(str);
-                btnTag.setBackgroundResource(R.drawable.buttonround);
-                btnTag.setTextColor(getResources().getColor(android.R.color.background_light));
-                btnTag.setLayoutParams(new LinearLayout.LayoutParams((int) (30 * context.getResources().getDisplayMetrics().density), (int) (30 * context.getResources().getDisplayMetrics().density)));
-                btnTag.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-                btnTag.setGravity(Gravity.CENTER);
-                btnTag.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Button b = (Button) v;
-                        String readings = "";
-                        FileInputStream fis = null;
-                        try {
-                            fis = new FileInputStream(new File(Environment.getExternalStorageDirectory() + "/VirTrack/" + b.getTag().toString()));  // 2nd line
-                            InputStreamReader isr = new InputStreamReader(fis);
-                            BufferedReader br = new BufferedReader(isr);
-                            StringBuilder sb = new StringBuilder();
-                            String readinText = "";
+                    tvRecord.setText("記錄" + seq);
+                    tvRecord.setLayoutParams(new TableLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
+                    tvRecord.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
 
-                            while ((readinText = br.readLine()) != null) {
-                                sb.append(readinText);
-                            }
-                            readings = sb.toString();
+                    btnTag.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
+                    btnTag.setText("𝑖");
+                    btnTag.setTag(str);
+                    btnTag.setBackgroundResource(R.drawable.buttonround);
+                    btnTag.setTextColor(getResources().getColor(android.R.color.background_light));
+                    btnTag.setLayoutParams(new LinearLayout.LayoutParams((int) (30 * context.getResources().getDisplayMetrics().density), (int) (30 * context.getResources().getDisplayMetrics().density)));
+                    btnTag.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+                    btnTag.setGravity(Gravity.CENTER);
+                    btnTag.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Button b = (Button) v;
+                            String readings = "";
+                            FileInputStream fis = null;
+                            try {
+                                fis = new FileInputStream(new File(Environment.getExternalStorageDirectory() + "/VirTrack/" + b.getTag().toString()));  // 2nd line
+                                InputStreamReader isr = new InputStreamReader(fis);
+                                BufferedReader br = new BufferedReader(isr);
+                                StringBuilder sb = new StringBuilder();
+                                String readinText = "";
 
-                            Class<?> TargetClass = ViewPastRecordDetails.class;
-                            Intent intent = new Intent(ViewRecordActivity.this, TargetClass);
-                            intent.putExtra("PASTDATA", readings);
+                                while ((readinText = br.readLine()) != null) {
+                                    sb.append(readinText);
+                                }
+                                readings = sb.toString();
 
-                            startActivity(intent);
+                                Class<?> TargetClass = ViewPastRecordDetails.class;
+                                Intent intent = new Intent(ViewRecordActivity.this, TargetClass);
+                                intent.putExtra("PASTDATA", readings);
 
-                        } catch (FileNotFoundException e) {
-                            Log.e("login activity", "File not found: " + e.toString());
-                        } catch (IOException e) {
-                            Log.e("login activity", "Can not read file: " + e.toString());
-                        } finally {
-                            if (fis != null) {
-                                try {
-                                    fis.close();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
+                                startActivity(intent);
+
+                            } catch (FileNotFoundException e) {
+                                Log.e("login activity", "File not found: " + e.toString());
+                            } catch (IOException e) {
+                                Log.e("login activity", "Can not read file: " + e.toString());
+                            } finally {
+                                if (fis != null) {
+                                    try {
+                                        fis.close();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
                             }
                         }
-                    }
-                });
-                recordContainer.addView(tvRecord);
-                recordContainer.addView(btnTag);
-                parentLayout.addView(recordContainer);
+                    });
+                    recordContainer.addView(tvRecord);
+                    recordContainer.addView(btnTag);
+                    parentLayout.addView(recordContainer);
+                }
             }
+        }else{
+            TextView tvNullMessage = new TextView(this);
+            tvNullMessage.setText("没有已上报接触人员");
+            tvNullMessage.setLayoutParams(new TableLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
+            tvNullMessage.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
+            tvNullMessage.setGravity(Gravity.CENTER);
+            parentLayout.addView(tvNullMessage);
         }
     }
 }
