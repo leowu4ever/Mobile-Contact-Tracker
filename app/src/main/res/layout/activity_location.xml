@@ -89,7 +89,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/buttonshape"
-                android:text="查看已上报接触人员"
+                android:text="查看接触记录"
                 android:textColor="@android:color/background_light"
                 android:textSize="14sp" />
 
