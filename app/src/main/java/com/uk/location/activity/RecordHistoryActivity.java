@@ -3,6 +3,7 @@ package com.uk.location.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -67,7 +68,9 @@ public class RecordHistoryActivity extends Activity {
                         seq = 0;
                         TextView tvDateSep = new TextView(this);
                         tvDateSep.setText(str.substring(7, 9) + "-" + str.substring(9, 11) + "-" + str.substring(11, 15));
-                        tvDateSep.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+                        tvDateSep.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+                        tvDateSep.setTextColor(Color.parseColor("#55578A"));
+
                         tvDateSep.setPadding(0, (int) (8 * context.getResources().getDisplayMetrics().density), 0, (int) (-5 * context.getResources().getDisplayMetrics().density));
                         parentLayout.addView(tvDateSep);
 
@@ -78,17 +81,18 @@ public class RecordHistoryActivity extends Activity {
                     }
                     seq += 1;
 
-                    tvRecord.setText("記錄" + seq);
+                    tvRecord.setText("接触人员 " + seq);
                     tvRecord.setLayoutParams(new TableLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
-                    tvRecord.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
+                    tvRecord.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+                    tvRecord.setTextColor(Color.parseColor("#55578A"));
 
-                    btnTag.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
+
                     btnTag.setText("𝑖");
                     btnTag.setTag(str);
                     btnTag.setBackgroundResource(R.drawable.buttonround);
                     btnTag.setTextColor(getResources().getColor(android.R.color.background_light));
-                    btnTag.setLayoutParams(new LinearLayout.LayoutParams((int) (30 * context.getResources().getDisplayMetrics().density), (int) (30 * context.getResources().getDisplayMetrics().density)));
-                    btnTag.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+                    btnTag.setLayoutParams(new LinearLayout.LayoutParams((int) (20 * context.getResources().getDisplayMetrics().density), (int) (20 * context.getResources().getDisplayMetrics().density)));
+                    btnTag.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
                     btnTag.setGravity(Gravity.CENTER);
                     btnTag.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -136,9 +140,10 @@ public class RecordHistoryActivity extends Activity {
             }
         }else{
             TextView tvNullMessage = new TextView(this);
-            tvNullMessage.setText("没有已上报接触人员");
+            tvNullMessage.setText("暂时没有接触记录");
             tvNullMessage.setLayoutParams(new TableLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
-            tvNullMessage.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
+            tvNullMessage.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+            tvNullMessage.setTextColor(Color.parseColor("#55578A"));
             tvNullMessage.setGravity(Gravity.CENTER);
             parentLayout.addView(tvNullMessage);
         }
