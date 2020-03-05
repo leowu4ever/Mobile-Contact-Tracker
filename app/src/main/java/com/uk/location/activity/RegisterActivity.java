@@ -49,6 +49,7 @@ public class RegisterActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         context = this;
+        tv_age = findViewById(R.id.tv_age);
         btnSubmit = findViewById(R.id.btn_submit);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +81,7 @@ public class RegisterActivity extends Activity {
         sb_age.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                tv_age.setText("" + progress);
+                tv_age.setText("" + progress + "岁");
             }
 
             @Override
