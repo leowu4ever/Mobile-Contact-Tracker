@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -84,6 +85,8 @@ public class LocationActivity extends Activity {
                     btnUpload.setText("开启后台定位采集");
                     uploadClient.unRegisterLocationListener(uploadListener);
                     uploadClient.stop();
+                    btnUpload.setBackgroundResource(R.drawable.buttonshape);
+
                 } else {
                     //开启后台定位
                     Log.d(DEBUG_TAG, "startback");
@@ -92,6 +95,7 @@ public class LocationActivity extends Activity {
                     btnUpload.setText("关闭后台定位采集");
                     uploadClient.registerLocationListener(uploadListener);
                     uploadClient.start();
+                    btnUpload.setBackgroundResource(R.drawable.buttonshape_red);
                 }
             }
         });

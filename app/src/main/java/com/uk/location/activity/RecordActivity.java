@@ -54,7 +54,6 @@ public class RecordActivity extends Activity {
             }
         });
 
-        et_job = findViewById(R.id.et_job);
         et_area = findViewById(R.id.et_area);
 //        dp_date = findViewById(R.id.dp_date);
 //        dp_date.setMaxDate(System.currentTimeMillis());
