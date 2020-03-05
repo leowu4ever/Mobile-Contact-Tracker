@@ -48,7 +48,7 @@
             android:paddingRight="10dp">
 
             <TextView
-                android:id="@+id/textView8"
+                android:id="@+id/tv_subject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -67,10 +67,8 @@
                 android:alpha="0.1"
                 android:background="@android:color/darker_gray" />
 
-
-
             <TextView
-                android:id="@+id/textView15"
+                android:id="@+id/tv_gender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="性别"
@@ -79,10 +77,11 @@
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:id="@+id/rg_gender">
 
                 <RadioButton
-                    android:id="@+id/radioButton2"
+                    android:id="@+id/rb_male"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -90,7 +89,7 @@
                     android:textColor="@android:color/darker_gray" />
 
                 <RadioButton
-                    android:id="@+id/radioButton"
+                    android:id="@+id/rb_felmale"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -139,7 +138,7 @@
                 android:textColor="@android:color/darker_gray" />
 
             <EditText
-                android:id="@+id/editText2"
+                android:id="@+id/et_job"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -153,7 +152,7 @@
                 android:textColor="@android:color/darker_gray" />
 
             <EditText
-                android:id="@+id/editText3"
+                android:id="@+id/et_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -167,7 +166,7 @@
                 android:textColor="@android:color/darker_gray" />
 
             <Spinner
-                android:id="@+id/spinner"
+                android:id="@+id/sp_healthState"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
