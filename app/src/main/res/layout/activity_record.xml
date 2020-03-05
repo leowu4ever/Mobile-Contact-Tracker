@@ -61,9 +61,7 @@
                 android:id="@+id/view1"
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
-                android:layout_marginLeft="30dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginRight="30dp"
                 android:alpha="0.1"
                 android:background="@android:color/darker_gray" />
 
@@ -258,20 +256,30 @@
                     android:padding="0dp"
                     android:text="1名"
                     android:textColor="@android:color/darker_gray" />
+
             </LinearLayout>
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:alpha="0.1"
+                android:background="@android:color/darker_gray" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="20dp">
+                android:layout_height="match_parent">
 
                 <Button
                     android:id="@+id/btn_RecordSubmit"
-                    android:layout_width="250dp"
+                    android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/buttonshape"
-                    android:text="提交"
+                    android:text="提交并保存"
                     android:textColor="@android:color/background_light"
                     android:textSize="14sp" />
             </RelativeLayout>

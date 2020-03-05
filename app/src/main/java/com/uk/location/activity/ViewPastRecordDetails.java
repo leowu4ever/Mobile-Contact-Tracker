@@ -25,7 +25,7 @@ public class ViewPastRecordDetails extends Activity {
         tv_gender.setText(record.getGender());
 
         tv_age = findViewById(R.id.tv_pr_age);
-        tv_age.setText(record.getAge() + "歲");
+        tv_age.setText(record.getAge() + "岁");
 
         tv_job = findViewById(R.id.tv_pr_job);
         tv_job.setText(record.getJob());
@@ -43,14 +43,14 @@ public class ViewPastRecordDetails extends Activity {
         String duration = "";
         int durationFromData = record.getDuration();
         if (durationFromData == 0) {
-            duration = "30分鐘或以下";
+            duration = "30分钟或以下";
         } else if (durationFromData > 0 && durationFromData < 19) {
-            duration = (durationFromData + 1) / 2 + "小時";
+            duration = (durationFromData + 1) / 2 + "小时";
             if ((durationFromData + 1) % 2 == 1) {
-                duration += "30分鐘";
+                duration += "30分钟";
             }
         } else if (durationFromData == 19) {
-            duration = "10小時或以上";
+            duration = "10小时或以上";
         }
         tv_duration.setText(duration);
 
@@ -58,7 +58,7 @@ public class ViewPastRecordDetails extends Activity {
         String membercount = "";
         int memberFromData = record.getMembers();
         if (memberFromData == 0) {
-            membercount = "無";
+            membercount = "无";
         } else if (memberFromData >= 1 && memberFromData <= 9) {
             membercount = memberFromData + "名";
         } else if (memberFromData >= 10) {

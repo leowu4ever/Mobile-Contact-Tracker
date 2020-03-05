@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/background_light"
     android:orientation="vertical"
     tools:context="com.uk.location.activity.RecordActivity">
@@ -26,7 +27,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
@@ -44,14 +45,14 @@
             android:paddingLeft="20dp"
             android:paddingTop="20dp"
             android:paddingRight="20dp"
-            android:paddingBottom="30dp">
+            android:paddingBottom="15dp">
 
             <TextView
                 android:id="@+id/textView8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="接触人员记录"
+                android:text="接触人员信息"
                 android:textColor="#55578A"
                 android:textSize="36sp"
                 android:textStyle="bold" />
@@ -60,8 +61,8 @@
                 android:id="@+id/view1"
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:alpha="0.1"
                 android:background="@android:color/darker_gray" />
 
@@ -73,196 +74,219 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="0dp"
-                    android:orientation="horizontal">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp">
 
-                    <TextView
-                        android:id="@+id/tv_pr_gender"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="start"
-                        android:text="姓別"
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="14sp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/tv_pr_age"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:id="@+id/textView7"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="年龄"
+                            android:textColor="#55578A" />
+
+                        <TextView
+                            android:id="@+id/tv_pr_age"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="#55578A"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="end"
-                        android:text="年龄"
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="14sp" />
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="性别"
+                            android:textColor="#55578A" />
+
+                        <TextView
+                            android:id="@+id/tv_pr_gender"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="#55578A"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_pr_label_area"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="接触地区"
+                            android:textColor="#55578A"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tv_pr_area"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text=" "
+                            android:textColor="#55578A"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:id="@+id/textView9"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="职业"
+                            android:textColor="#55578A" />
+
+                        <TextView
+                            android:id="@+id/tv_pr_job"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="#55578A"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_pr_label_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="接触日期"
+                            android:textColor="#55578A"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tv_pr_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text=" "
+                            android:textColor="#55578A"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_pr_label_members"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="家庭人数"
+                            android:textColor="#55578A"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tv_pr_members"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text=""
+                            android:textColor="#55578A"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_pr_label_edu"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="教育水平"
+                            android:textColor="#55578A"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tv_pr_edu"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text=" "
+                            android:textColor="#55578A"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_pr_label_duration"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="接触时长"
+                            android:textColor="#55578A"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tv_pr_duration"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text=" "
+                            android:textColor="#55578A"
+                            android:textSize="14sp" />
+                    </LinearLayout>
                 </LinearLayout>
 
-                <LinearLayout
+
+                <View
+                    android:id="@+id/view"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
-
-
-                    <TextView
-                        android:id="@+id/tv_pr_job"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="8"
-                        android:gravity="start"
-                        android:text="职业"
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="14sp" />
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tv_pr_label_edu"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="20dp"
-                        android:gravity="center"
-                        android:text="教育水平"
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/tv_pr_edu"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:gravity="center"
-                        android:text=" "
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="18sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tv_pr_label_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="20dp"
-                        android:gravity="center"
-                        android:text="接触日期"
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/tv_pr_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:gravity="center"
-                        android:text=" "
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="18sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tv_pr_label_area"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="20dp"
-                        android:gravity="center"
-                        android:text="接触地区"
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/tv_pr_area"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:gravity="center"
-                        android:text=" "
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="18sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tv_pr_label_duration"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="20dp"
-                        android:gravity="center"
-                        android:text="接触时长"
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/tv_pr_duration"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:gravity="center"
-                        android:text=" "
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="18sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tv_pr_label_members"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="20dp"
-                        android:gravity="center"
-                        android:text="家庭人数"
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/tv_pr_members"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:gravity="center"
-                        android:text=" "
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="18sp" />
-
-                </LinearLayout>
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:alpha="0.1"
+                    android:background="@android:color/darker_gray" />
 
                 <Button
-                    android:id="@+id/btn_viewReport2"
+                    android:id="@+id/btn_contact_detail_close"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginBottom="30dp"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/buttonshape"
                     android:text="知道了"
                     android:textColor="@android:color/background_light"
@@ -271,4 +295,5 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
 </RelativeLayout>
