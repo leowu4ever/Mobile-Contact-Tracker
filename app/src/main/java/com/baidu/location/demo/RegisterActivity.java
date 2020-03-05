@@ -44,8 +44,6 @@ public class RegisterActivity extends Activity {
                 startActivity(intent);
             }
         });
-    }
-
 
 
         btn_Tnc = findViewById(R.id.btn_Tnc);
@@ -79,6 +77,7 @@ public class RegisterActivity extends Activity {
 
             }
         });
+    }
 
 
     public static void getLocationPermission(Context context) {
@@ -102,3 +101,4 @@ public class RegisterActivity extends Activity {
 
     }
 }
+
