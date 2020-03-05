@@ -163,26 +163,10 @@
                 android:text="职业"
                 android:textColor="#55578A" />
 
-            <EditText
-                android:id="@+id/et_job"
+            <Spinner
+                android:id="@+id/sp_occupation3"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName" />
-
-            <TextView
-                android:id="@+id/textView13"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="日常活动区域"
-                android:textColor="#55578A" />
-
-            <EditText
-                android:id="@+id/et_area"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName" />
+                android:layout_height="wrap_content" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
