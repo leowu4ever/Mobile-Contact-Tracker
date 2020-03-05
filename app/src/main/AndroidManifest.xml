@@ -4,8 +4,7 @@
     package="com.baidu.baidulocationdemo"
     tools:ignore="GoogleAppIndexingWarning"
     android:installLocation="internalOnly">
-    <!-- 这个权限用于进行网络定位 -->
-    <!-- 这个权限用于进行网络定位 -->
+
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
