@@ -157,6 +157,7 @@
                 android:ems="10"
                 android:hint="年/月/日 (比如 2019/06/28)"
                 android:inputType="date"
+                android:maxLength="8"
                 android:textSize="14sp" />
 
             <TextView
@@ -173,6 +174,7 @@
                 android:ems="10"
                 android:hint="小时:分钟 (比如 18:34)"
                 android:inputType="time"
+                android:maxLength="4"
                 android:textSize="14sp" />
 
             <TextView

@@ -20,7 +20,7 @@ public class RecordActivity extends Activity {
     private EditText et_area, et_date, et_time;
     private RadioGroup rg_gender;
     private Spinner sp_edu, sp_occupation;
-    private String[] sp_item_education = {"小学或以下", "初中", "高中", "大学"};
+    private String[] sp_item_education = {"小学或以下", "初中", "高中", "大学", "硕士", "博士或其他"};
     private String[] sp_item_job = {"服务业", "农民/工人", "医务人员", "退休人员", "其他"};
     private String gender;
     private Context context;

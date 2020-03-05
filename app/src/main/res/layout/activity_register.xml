@@ -168,6 +168,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="教育水平"
+                android:textColor="#55578A" />
+
+            <Spinner
+                android:id="@+id/sp_edu2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
             <View
                 android:id="@+id/view3"
                 android:layout_width="match_parent"
