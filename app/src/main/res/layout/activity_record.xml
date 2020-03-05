@@ -27,9 +27,10 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="700dp"
+        android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/windowshape"
         android:orientation="vertical">
@@ -45,7 +46,7 @@
             android:paddingLeft="20dp"
             android:paddingTop="20dp"
             android:paddingRight="20dp"
-            android:paddingBottom="30dp">
+            android:paddingBottom="20dp">
 
             <TextView
                 android:id="@+id/textView8"
@@ -53,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="接触人员记录"
-                android:textColor="@android:color/darker_gray"
+                android:textColor="#55578A"
                 android:textSize="36sp"
                 android:textStyle="bold" />
 
@@ -72,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="性别"
-                android:textColor="@android:color/darker_gray" />
+                android:textColor="#55578A" />
 
             <RadioGroup
                 android:id="@+id/rg_gender"
@@ -103,7 +104,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="年龄"
-                android:textColor="@android:color/darker_gray" />
+                android:textColor="#55578A" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -113,19 +114,19 @@
                     android:id="@+id/sb_age"
                     android:layout_width="0dp"
                     android:layout_height="30dp"
+                    android:layout_weight="8"
                     android:max="100"
-                    android:progress="0"
-                    android:layout_weight="10"/>
+                    android:progress="0" />
 
                 <TextView
                     android:id="@+id/tv_age"
-                    android:gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="0"
-                    android:textColor="@android:color/darker_gray"
+                    android:layout_margin="1dp"
                     android:layout_weight="1"
-                    android:layout_margin="1dp"/>
+                    android:gravity="center"
+                    android:text="0岁"
+                    android:textColor="@android:color/darker_gray" />
             </LinearLayout>
 
 
@@ -134,22 +135,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="职业"
-                android:textColor="@android:color/darker_gray" />
+                android:textColor="#55578A" />
 
             <EditText
                 android:id="@+id/et_job"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:imeOptions="actionDone"/>
+                android:imeOptions="actionDone"
+                android:inputType="textPersonName" />
 
             <TextView
                 android:id="@+id/textView17"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="教育水平"
-                android:textColor="@android:color/darker_gray" />
+                android:textColor="#55578A" />
 
             <Spinner
                 android:id="@+id/sp_edu"
@@ -161,36 +162,54 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="接触地区"
-                android:textColor="@android:color/darker_gray" />
+                android:textColor="#55578A" />
 
             <EditText
                 android:id="@+id/et_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:imeOptions="actionDone"/>
+                android:imeOptions="actionDone"
+                android:inputType="textPersonName" />
 
             <TextView
                 android:id="@+id/textView14"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="接触日期"
-                android:textColor="@android:color/darker_gray" />
+                android:text="接触时间"
+                android:textColor="#55578A" />
 
-            <DatePicker
-                android:id="@+id/dp_date"
-                style="@android:style/Widget.DatePicker"
+            <EditText
+                android:id="@+id/editText9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:datePickerMode="spinner" />
+                android:ems="10"
+                android:hint="比如 18:34"
+                android:inputType="time"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="接触日期"
+                android:textColor="#55578A" />
+
+            <EditText
+                android:id="@+id/editText5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="比如 28/06/2019"
+                android:inputType="date"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/textView19"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="接触时长"
-                android:textColor="@android:color/darker_gray" />
+                android:textColor="#55578A" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -200,19 +219,19 @@
                     android:id="@+id/sb_duration"
                     android:layout_width="0dp"
                     android:layout_height="30dp"
+                    android:layout_weight="10"
                     android:max="19"
-                    android:progress="0"
-                    android:layout_weight="10"/>
+                    android:progress="0" />
 
                 <TextView
                     android:id="@+id/tv_duration"
-                    android:gravity="center | right"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="30分鐘或以下"
-                    android:textColor="@android:color/darker_gray"
                     android:layout_weight="4"
-                    android:padding = "0dp" />
+                    android:gravity="center | right"
+                    android:padding="0dp"
+                    android:text="30分钟以内"
+                    android:textColor="@android:color/darker_gray" />
             </LinearLayout>
 
             <TextView
@@ -220,7 +239,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="家庭人数"
-                android:textColor="@android:color/darker_gray" />
+                android:textColor="#55578A" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -230,19 +249,19 @@
                     android:id="@+id/sb_members"
                     android:layout_width="0dp"
                     android:layout_height="30dp"
+                    android:layout_weight="10"
                     android:max="10"
-                    android:progress="0"
-                    android:layout_weight="10"/>
+                    android:progress="0" />
 
                 <TextView
                     android:id="@+id/tv_members"
-                    android:gravity="center | right"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="無"
-                    android:textColor="@android:color/darker_gray"
                     android:layout_weight="4"
-                    android:padding="0dp"/>
+                    android:gravity="center | right"
+                    android:padding="0dp"
+                    android:text="1名"
+                    android:textColor="@android:color/darker_gray" />
             </LinearLayout>
 
             <RelativeLayout

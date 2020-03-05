@@ -10,15 +10,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.Toast;
 
 import com.baidu.baidulocationdemo.R;
 
 public class LgActivity extends Activity {
 
-    private Button btnAgree;
-    private CheckBox cbAck;
+    private Button btnLogin, btnRegister;
 
     public static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
 
@@ -27,22 +24,31 @@ public class LgActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lg);
 
-        cbAck = findViewById(R.id.cb_Ack);
+        initUIs();
 
-        btnAgree = findViewById(R.id.btn_agree);
-        btnAgree.setOnClickListener(new View.OnClickListener() {
+        getLocationPermission(this);
+    }
+
+    private void initUIs() {
+        btnLogin = findViewById(R.id.btn_login);
+        btnRegister = findViewById(R.id.btn_register);
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (cbAck.isChecked()) {
-                    Class<?> TargetClass = InfoActivity.class;
-                    Intent intent = new Intent(LgActivity.this, TargetClass);
-                    startActivity(intent);
-                }else{
-                    Toast.makeText(LgActivity.this, "請閱讀並同意用戶協議", Toast.LENGTH_LONG).show();
-                }
+                // password check
+                Intent intent = new Intent(LgActivity.this, LocationActivity.class);
+                startActivity(intent);
             }
         });
-        getLocationPermission(this);
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LgActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 

@@ -35,7 +35,7 @@ public class RecordActivity extends Activity {
     private DatePicker dp_date;
     private RadioGroup rg_gender;
     private Spinner sp_edu;
-    private String[] sp_item_education = {"小學或以下", "初中", "高中", "大學"};
+    private String[] sp_item_education = {"小学或以下", "初中", "高中", "大学"};
     private String gender;
     private Context context;
 
@@ -58,14 +58,14 @@ public class RecordActivity extends Activity {
 
         et_job = findViewById(R.id.et_job);
         et_area = findViewById(R.id.et_area);
-        dp_date = findViewById(R.id.dp_date);
-        dp_date.setMaxDate(System.currentTimeMillis());
+//        dp_date = findViewById(R.id.dp_date);
+//        dp_date.setMaxDate(System.currentTimeMillis());
 
         sb_age = findViewById(R.id.sb_age);
         sb_age.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                tv_age.setText("" + progress);
+                tv_age.setText(progress + " 岁");
             }
 
             @Override
@@ -85,14 +85,14 @@ public class RecordActivity extends Activity {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 String text = "";
                 if (progress == 0) {
-                    text = "30分鐘或以下";
+                    text = "30分钟以内";
                 } else if (progress > 0 && progress < 19) {
-                    text = (progress + 1) / 2 + "小時";
+                    text = (progress + 1) / 2 + "小时";
                     if ((progress + 1) % 2 == 1) {
-                        text += "30分鐘";
+                        text += "30分钟";
                     }
                 } else if (progress == 19) {
-                    text = "10小時或以上";
+                    text = "10小时以上";
                 }
 
                 tv_duration.setText(text);
@@ -114,12 +114,11 @@ public class RecordActivity extends Activity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 String text = "";
-                if (progress == 0) {
-                    text = "無";
-                } else if (progress >= 1 && progress <= 9) {
+                if (progress >= 0 && progress <= 9) {
+                    progress = progress + 1;
                     text = progress + "名";
                 } else if (progress >= 10) {
-                    text = progress + "名或以上";
+                    text = progress + "名以上";
                 }
                 tv_members.setText(text);
             }

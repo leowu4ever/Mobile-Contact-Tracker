@@ -27,9 +27,10 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="700dp"
+        android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/windowshape"
         android:orientation="vertical">
@@ -53,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="接触人员记录"
-                android:textColor="@android:color/darker_gray"
+                android:textColor="#55578A"
                 android:textSize="36sp"
                 android:textStyle="bold" />
 
@@ -68,10 +69,10 @@
                 android:background="@android:color/darker_gray" />
 
             <LinearLayout
+                android:id="@+id/layout_RecordView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
-                android:id="@+id/layout_RecordView"
                 android:orientation="vertical">
 
 

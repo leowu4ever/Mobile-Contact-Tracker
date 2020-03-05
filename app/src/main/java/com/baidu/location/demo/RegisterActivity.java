@@ -6,30 +6,24 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.baidu.baidulocationdemo.R;
 
-public class InfoActivity extends Activity {
+public class RegisterActivity extends Activity {
 
-    private Button btnSubmit;
-    private Spinner sp_healthState;
+    private Button btnSubmit, btn_Tnc;
     private SeekBar sb_age;
     private TextView tv_age;
-    private String[] sp_Item_HealthState = {"差劣", "略差", "一般", "良好", "優良"};
+    private EditText et_loginAccount, et_loginPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_info);
-
-
-        sp_healthState = findViewById(R.id.sp_healthState);
-        ArrayAdapter aa_healthS = new ArrayAdapter(this, android.R.layout.simple_spinner_item, sp_Item_HealthState);
-        aa_healthS.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sp_healthState.setAdapter(aa_healthS);
+        setContentView(R.layout.activity_register);
 
         btnSubmit = findViewById(R.id.btn_submit);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
@@ -37,10 +31,24 @@ public class InfoActivity extends Activity {
             public void onClick(View v) {
 
                 Class<?> TargetClass = LocationActivity.class;
-                Intent intent = new Intent(InfoActivity.this, TargetClass);
+                Intent intent = new Intent(RegisterActivity.this, TargetClass);
                 startActivity(intent);
             }
         });
+
+        btn_Tnc = findViewById(R.id.btn_Tnc);
+        btn_Tnc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+/*                Class<?> TargetClass = TermsnConditions.class;
+                Intent intent = new Intent(RegisterActivity.this, TargetClass);
+                startActivity(intent);*/
+            }
+        });
+
+        et_loginAccount = findViewById(R.id.et_loginAccount);
+        et_loginPassword = findViewById(R.id.et_loginPassword);
 
         sb_age = findViewById(R.id.sb_age);
         sb_age.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -59,5 +67,6 @@ public class InfoActivity extends Activity {
 
             }
         });
+
     }
 }
