@@ -109,7 +109,7 @@ public class LocationActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                Class<?> TargetClass = ViewRecordActivity.class;
+                Class<?> TargetClass = RecordHistoryActivity.class;
                 Intent intent = new Intent(LocationActivity.this, TargetClass);
                 startActivity(intent);
             }

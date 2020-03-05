@@ -13,21 +13,19 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class ViewRecordActivity extends Activity {
+public class RecordHistoryActivity extends Activity {
     private Context context;
 
     @Override
@@ -110,8 +108,8 @@ public class ViewRecordActivity extends Activity {
                                 }
                                 readings = sb.toString();
 
-                                Class<?> TargetClass = ViewPastRecordDetails.class;
-                                Intent intent = new Intent(ViewRecordActivity.this, TargetClass);
+                                Class<?> TargetClass = RecordDetailsActivity.class;
+                                Intent intent = new Intent(RecordHistoryActivity.this, TargetClass);
                                 intent.putExtra("PASTDATA", readings);
 
                                 startActivity(intent);

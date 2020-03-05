@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:screenOrientation="portrait"
-    tools:context="com.uk.location.activity.LgActivity">
+    tools:context="com.uk.location.activity.MainActivity">
 
 
     <ImageView

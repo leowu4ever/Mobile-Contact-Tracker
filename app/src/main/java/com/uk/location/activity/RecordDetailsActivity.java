@@ -7,7 +7,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 
 
-public class ViewPastRecordDetails extends Activity {
+public class RecordDetailsActivity extends Activity {
 
     private Record record;
     private TextView tv_name, tv_gender, tv_age, tv_job, tv_edu, tv_date, tv_area, tv_duration, tv_members;
