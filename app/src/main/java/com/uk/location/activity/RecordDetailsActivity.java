@@ -2,6 +2,8 @@ package com.uk.location.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -11,7 +13,7 @@ public class RecordDetailsActivity extends Activity {
 
     private Record record;
     private TextView tv_name, tv_gender, tv_age, tv_job, tv_edu, tv_date, tv_area, tv_duration, tv_members;
-
+    private Button btn_close;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,14 @@ public class RecordDetailsActivity extends Activity {
             membercount = memberFromData + "名或以上";
         }
         tv_members.setText(membercount);
+
+        btn_close = findViewById(R.id.btn_contact_detail_close);
+        btn_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     public void setData(Record rc) {

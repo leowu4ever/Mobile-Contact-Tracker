@@ -32,7 +32,7 @@ public class RecordHistoryActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         context = this;
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_past_record_list);
+        //setContentView(R.layout.activity_past_record_list);
         File rootDircectory = new File(Environment.getExternalStorageDirectory() + "/VirTrack/");
         String[] files = rootDircectory.list();
         LinearLayout parentLayout = findViewById(R.id.layout_RecordView);
@@ -66,7 +66,7 @@ public class RecordHistoryActivity extends Activity {
                         date = str.substring(7, 15);
                         seq = 0;
                         TextView tvDateSep = new TextView(this);
-                        tvDateSep.setText(str.substring(7, 9) + "-" + str.substring(9, 11) + "-" + str.substring(11, 15));
+                        tvDateSep.setText(str.substring(7, 11) + "-" + str.substring(11, 13) + "-" + str.substring(13, 15));
                         tvDateSep.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
                         tvDateSep.setPadding(0, (int) (8 * context.getResources().getDisplayMetrics().density), 0, (int) (-5 * context.getResources().getDisplayMetrics().density));
                         parentLayout.addView(tvDateSep);

@@ -2,26 +2,35 @@ package com.uk.location.activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class RegisterActivity extends Activity {
 
     public static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
-    private Button btnSubmit, btn_Tnc;
+    private Button btnSubmit, btn_privacy;
     private SeekBar sb_age;
     private TextView tv_age;
     private EditText et_loginAccount, et_loginPassword;
     private Context context;
+    private Spinner sp_occupation, sp_edu;
+    private String[] sp_item_job = {"服务业", "农民/工人", "医务人员", "退休人员", "其他"};
+    private String[] sp_item_education = {"小学或以下", "初中", "高中", "大学", "硕士", "博士或其他"};
+    private Dialog privacyDialog;
 
     public static void getLocationPermission(Context context) {
         // TO DO need permission check on later screens
@@ -54,7 +63,6 @@ public class RegisterActivity extends Activity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 getLocationPermission(context);
                 Class<?> TargetClass = LocationActivity.class;
                 Intent intent = new Intent(RegisterActivity.this, TargetClass);
@@ -63,14 +71,21 @@ public class RegisterActivity extends Activity {
         });
 
 
-        btn_Tnc = findViewById(R.id.btn_Tnc);
-        btn_Tnc.setOnClickListener(new View.OnClickListener() {
+        btn_privacy = findViewById(R.id.btn_privacy);
+        btn_privacy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-/*                Class<?> TargetClass = TermsnConditions.class;
-                Intent intent = new Intent(RegisterActivity.this, TargetClass);
-                startActivity(intent);*/
+                privacyDialog = new Dialog(context);
+                privacyDialog.setContentView(R.layout.dialog_privacy);
+                privacyDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                Button btn_privacy_return = privacyDialog.findViewById(R.id.btn_return);
+                btn_privacy_return.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        privacyDialog.dismiss();
+                    }
+                });
+                privacyDialog.show();
             }
         });
 
@@ -94,5 +109,19 @@ public class RegisterActivity extends Activity {
 
             }
         });
+
+        sp_occupation = findViewById(R.id.sp_occupation3);
+        ArrayAdapter aa_occupation = new ArrayAdapter(this, android.R.layout.simple_spinner_item, sp_item_job);
+        aa_occupation.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sp_occupation.setAdapter(aa_occupation);
+
+        sp_edu = findViewById(R.id.sp_edu2);
+        ArrayAdapter aa_edu = new ArrayAdapter(this, android.R.layout.simple_spinner_item, sp_item_education);
+        aa_edu.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sp_edu.setAdapter(aa_edu);
+
+
     }
+
+
 }
