@@ -28,14 +28,16 @@ import com.baidu.mapapi.map.UiSettings;
 import com.baidu.mapapi.model.LatLng;
 
 import java.text.DecimalFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 
 public class LocationActivity extends Activity {
 
-
     public static Runnable countdownRunnbale;
     public static Handler handler;
-    public static final int LOCATION_UPLOAD_INTERVAL = 1 * 1000 * 60; //1min
-    private Button btnReport, btnViewReport, btnUpload;
+    public static final int LOCATION_UPLOAD_INTERVAL = 1 * 1000 * 60 * 5  ; //1min
+    private Button btnReport, btnViewReport, btnUpload, btnLocate;
     private TextView tvCountDown;
     private MapView mapView = null;
     private BaiduMap baiduMap = null;
@@ -51,17 +53,27 @@ public class LocationActivity extends Activity {
     private TextView tvLocationHelper = null;
     private Dialog recordListDialog;
 
+
+    private TextView tvTest = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(DEBUG_TAG, "create");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
 
+        tvTest = findViewById(R.id.tv_test);
+        tvTest.append("start" + "\n");
+
+        initRunnables();
+
         initMap();
         initLocationClient();
         initUploadClient();
         initNotification();
         initUIs();
+
+        locationClient.start();
 
         handler = new Handler();
 
@@ -86,9 +98,10 @@ public class LocationActivity extends Activity {
                 tvLocationHelper.setText("距下一次采集地理位置所剩时间");
                 if (isEnableLocInForeground) {
                     Log.d(DEBUG_TAG, "endback");
+                    btnUpload.setText("开启后台定位采集");
+
                     uploadClient.disableLocInForeground(true);
                     isEnableLocInForeground = false;
-                    btnUpload.setText("开启后台定位采集");
                     uploadClient.unRegisterLocationListener(uploadListener);
                     uploadClient.stop();
                     btnUpload.setBackgroundResource(R.drawable.buttonshape);
@@ -96,15 +109,16 @@ public class LocationActivity extends Activity {
 
                 } else {
                     //开启后台定位
+                    handler.postDelayed(countdownRunnbale, 0);
                     Log.d(DEBUG_TAG, "startback");
+                    btnUpload.setText("关闭后台定位采集");
+
                     uploadClient.enableLocInForeground(1001, notification);// 调起前台定位
                     isEnableLocInForeground = true;
-                    btnUpload.setText("关闭后台定位采集");
                     uploadClient.registerLocationListener(uploadListener);
                     uploadClient.start();
                     btnUpload.setBackgroundResource(R.drawable.buttonshape_red);
-                    initRunnables();
-                    handler.postDelayed(countdownRunnbale, 0);
+
                     LocationActivity.this.moveTaskToBack(true);
                 }
             }
@@ -121,6 +135,14 @@ public class LocationActivity extends Activity {
 
         tvCountDown = findViewById(R.id.tv_timer);
 
+        btnLocate = findViewById(R.id.btn_locate);
+        btnLocate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                locationClient.stop();
+                locationClient.start();
+            }
+        });
     }
 
     private void initNotification() {
@@ -162,10 +184,9 @@ public class LocationActivity extends Activity {
                 if (location != null) {
                     double latitude = location.getLatitude();
                     double longitude = location.getLongitude();
-
                     Log.d(DEBUG_TAG, "upload client" + latitude + "," + longitude);
-                    setPosition2Center(baiduMap, location, true);
-
+                    Date currentTime = Calendar.getInstance().getTime();
+                    tvTest.append(currentTime.toString() + " " + latitude + " " + latitude + "\n");
                 } else {
                     Log.d(DEBUG_TAG, "Cant find your location");
                 }
@@ -179,7 +200,7 @@ public class LocationActivity extends Activity {
 
         LocationClientOption locationOption = new LocationClientOption();
         locationOption.setOpenGps(true);
-        locationOption.setScanSpan(5000);
+        //locationOption.setScanSpan(0);
         locationOption.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
         locationOption.setCoorType("bd09ll");
 
@@ -192,6 +213,8 @@ public class LocationActivity extends Activity {
                     double latitude = location.getLatitude();
                     double longitude = location.getLongitude();
                     Log.d(DEBUG_TAG, "location client" + latitude + "," + longitude);
+//                    Date currentTime = Calendar.getInstance().getTime();
+//                    tvTest.append("location" + currentTime.toString() + " " + latitude + " " + latitude + "\n");
                     setPosition2Center(baiduMap, location, true);
 
                 } else {
@@ -208,7 +231,7 @@ public class LocationActivity extends Activity {
         mapView.showScaleControl(false);
         baiduMap = mapView.getMap();
         baiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
-        baiduMap.setMyLocationEnabled(true);
+        //baiduMap.setMyLocationEnabled(true);
         UiSettings uiSetting = baiduMap.getUiSettings();
         uiSetting.setZoomGesturesEnabled(false);
         uiSetting.setOverlookingGesturesEnabled(false);
@@ -235,8 +258,6 @@ public class LocationActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-        locationClient.registerLocationListener(locationListener);
-        locationClient.start();
         Log.d(DEBUG_TAG, "start");
     }
 
@@ -244,6 +265,7 @@ public class LocationActivity extends Activity {
     protected void onResume() {
         super.onResume();
         mapView.onResume();
+        locationClient.registerLocationListener(locationListener);
         Log.d(DEBUG_TAG, "resume");
     }
 
@@ -271,9 +293,9 @@ public class LocationActivity extends Activity {
         map.setMyLocationData(locData);
 
         if (isShowLoc) {
-            LatLng ll = new LatLng(bdLocation.getLatitude()-0.01, bdLocation.getLongitude());
+            LatLng ll = new LatLng(bdLocation.getLatitude()-0.005, bdLocation.getLongitude());
             MapStatus.Builder builder = new MapStatus.Builder();
-            builder.target(ll).zoom(15);
+            builder.target(ll).zoom(16);
             map.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
         }
     }
@@ -282,4 +304,3 @@ public class LocationActivity extends Activity {
     public void onBackPressed() {
     }
 }
-
