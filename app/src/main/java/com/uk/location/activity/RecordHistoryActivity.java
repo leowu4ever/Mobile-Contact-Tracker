@@ -1,14 +1,21 @@
 package com.uk.location.activity;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -25,17 +32,19 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class RecordHistoryActivity extends Activity {
-    private Context context;
+public class RecordHistoryActivity{
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        context = this;
-        super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_past_record_list);
+    public RecordHistoryActivity(Context context) { init(context); }
+
+    public void init(final Context context) {
+        Dialog recordListDialog = new Dialog(context);
+        recordListDialog.setContentView(R.layout.activity_past_record_list);
+        recordListDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
         File rootDircectory = new File(Environment.getExternalStorageDirectory() + "/VirTrack/");
         String[] files = rootDircectory.list();
-        LinearLayout parentLayout = findViewById(R.id.layout_RecordView);
+
+        LinearLayout parentLayout = recordListDialog.findViewById(R.id.layout_RecordView);
         parentLayout.removeAllViews();
         
         if (files != null) {
@@ -47,9 +56,9 @@ public class RecordHistoryActivity extends Activity {
 
             for (String str : colList) {
                 if (str.startsWith("record_")) {
-                    LinearLayout recordContainer = new LinearLayout(this);
-                    Button btnTag = new Button(this);
-                    TextView tvRecord = new TextView(this);
+                    LinearLayout recordContainer = new LinearLayout(context);
+                    Button btnTag = new Button(context);
+                    TextView tvRecord = new TextView(context);
 
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.MATCH_PARENT,
@@ -65,15 +74,15 @@ public class RecordHistoryActivity extends Activity {
                     if (!(str.substring(7, 15).equals(date))) {
                         date = str.substring(7, 15);
                         seq = 0;
-                        TextView tvDateSep = new TextView(this);
+                        TextView tvDateSep = new TextView(context);
                         tvDateSep.setText(str.substring(7, 11) + "-" + str.substring(11, 13) + "-" + str.substring(13, 15));
                         tvDateSep.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
                         tvDateSep.setPadding(0, (int) (8 * context.getResources().getDisplayMetrics().density), 0, (int) (-5 * context.getResources().getDisplayMetrics().density));
                         parentLayout.addView(tvDateSep);
 
-                        View vSep = new View(this);
+                        View vSep = new View(context);
                         vSep.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-                        vSep.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
+                        vSep.setBackgroundColor(context.getResources().getColor(android.R.color.darker_gray));
                         parentLayout.addView(vSep);
                     }
                     seq += 1;
@@ -86,7 +95,7 @@ public class RecordHistoryActivity extends Activity {
                     btnTag.setText("𝑖");
                     btnTag.setTag(str);
                     btnTag.setBackgroundResource(R.drawable.buttonround);
-                    btnTag.setTextColor(getResources().getColor(android.R.color.background_light));
+                    btnTag.setTextColor(context.getResources().getColor(android.R.color.background_light));
                     btnTag.setLayoutParams(new LinearLayout.LayoutParams((int) (30 * context.getResources().getDisplayMetrics().density), (int) (30 * context.getResources().getDisplayMetrics().density)));
                     btnTag.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
                     btnTag.setGravity(Gravity.CENTER);
@@ -107,12 +116,10 @@ public class RecordHistoryActivity extends Activity {
                                     sb.append(readinText);
                                 }
                                 readings = sb.toString();
+                                RecordDetailsActivity RecordDetailsActivity = new RecordDetailsActivity(context, readings);
 
-                                Class<?> TargetClass = RecordDetailsActivity.class;
-                                Intent intent = new Intent(RecordHistoryActivity.this, TargetClass);
-                                intent.putExtra("PASTDATA", readings);
 
-                                startActivity(intent);
+
 
                             } catch (FileNotFoundException e) {
                                 Log.e("login activity", "File not found: " + e.toString());
@@ -135,12 +142,17 @@ public class RecordHistoryActivity extends Activity {
                 }
             }
         }else{
-            TextView tvNullMessage = new TextView(this);
+            TextView tvNullMessage = new TextView(context);
             tvNullMessage.setText("没有已上报接触人员");
             tvNullMessage.setLayoutParams(new TableLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
             tvNullMessage.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
             tvNullMessage.setGravity(Gravity.CENTER);
             parentLayout.addView(tvNullMessage);
         }
+        recordListDialog.show();
+
+        Window window = recordListDialog.getWindow();
+        window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
     }
 }
