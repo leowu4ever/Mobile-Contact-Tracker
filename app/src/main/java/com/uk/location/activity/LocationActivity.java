@@ -36,7 +36,7 @@ public class LocationActivity extends Activity {
 
     public static Runnable countdownRunnbale;
     public static Handler handler;
-    public static final int LOCATION_UPLOAD_INTERVAL = 1 * 1000 * 60 * 5  ; //1min
+    public static final int LOCATION_UPLOAD_INTERVAL = 1 * 1000 * 60 * 5; //5min
     private Button btnReport, btnViewReport, btnUpload, btnLocate;
     private TextView tvCountDown;
     private MapView mapView = null;
@@ -74,7 +74,6 @@ public class LocationActivity extends Activity {
         initUIs();
 
         locationClient.start();
-
         handler = new Handler();
 
     }
@@ -124,7 +123,6 @@ public class LocationActivity extends Activity {
             }
         });
 
-
         btnViewReport = findViewById(R.id.btn_viewReport);
         btnViewReport.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,7 +170,7 @@ public class LocationActivity extends Activity {
 
         LocationClientOption uploadOption = new LocationClientOption();
         uploadOption.setOpenGps(true);
-        uploadOption.setScanSpan(LOCATION_UPLOAD_INTERVAL);
+//        uploadOption.setScanSpan(LOCATION_UPLOAD_INTERVAL);
         uploadOption.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
         uploadOption.setCoorType("bd09ll");
 
@@ -187,6 +185,7 @@ public class LocationActivity extends Activity {
                     Log.d(DEBUG_TAG, "upload client" + latitude + "," + longitude);
                     Date currentTime = Calendar.getInstance().getTime();
                     tvTest.append(currentTime.toString() + " " + latitude + " " + latitude + "\n");
+                    uploadClient.stop();
                 } else {
                     Log.d(DEBUG_TAG, "Cant find your location");
                 }
@@ -213,9 +212,8 @@ public class LocationActivity extends Activity {
                     double latitude = location.getLatitude();
                     double longitude = location.getLongitude();
                     Log.d(DEBUG_TAG, "location client" + latitude + "," + longitude);
-//                    Date currentTime = Calendar.getInstance().getTime();
-//                    tvTest.append("location" + currentTime.toString() + " " + latitude + " " + latitude + "\n");
                     setPosition2Center(baiduMap, location, true);
+                    locationClient.stop();
 
                 } else {
                     Log.d(DEBUG_TAG, "Cant find your location");
@@ -250,6 +248,7 @@ public class LocationActivity extends Activity {
                 } else {
                     countDown = LOCATION_UPLOAD_INTERVAL;
                     handler.postDelayed(this, 0);
+                    uploadClient.start();
                 }
             }
         };
