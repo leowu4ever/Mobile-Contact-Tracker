@@ -155,7 +155,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="年/月/日 (比如 2019/06/28)"
+                android:hint="年月日 (比如 20190628)"
                 android:inputType="date"
                 android:maxLength="8"
                 android:textSize="14sp" />

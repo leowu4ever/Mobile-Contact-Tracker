@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:orientation="vertical"
+    tools:context="com.uk.location.activity.RecordActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/windowshape"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_subject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center_horizontal|center_vertical"
+            android:layout_margin="15dp"
+            android:ems="10"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:orientation="vertical"
+            android:text="服务协议"
+            android:textSize="30sp"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:layout_margin="0dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="15dp"
+            >
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:text="这个手机应用程序将定期访问和收集设备的信息，以验证您的位置。使用本应用程序，即表示您声明您已同意使用该应用程序，并允许它按照'信息'部分中所述的目的访问和收集此类信息。\n\n您使用本应用程序并提供由它收集的任何数据是完全自愿的，由此导致的风险由您自己承担。
+您理解并同意自愿参与信息部分所定义的研究。 \n\n
+该应用程序包含的归我们所有或授权给我们的材料，包括设计，布局，外形和图形都不许复制，否则将可能会导致索赔。 \n \n
+我们将根据国家的隐私政策及相关法律来收集和/或处理您的数据。\n\n我们将采取一切适当措施，确保我们控制的所有个人信息均安全且符合相关数据保护法律。\n\n我们使用严格的程序和安全功能来防止任何未经授权的访问、滥用或丢失您的个人信息。\n\n您对应用程序的使用以及由此种使用引起的任何争议均受中国法律的约束。
+您超过 12 岁并是中国公民（如果您未满 16 岁，您已征得家长同意使用此应用程序）" />
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center_horizontal|center_vertical"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginBottom="25dp"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_return"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/buttonshape"
+                android:text="知道了"
+                android:textColor="@android:color/background_light"
+                android:textSize="14sp"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

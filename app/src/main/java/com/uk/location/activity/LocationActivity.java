@@ -1,9 +1,12 @@
 package com.uk.location.activity;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -46,6 +49,7 @@ public class LocationActivity extends Activity {
     private String DEBUG_TAG = "loa1";
     private int countDown = 0;
     private TextView tvLocationHelper = null;
+    private Dialog recordListDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,10 +115,7 @@ public class LocationActivity extends Activity {
         btnViewReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Class<?> TargetClass = RecordHistoryActivity.class;
-                Intent intent = new Intent(LocationActivity.this, TargetClass);
-                startActivity(intent);
+                new RecordHistoryActivity(LocationActivity.this);
             }
         });
 
