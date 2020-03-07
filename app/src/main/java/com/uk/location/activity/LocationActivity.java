@@ -32,9 +32,9 @@ import java.util.Date;
 
 public class LocationActivity extends Activity {
 
+    public static final int LOCATION_UPLOAD_INTERVAL = 1 * 1000 * 60 * 5; //5min
     public static Runnable countdownRunnbale;
     public static Handler handler;
-    public static final int LOCATION_UPLOAD_INTERVAL = 1 * 1000 * 60 * 5; //5min
     private Button btnReport, btnViewReport, btnUpload, btnLocate;
     private TextView tvCountDown;
     private MapView mapView = null;
@@ -289,7 +289,7 @@ public class LocationActivity extends Activity {
         map.setMyLocationData(locData);
 
         if (isShowLoc) {
-            LatLng ll = new LatLng(bdLocation.getLatitude()-0.005, bdLocation.getLongitude());
+            LatLng ll = new LatLng(bdLocation.getLatitude() - 0.005, bdLocation.getLongitude());
             MapStatus.Builder builder = new MapStatus.Builder();
             builder.target(ll).zoom(16);
             map.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));

@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
@@ -54,7 +53,7 @@ public class RecordEntryDialog {
                 String dateForFile = date.replace("-", "");
                 int duration = sb_duration.getProgress();
                 int members = sb_members.getProgress();
-                if (gender != null && !(edu.equals("")) && !(area.equals("")) ) { //TODO: INPUT Validation, Replace "/" in file name
+                if (gender != null && !(edu.equals("")) && !(area.equals(""))) { //TODO: INPUT Validation, Replace "/" in file name
                     Record record = new Record();
                     record.createRecord(gender, age, job, edu, area, date, duration, members);
                     record.objectToFile(record, dateForFile);

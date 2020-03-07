@@ -1,7 +1,6 @@
 package com.uk.location.activity;
 
 import android.os.Environment;
-import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -59,7 +58,7 @@ public class Record {
         return this.members;
     }
 
-    public void objectToFile(Record record, String dateForFile){
+    public void objectToFile(Record record, String dateForFile) {
 
         DateFormat formatter = new SimpleDateFormat("ddMMyyyyHHmmss");
         String sysDate = formatter.format(Calendar.getInstance().getTime());

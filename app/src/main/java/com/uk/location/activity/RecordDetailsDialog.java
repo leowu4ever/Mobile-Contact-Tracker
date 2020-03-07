@@ -16,12 +16,12 @@ import com.google.gson.Gson;
 
 public class RecordDetailsDialog {
 
-    public RecordDetailsDialog(Context context, String data) {init(context, data);}
-
     private Record record;
     private TextView tv_name, tv_gender, tv_age, tv_job, tv_edu, tv_date, tv_area, tv_duration, tv_members;
     private Button btn_close;
-
+    public RecordDetailsDialog(Context context, String data) {
+        init(context, data);
+    }
 
     public void init(final Context context, final String rawData) {
 

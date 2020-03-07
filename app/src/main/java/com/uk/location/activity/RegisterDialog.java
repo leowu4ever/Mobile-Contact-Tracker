@@ -34,7 +34,30 @@ public class RegisterDialog {
     private String[] sp_item_education = {"小学或以下", "初中", "高中", "大学", "硕士", "博士或其他"};
     private Dialog privacyDialog;
 
-    public RegisterDialog(Context context) { init(context); }
+    public RegisterDialog(Context context) {
+        init(context);
+    }
+
+    public static void getLocationPermission(Context context) {
+        // TO DO need permission check on later screens
+        if (ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.ACCESS_NETWORK_STATE) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.ACCESS_WIFI_STATE) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+
+        } else {
+            String[] permissions = {android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION,
+                    android.Manifest.permission.ACCESS_NETWORK_STATE,
+                    android.Manifest.permission.ACCESS_WIFI_STATE,
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE};
+            ActivityCompat.requestPermissions((Activity) context, permissions, PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        }
+
+    }
 
     public void init(final Context context) {
         final Dialog registerDialog = new Dialog(context);
@@ -55,7 +78,7 @@ public class RegisterDialog {
             @Override
             public void onClick(View v) {
                 getLocationPermission(context);
-                Intent intent = new Intent((MainActivity)context, LocationActivity.class);
+                Intent intent = new Intent(context, LocationActivity.class);
                 context.startActivity(intent);
             }
         });
@@ -79,7 +102,7 @@ public class RegisterDialog {
                 Window window = privacyDialog.getWindow();
                 window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
                 privacyDialog.show();
-             }
+            }
         });
 
         btn_abort = registerDialog.findViewById(R.id.btn_Tnc3);
@@ -121,28 +144,6 @@ public class RegisterDialog {
         aa_edu.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sp_edu.setAdapter(aa_edu);
 
-
-
-
-    }
-    public static void getLocationPermission(Context context) {
-        // TO DO need permission check on later screens
-        if (ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.ACCESS_NETWORK_STATE) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.ACCESS_WIFI_STATE) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-
-        } else {
-            String[] permissions = {android.Manifest.permission.ACCESS_COARSE_LOCATION,
-                    android.Manifest.permission.ACCESS_FINE_LOCATION,
-                    android.Manifest.permission.ACCESS_NETWORK_STATE,
-                    android.Manifest.permission.ACCESS_WIFI_STATE,
-                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    android.Manifest.permission.READ_EXTERNAL_STORAGE};
-            ActivityCompat.requestPermissions((Activity) context, permissions, PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-        }
 
     }
 

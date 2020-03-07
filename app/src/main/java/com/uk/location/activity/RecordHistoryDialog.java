@@ -28,7 +28,9 @@ import java.util.List;
 
 public class RecordHistoryDialog {
 
-    public RecordHistoryDialog(Context context) { init(context); }
+    public RecordHistoryDialog(Context context) {
+        init(context);
+    }
 
     public void init(final Context context) {
         Dialog recordListDialog = new Dialog(context);
@@ -49,11 +51,11 @@ public class RecordHistoryDialog {
         recordListDialog.show();
 
         if (files != null) {
-        List<String> colList = new ArrayList(Arrays.asList(files));
-        Collections.sort(colList);
+            List<String> colList = new ArrayList(Arrays.asList(files));
+            Collections.sort(colList);
 
-        String date = "";
-        int seq = 0;
+            String date = "";
+            int seq = 0;
 
             for (String str : colList) {
                 if (str.startsWith("record_")) {
@@ -139,7 +141,7 @@ public class RecordHistoryDialog {
 
                 }
             }
-        }else{
+        } else {
             TextView tvNullMessage = new TextView(context);
             tvNullMessage.setText("没有已上报接触人员");
             tvNullMessage.setLayoutParams(new TableLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
