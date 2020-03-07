@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class RegisterDialog {
 
@@ -57,7 +58,12 @@ public class RegisterDialog {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // todo
+                // if all fields are provided then dismiss dialog and toast
+                // else toast and stay
                 registerDialog.dismiss();
+                Toast.makeText(context,"已注册成功", Toast.LENGTH_SHORT).show();
 
                 //to do
                 //check all information required and toast

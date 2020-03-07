@@ -101,6 +101,8 @@ public class RecordHistoryDialog {
 
                     btnTag.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
                     btnTag.setText("查看");
+                    btnTag.setTypeface(btnTag.getTypeface(), Typeface.BOLD);
+
                     btnTag.setTag(str);
                     btnTag.setBackgroundResource(R.drawable.buttonround);
                     btnTag.setTextColor(context.getResources().getColor(android.R.color.background_light));

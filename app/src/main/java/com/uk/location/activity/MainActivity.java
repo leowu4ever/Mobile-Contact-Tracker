@@ -12,6 +12,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -66,6 +67,8 @@ public class MainActivity extends Activity {
 
                 Intent intent = new Intent(MainActivity.this, LocationActivity.class);
                 startActivity(intent);
+                Toast.makeText(getApplicationContext(),"登录成功", Toast.LENGTH_SHORT).show();
+
             }
         });
 
