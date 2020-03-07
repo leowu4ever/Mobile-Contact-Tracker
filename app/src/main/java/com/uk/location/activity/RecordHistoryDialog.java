@@ -1,19 +1,13 @@
 package com.uk.location.activity;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
 import android.os.Environment;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -32,13 +26,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class RecordHistoryActivity{
+public class RecordHistoryDialog {
 
-    public RecordHistoryActivity(Context context) { init(context); }
+    public RecordHistoryDialog(Context context) { init(context); }
 
     public void init(final Context context) {
         Dialog recordListDialog = new Dialog(context);
-        recordListDialog.setContentView(R.layout.activity_past_record_list);
+        recordListDialog.setContentView(R.layout.dialog_past_record_list);
         recordListDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         File rootDircectory = new File(Environment.getExternalStorageDirectory() + "/VirTrack/");
@@ -46,7 +40,11 @@ public class RecordHistoryActivity{
 
         LinearLayout parentLayout = recordListDialog.findViewById(R.id.layout_RecordView);
         parentLayout.removeAllViews();
-        
+
+        recordListDialog.show();
+        recordListDialog.setCanceledOnTouchOutside(false);
+        Window window = recordListDialog.getWindow();
+        window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         if (files != null) {
         List<String> colList = new ArrayList(Arrays.asList(files));
         Collections.sort(colList);
@@ -64,7 +62,6 @@ public class RecordHistoryActivity{
                             LinearLayout.LayoutParams.MATCH_PARENT,
                             LinearLayout.LayoutParams.MATCH_PARENT
                     );
-                    params.setMargins((int) (10 * context.getResources().getDisplayMetrics().density), (int) (8 * context.getResources().getDisplayMetrics().density), 0, 0);
 
                     recordContainer.setLayoutParams(params);
                     recordContainer.setWeightSum(1);
@@ -77,7 +74,6 @@ public class RecordHistoryActivity{
                         TextView tvDateSep = new TextView(context);
                         tvDateSep.setText(str.substring(7, 11) + "-" + str.substring(11, 13) + "-" + str.substring(13, 15));
                         tvDateSep.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-                        tvDateSep.setPadding(0, (int) (8 * context.getResources().getDisplayMetrics().density), 0, (int) (-5 * context.getResources().getDisplayMetrics().density));
                         parentLayout.addView(tvDateSep);
 
                         View vSep = new View(context);
@@ -116,9 +112,7 @@ public class RecordHistoryActivity{
                                     sb.append(readinText);
                                 }
                                 readings = sb.toString();
-                                RecordDetailsActivity RecordDetailsActivity = new RecordDetailsActivity(context, readings);
-
-
+                                new RecordDetailsDialog(context, readings);
 
 
                             } catch (FileNotFoundException e) {
@@ -139,6 +133,7 @@ public class RecordHistoryActivity{
                     recordContainer.addView(tvRecord);
                     recordContainer.addView(btnTag);
                     parentLayout.addView(recordContainer);
+
                 }
             }
         }else{
@@ -149,10 +144,7 @@ public class RecordHistoryActivity{
             tvNullMessage.setGravity(Gravity.CENTER);
             parentLayout.addView(tvNullMessage);
         }
-        recordListDialog.show();
 
-        Window window = recordListDialog.getWindow();
-        window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
     }
 }

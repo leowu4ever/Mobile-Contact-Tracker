@@ -78,7 +78,6 @@ public class Record {
 
         } catch (IOException e) {
             e.printStackTrace();
-            Log.wtf("DEBUG","___________________________________________________________________");
         }
     }
 }

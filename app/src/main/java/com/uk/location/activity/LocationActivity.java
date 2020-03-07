@@ -5,8 +5,6 @@ import android.app.Dialog;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -84,9 +82,7 @@ public class LocationActivity extends Activity {
         btnReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Class<?> TargetClass = RecordActivity.class;
-                Intent intent = new Intent(LocationActivity.this, TargetClass);
-                startActivity(intent);
+                new RecordEntryDialog(LocationActivity.this);
             }
         });
 
@@ -127,7 +123,7 @@ public class LocationActivity extends Activity {
         btnViewReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new RecordHistoryActivity(LocationActivity.this);
+                new RecordHistoryDialog(LocationActivity.this);
             }
         });
 

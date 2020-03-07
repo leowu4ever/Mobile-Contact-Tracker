@@ -39,11 +39,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.uk.location.activity.RecordActivity" />
-        <activity android:name="com.uk.location.activity.RegisterActivity" />
+        <activity android:name="com.uk.location.activity.RecordEntryDialog" />
+        <activity android:name="com.uk.location.activity.RegisterDialog" />
         <activity android:name="com.uk.location.activity.LocationActivity" />
-        <activity android:name="com.uk.location.activity.RecordHistoryActivity" />
-        <activity android:name="com.uk.location.activity.RecordDetailsActivity" />
+        <activity android:name="com.uk.location.activity.RecordHistoryDialog" />
+        <activity android:name="com.uk.location.activity.RecordDetailsDialog" />
 
 
         <receiver

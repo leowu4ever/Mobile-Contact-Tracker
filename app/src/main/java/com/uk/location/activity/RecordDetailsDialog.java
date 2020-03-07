@@ -1,21 +1,21 @@
 package com.uk.location.activity;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 
 
-public class RecordDetailsActivity {
+public class RecordDetailsDialog {
 
-    public RecordDetailsActivity(Context context, String data) {init(context, data);}
+    public RecordDetailsDialog(Context context, String data) {init(context, data);}
 
     private Record record;
     private TextView tv_name, tv_gender, tv_age, tv_job, tv_edu, tv_date, tv_area, tv_duration, tv_members;
@@ -27,10 +27,13 @@ public class RecordDetailsActivity {
         final Dialog recordDetailsDialog = new Dialog(context);
 
         recordDetailsDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        recordDetailsDialog.setContentView(R.layout.activity_past_record_view);
+        recordDetailsDialog.setContentView(R.layout.dialog_past_record_view);
         recordDetailsDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
         recordDetailsDialog.show();
+        recordDetailsDialog.setCanceledOnTouchOutside(false);
+        Window window = recordDetailsDialog.getWindow();
+        window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+
         Gson gson = new Gson();
         Record record = gson.fromJson(rawData, Record.class);
 

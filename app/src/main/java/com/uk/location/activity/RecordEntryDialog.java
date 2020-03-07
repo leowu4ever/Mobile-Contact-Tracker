@@ -1,19 +1,22 @@
 package com.uk.location.activity;
 
-import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
-import android.os.Bundle;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.View;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class RecordActivity extends Activity {
+public class RecordEntryDialog {
     private Button btn_submit;
     private SeekBar sb_age, sb_duration, sb_members;
     private TextView tv_age, tv_duration, tv_members;
@@ -23,18 +26,20 @@ public class RecordActivity extends Activity {
     private String[] sp_item_education = {"小学或以下", "初中", "高中", "大学", "硕士", "博士或其他"};
     private String[] sp_item_job = {"服务业", "农民/工人", "医务人员", "退休人员", "其他"};
     private String gender;
-    private Context context;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        context = this;
-        super.onCreate(savedInstanceState);
+    public RecordEntryDialog(Context context) { init(context); }
 
-        setContentView(R.layout.activity_record);
-
+    public void init(final Context context) {
         gender = "男";
+        final Dialog recordDialog = new Dialog(context);
+        recordDialog.setContentView(R.layout.dialog_record);
+        recordDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        recordDialog.show();
+        recordDialog.setCanceledOnTouchOutside(false);
+        Window window = recordDialog.getWindow();
+        window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
-        btn_submit = findViewById(R.id.btn_RecordSubmit);
+        btn_submit = recordDialog.findViewById(R.id.btn_RecordSubmit);
         btn_submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 int age = sb_age.getProgress();
@@ -49,18 +54,18 @@ public class RecordActivity extends Activity {
                     Record record = new Record();
                     record.createRecord(gender, age, job, edu, area, date, duration, members);
                     record.objectToFile(record, dateForFile);
-                    Toast.makeText(getApplicationContext(), "已储存记录", Toast.LENGTH_LONG).show();
-                    finish();
+                    Toast.makeText(context, "已储存记录", Toast.LENGTH_LONG).show();
+                    recordDialog.dismiss();
                 } else {
-                    Toast.makeText(getApplicationContext(), "請填寫所有欄位", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "請填寫所有欄位", Toast.LENGTH_LONG).show();
                 }
             }
         });
 
-        et_area = findViewById(R.id.et_area);
-        et_date = findViewById(R.id.et_date);
+        et_area = recordDialog.findViewById(R.id.et_area);
+        et_date = recordDialog.findViewById(R.id.et_date);
 
-        sb_age = findViewById(R.id.sb_age);
+        sb_age = recordDialog.findViewById(R.id.sb_age);
         sb_age.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -78,7 +83,7 @@ public class RecordActivity extends Activity {
             }
         });
 
-        sb_duration = findViewById(R.id.sb_duration);
+        sb_duration = recordDialog.findViewById(R.id.sb_duration);
         sb_duration.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -108,7 +113,7 @@ public class RecordActivity extends Activity {
             }
         });
 
-        sb_members = findViewById(R.id.sb_members);
+        sb_members = recordDialog.findViewById(R.id.sb_members);
         sb_members.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -133,17 +138,17 @@ public class RecordActivity extends Activity {
             }
         });
 
-        sp_edu = findViewById(R.id.sp_edu);
-        ArrayAdapter aa_edu = new ArrayAdapter(this, android.R.layout.simple_spinner_item, sp_item_education);
+        sp_edu = recordDialog.findViewById(R.id.sp_edu);
+        ArrayAdapter aa_edu = new ArrayAdapter(context, android.R.layout.simple_spinner_item, sp_item_education);
         aa_edu.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sp_edu.setAdapter(aa_edu);
 
-        sp_occupation = findViewById(R.id.sp_occupation);
-        ArrayAdapter aa_job = new ArrayAdapter(this, android.R.layout.simple_spinner_item, sp_item_job);
+        sp_occupation = recordDialog.findViewById(R.id.sp_occupation);
+        ArrayAdapter aa_job = new ArrayAdapter(context, android.R.layout.simple_spinner_item, sp_item_job);
         aa_job.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sp_occupation.setAdapter(aa_job);
 
-        rg_gender = findViewById(R.id.rg_gender);
+        rg_gender = recordDialog.findViewById(R.id.rg_gender);
         rg_gender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -158,10 +163,9 @@ public class RecordActivity extends Activity {
             }
         });
 
-        tv_age = findViewById(R.id.tv_age);
-        tv_duration = findViewById(R.id.tv_duration);
-        tv_members = findViewById(R.id.tv_members);
-
+        tv_age = recordDialog.findViewById(R.id.tv_age);
+        tv_duration = recordDialog.findViewById(R.id.tv_duration);
+        tv_members = recordDialog.findViewById(R.id.tv_members);
 
     }
 }
