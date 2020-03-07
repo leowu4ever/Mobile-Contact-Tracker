@@ -68,20 +68,6 @@
             android:inputType="textPersonName" />
 
         <TextView
-            android:id="@+id/textView16"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="再次输入密码"
-            android:textColor="#55578A" />
-
-        <EditText
-            android:id="@+id/et_loginPassword2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName" />
-
-        <TextView
             android:id="@+id/tv_gender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
