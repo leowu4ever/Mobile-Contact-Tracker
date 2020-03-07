@@ -115,7 +115,8 @@
                 android:background="@drawable/buttonshape"
                 android:text="登录"
                 android:textColor="@android:color/background_light"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/btn_register"
@@ -127,7 +128,8 @@
                 android:background="@drawable/buttonshape"
                 android:text="注册"
                 android:textColor="@android:color/background_light"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
     </LinearLayout>

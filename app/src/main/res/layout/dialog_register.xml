@@ -68,6 +68,20 @@
             android:inputType="textPersonName" />
 
         <TextView
+            android:id="@+id/textView16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="再次输入密码"
+            android:textColor="#55578A" />
+
+        <EditText
+            android:id="@+id/et_loginPassword2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <TextView
             android:id="@+id/tv_gender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -181,7 +195,8 @@
                     android:background="@drawable/buttonshape"
                     android:text="用户协议"
                     android:textColor="@android:color/background_light"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/btn_submit"
@@ -191,7 +206,8 @@
                     android:background="@drawable/buttonshape"
                     android:text="同意并提交"
                     android:textColor="@android:color/background_light"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/btn_Tnc3"
@@ -202,7 +218,8 @@
                     android:background="@drawable/buttonshape"
                     android:text="放弃注册"
                     android:textColor="@android:color/background_light"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
         </RelativeLayout>

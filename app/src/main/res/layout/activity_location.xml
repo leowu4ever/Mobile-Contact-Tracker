@@ -82,20 +82,12 @@
             android:paddingBottom="10dp">
 
             <TextView
-                android:id="@+id/tv_timer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColor="#55578A "
-                android:textSize="60sp"
-                android:textStyle="bold" />
-
-            <TextView
                 android:id="@+id/tv_location_helper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="请点击以下按钮开启定位采集，开启后将每隔一小时上报一次你的地理位置。我们的APP已经过优化，会在后台以低功耗持续工作。"
+                android:layout_marginTop="15dp"
+                android:gravity="left"
+                android:text="请点击以下按钮开启后台定位采集，我们的软件每隔一小时会上报一次你的地理位置。定位只会消耗很低的电量和流量，请放心保持在后台运行。"
                 android:textColor="#55578A"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -123,7 +115,8 @@
                 android:background="@drawable/buttonshape"
                 android:text="开启后台定位采集"
                 android:textColor="@android:color/background_light"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/btn_viewReport"
@@ -135,7 +128,8 @@
                 android:background="@drawable/buttonshape"
                 android:text="查看接触记录"
                 android:textColor="@android:color/background_light"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -152,7 +146,8 @@
                 android:background="@drawable/buttonshape"
                 android:text="上报已接触人员"
                 android:textColor="@android:color/background_light"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
     </LinearLayout>

@@ -57,8 +57,10 @@ public class RegisterDialog {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, LocationActivity.class);
-                context.startActivity(intent);
+                registerDialog.dismiss();
+
+                //to do
+                //check all information required and toast
             }
         });
 
