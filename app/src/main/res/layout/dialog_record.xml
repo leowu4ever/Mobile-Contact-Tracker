@@ -65,29 +65,10 @@
                     android:text="性别"
                     android:textColor="#55578A" />
 
-                <RadioGroup
-                    android:id="@+id/rg_gender"
+                <Spinner
+                    android:id="@+id/sp_occupation2"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/rb_male"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="男"
-                        android:textColor="@android:color/darker_gray" />
-
-                    <RadioButton
-                        android:id="@+id/rb_female"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="女"
-                        android:textColor="@android:color/darker_gray" />
-
-                </RadioGroup>
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/textView10"
@@ -96,22 +77,11 @@
                     android:text="年龄"
                     android:textColor="#55578A" />
 
-                <TextView
-                    android:id="@+id/tv_age"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="0岁"
-                    android:textColor="@android:color/darker_gray" />
 
-                <SeekBar
-                    android:id="@+id/sb_age"
-                    style="@android:style/Widget.SeekBar"
+                <Spinner
+                    android:id="@+id/sp_occupation4"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:max="100"
-                    android:progress="0" />
-
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/textView11"
@@ -144,15 +114,23 @@
                     android:text="接触日期"
                     android:textColor="#55578A" />
 
-                <EditText
-                    android:id="@+id/et_date"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="年月日 (比如 20190628)"
-                    android:inputType="date"
-                    android:maxLength="8"
-                    android:textSize="14sp" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <Spinner
+                        android:id="@+id/sp_edu6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <Spinner
+                        android:id="@+id/sp_edu7"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/textView14"
@@ -161,15 +139,23 @@
                     android:text="接触时间"
                     android:textColor="#55578A" />
 
-                <EditText
-                    android:id="@+id/et_time"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="小时:分钟 (比如 18:34)"
-                    android:inputType="time"
-                    android:maxLength="4"
-                    android:textSize="14sp" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <Spinner
+                        android:id="@+id/sp_edu6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <Spinner
+                        android:id="@+id/sp_edu7"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/textView19"
@@ -178,21 +164,10 @@
                     android:text="接触时长"
                     android:textColor="#55578A" />
 
-                <TextView
-                    android:id="@+id/tv_duration"
+                <Spinner
+                    android:id="@+id/sp_edu4"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="0dp"
-                    android:text="30分钟以内"
-                    android:textColor="@android:color/darker_gray" />
-
-                <SeekBar
-                    android:id="@+id/sb_duration"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:max="19"
-                    android:progress="0" />
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/textView13"
@@ -201,13 +176,10 @@
                     android:text="接触地区"
                     android:textColor="#55578A" />
 
-                <EditText
-                    android:id="@+id/et_area"
+                <Spinner
+                    android:id="@+id/sp_edu3"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:imeOptions="actionDone"
-                    android:inputType="textPersonName" />
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/textView18"
@@ -216,21 +188,10 @@
                     android:text="家庭人数"
                     android:textColor="#55578A" />
 
-                <TextView
-                    android:id="@+id/tv_members"
+                <Spinner
+                    android:id="@+id/sp_edu5"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:padding="0dp"
-                    android:text="1名"
-                    android:textColor="@android:color/darker_gray" />
-
-                <SeekBar
-                    android:id="@+id/sb_members"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:max="10"
-                    android:progress="0" />
+                    android:layout_height="wrap_content" />
 
                 <View
                     android:id="@+id/view2"

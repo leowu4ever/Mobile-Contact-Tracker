@@ -25,6 +25,15 @@ public class RecordEntryDialog {
     private Spinner sp_edu, sp_occupation;
     private String[] sp_item_education = {"小学或以下", "初中", "高中", "大学", "硕士", "博士或其他"};
     private String[] sp_item_job = {"服务业", "农民/工人", "医务人员", "退休人员", "其他"};
+    private String[] sp_item_contact_location = {"家中", "通勤过程", "工作场合", "餐厅", "学校", "医院", "商场", "他人家中", "公园", "市场","其他"};
+    private String[] sp_item_month = {}; //1-12 月
+    private String[] sp_item_day = {}; //1-31日
+    private String[] sp_item_hour = {}; // 1-24时
+    private String[] sp_item_min = {}; //0-59分
+    private String[] sp_item_gender = {"男", "女"};
+    private String[] sp_item_age = {}; //0-100
+    private String[] sp_item_family_size = {"1", "2", "3", "4", "5", "6", "7", "8", "其他"};
+    private String[] sp_item_time_spent = {"0.5小时", "1小时"}; //0.5-10小时，补全
     private String gender;
 
     public RecordEntryDialog(Context context) {
