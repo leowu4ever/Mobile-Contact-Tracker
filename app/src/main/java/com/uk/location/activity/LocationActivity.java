@@ -32,11 +32,9 @@ import java.util.Date;
 
 public class LocationActivity extends Activity {
 
-    public static final int LOCATION_UPLOAD_INTERVAL = 1 * 1000 * 10; //5min
+    public static final int LOCATION_UPLOAD_INTERVAL = 1 * 1000 * 60 * 2; //5min
     public static Runnable countdownRunnbale;
-    public static Handler handler;
     private Button btnReport, btnViewReport, btnUpload, btnLocate;
-    private TextView tvCountDown;
     private MapView mapView = null;
     private BaiduMap baiduMap = null;
     private LocationClient locationClient = null;
@@ -63,8 +61,6 @@ public class LocationActivity extends Activity {
         tvTest = findViewById(R.id.tv_test);
         tvTest.append("start" + "\n");
 
-        initRunnables();
-
         initMap();
         initLocationClient();
         initUploadClient();
@@ -72,7 +68,6 @@ public class LocationActivity extends Activity {
         initUIs();
 
         locationClient.start();
-        handler = new Handler();
 
     }
 
@@ -91,7 +86,6 @@ public class LocationActivity extends Activity {
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tvLocationHelper.setText("距下一次采集地理位置所剩时间");
                 if (isEnableLocInForeground) {
                     Log.d(DEBUG_TAG, "endback");
                     btnUpload.setText("开启后台定位采集");
@@ -101,11 +95,9 @@ public class LocationActivity extends Activity {
                     uploadClient.unRegisterLocationListener(uploadListener);
                     uploadClient.stop();
                     btnUpload.setBackgroundResource(R.drawable.buttonshape);
-                    handler.removeCallbacks(countdownRunnbale);
 
                 } else {
                     //开启后台定位
-                    handler.postDelayed(countdownRunnbale, 0);
                     Log.d(DEBUG_TAG, "startback");
                     btnUpload.setText("关闭后台定位采集");
 
@@ -127,8 +119,6 @@ public class LocationActivity extends Activity {
                 new RecordHistoryDialog(LocationActivity.this);
             }
         });
-
-        tvCountDown = findViewById(R.id.tv_timer);
 
         btnLocate = findViewById(R.id.btn_locate);
         btnLocate.setOnClickListener(new View.OnClickListener() {
@@ -167,7 +157,7 @@ public class LocationActivity extends Activity {
 
         LocationClientOption uploadOption = new LocationClientOption();
         uploadOption.setOpenGps(true);
-        //uploadOption.setScanSpan(LOCATION_UPLOAD_INTERVAL);
+        uploadOption.setScanSpan(LOCATION_UPLOAD_INTERVAL);
         uploadOption.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
         uploadOption.setCoorType("bd09ll");
 
@@ -185,9 +175,6 @@ public class LocationActivity extends Activity {
                             + currentTime.get(Calendar.MINUTE)+  " : "
                             + currentTime.get(Calendar.SECOND)+  ")  "
                             + latitude + " " + longitude + "\n");
-                    uploadClient.stop();
-                    uploadClient.enableLocInForeground(1001, notification);// 调起前台定位
-
                 } else {
                     Log.d(DEBUG_TAG, "Cant find your location");
                 }
@@ -237,25 +224,6 @@ public class LocationActivity extends Activity {
         uiSetting.setOverlookingGesturesEnabled(false);
     }
 
-
-    private void initRunnables() {
-        countdownRunnbale = new Runnable() {
-            @Override
-            public void run() {
-                if (countDown > 0 && countDown <= LOCATION_UPLOAD_INTERVAL) {
-                    DecimalFormat secFormatter = new DecimalFormat("00");
-                    tvCountDown.setText(secFormatter.format(countDown % 3600000 / 60000) + ":" + secFormatter.format(countDown % 60000 / 1000));
-                    countDown -= 1000;
-                    handler.postDelayed(this, 1000);
-                } else {
-                    countDown = LOCATION_UPLOAD_INTERVAL;
-                    handler.postDelayed(this, 0);
-                    uploadClient.start();
-
-                }
-            }
-        };
-    }
 
     @Override
     protected void onStart() {
