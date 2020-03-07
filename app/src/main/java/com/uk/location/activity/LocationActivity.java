@@ -276,5 +276,7 @@ public class LocationActivity extends Activity {
 
     @Override
     public void onBackPressed() {
+        LocationActivity.this.moveTaskToBack(true);
+
     }
 }

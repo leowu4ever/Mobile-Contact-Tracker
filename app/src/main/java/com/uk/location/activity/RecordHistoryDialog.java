@@ -29,12 +29,15 @@ import java.util.List;
 
 public class RecordHistoryDialog {
 
+    private Button btnUploadHistory, btnDismissHisory;
+
     public RecordHistoryDialog(Context context) {
         init(context);
     }
 
+
     public void init(final Context context) {
-        Dialog recordListDialog = new Dialog(context);
+        final Dialog recordListDialog = new Dialog(context);
         recordListDialog.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
         recordListDialog.setContentView(R.layout.dialog_record_history);
         recordListDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -154,6 +157,22 @@ public class RecordHistoryDialog {
             parentLayout.addView(tvNullMessage);
         }
 
+        btnUploadHistory = recordListDialog.findViewById(R.id.btn_upload_history);
+        btnUploadHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //todo
+                // upload json here
+            }
+        });
 
+
+        btnDismissHisory = recordListDialog.findViewById(R.id.btn_dismiss_history);
+        btnDismissHisory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recordListDialog.dismiss();
+            }
+        });
     }
 }
