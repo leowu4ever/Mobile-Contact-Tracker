@@ -32,7 +32,7 @@ import java.util.Date;
 
 public class LocationActivity extends Activity {
 
-    public static final int LOCATION_UPLOAD_INTERVAL = 1 * 1000 * 60 * 2; //5min
+    public static final int LOCATION_UPLOAD_INTERVAL = 1 * 1000 * 60 * 10; //10min
     public static Runnable countdownRunnbale;
     private Button btnReport, btnViewReport, btnUpload, btnLocate;
     private MapView mapView = null;
@@ -252,6 +252,10 @@ public class LocationActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         mapView.onDestroy();
+        uploadClient.disableLocInForeground(true);
+        isEnableLocInForeground = false;
+        uploadClient.unRegisterLocationListener(uploadListener);
+        uploadClient.stop();
         Log.d(DEBUG_TAG, "destory");
     }
 
