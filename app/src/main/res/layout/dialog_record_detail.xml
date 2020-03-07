@@ -63,29 +63,6 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/textView7"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="年龄"
-                            android:textColor="#55578A" />
-
-                        <TextView
-                            android:id="@+id/tv_pr_age"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textColor="#55578A"
-                            android:textSize="14sp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
@@ -109,26 +86,25 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/tv_pr_label_area"
+                            android:id="@+id/textView7"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="接触地区"
+                            android:text="年龄"
+                            android:textColor="#55578A" />
+
+                        <TextView
+                            android:id="@+id/tv_pr_age"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:textColor="#55578A"
                             android:textSize="14sp" />
 
-                        <TextView
-                            android:id="@+id/tv_pr_area"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text=" "
-                            android:textColor="#55578A"
-                            android:textSize="14sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -161,6 +137,33 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_pr_label_edu"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="教育水平"
+                            android:textColor="#55578A"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tv_pr_edu"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text=" "
+                            android:textColor="#55578A"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
                             android:id="@+id/tv_pr_label_date"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -171,6 +174,55 @@
 
                         <TextView
                             android:id="@+id/tv_pr_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text=" "
+                            android:textColor="#55578A"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_pr_label_duration"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="接触时长"
+                            android:textColor="#55578A"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tv_pr_duration"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text=" "
+                            android:textColor="#55578A"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_pr_label_area"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="接触地区"
+                            android:textColor="#55578A"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tv_pr_area"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -204,54 +256,6 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/tv_pr_label_edu"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="教育水平"
-                            android:textColor="#55578A"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/tv_pr_edu"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text=" "
-                            android:textColor="#55578A"
-                            android:textSize="14sp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/tv_pr_label_duration"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="接触时长"
-                            android:textColor="#55578A"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/tv_pr_duration"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text=" "
-                            android:textColor="#55578A"
-                            android:textSize="14sp" />
-                    </LinearLayout>
                 </LinearLayout>
 
 

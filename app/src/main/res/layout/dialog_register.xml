@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="初始信息采集"
+            android:text="注册账号"
             android:textColor="#55578A"
             android:textSize="36sp"
             android:textStyle="bold" />

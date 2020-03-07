@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
@@ -34,7 +35,7 @@ public class LocationActivity extends Activity {
 
     public static final int LOCATION_UPLOAD_INTERVAL = 1 * 1000 * 60 * 10; //10min
     public static Runnable countdownRunnbale;
-    private Button btnReport, btnViewReport, btnUpload, btnLocate;
+    private Button btnReport, btnViewReport, btnUpload, btnLocate, btnLogout;
     private MapView mapView = null;
     private BaiduMap baiduMap = null;
     private LocationClient locationClient = null;
@@ -124,8 +125,20 @@ public class LocationActivity extends Activity {
         btnLocate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"已定位到你当前的大致位置", Toast.LENGTH_SHORT).show();
                 locationClient.stop();
                 locationClient.start();
+            }
+        });
+
+        btnLogout = findViewById(R.id.btn_logout);
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // todo
+                //to do adding a double check dialog
+                Intent intent = new Intent(LocationActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
     }
