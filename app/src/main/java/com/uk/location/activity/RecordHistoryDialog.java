@@ -3,6 +3,7 @@ package com.uk.location.activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Environment;
 import android.util.Log;
@@ -35,7 +36,7 @@ public class RecordHistoryDialog {
     public void init(final Context context) {
         Dialog recordListDialog = new Dialog(context);
         recordListDialog.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
-        recordListDialog.setContentView(R.layout.dialog_past_record_list);
+        recordListDialog.setContentView(R.layout.dialog_record_history);
         recordListDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         File rootDircectory = new File(Environment.getExternalStorageDirectory() + "/VirTrack/");
@@ -78,7 +79,9 @@ public class RecordHistoryDialog {
                         seq = 0;
                         TextView tvDateSep = new TextView(context);
                         tvDateSep.setText(str.substring(7, 11) + "-" + str.substring(11, 13) + "-" + str.substring(13, 15));
-                        tvDateSep.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+                        tvDateSep.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
+                        tvDateSep.setTextColor(Color.parseColor("#55578A"));
+                        tvDateSep.setTypeface(tvDateSep.getTypeface(), Typeface.BOLD);
                         parentLayout.addView(tvDateSep);
 
                         View vSep = new View(context);
@@ -88,17 +91,18 @@ public class RecordHistoryDialog {
                     }
                     seq += 1;
 
-                    tvRecord.setText("記錄" + seq);
+                    tvRecord.setText("接触记录 - " + seq);
                     tvRecord.setLayoutParams(new TableLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
-                    tvRecord.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
+                    tvRecord.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+                    tvRecord.setTextColor(Color.parseColor("#55578A"));
 
-                    btnTag.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
-                    btnTag.setText("𝑖");
+                    btnTag.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+                    btnTag.setText("查看");
                     btnTag.setTag(str);
                     btnTag.setBackgroundResource(R.drawable.buttonround);
                     btnTag.setTextColor(context.getResources().getColor(android.R.color.background_light));
-                    btnTag.setLayoutParams(new LinearLayout.LayoutParams((int) (30 * context.getResources().getDisplayMetrics().density), (int) (30 * context.getResources().getDisplayMetrics().density)));
-                    btnTag.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+                    btnTag.setLayoutParams(new LinearLayout.LayoutParams((int) (60 * context.getResources().getDisplayMetrics().density), (int) (30 * context.getResources().getDisplayMetrics().density)));
+                    btnTag.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
                     btnTag.setGravity(Gravity.CENTER);
                     btnTag.setOnClickListener(new View.OnClickListener() {
                         @Override
