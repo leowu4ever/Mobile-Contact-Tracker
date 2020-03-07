@@ -139,6 +139,9 @@ public class LocationActivity extends Activity {
                 //to do adding a double check dialog
                 Intent intent = new Intent(LocationActivity.this, MainActivity.class);
                 startActivity(intent);
+
+                Toast.makeText(getApplicationContext(),"退登成功", Toast.LENGTH_SHORT).show();
+
             }
         });
     }

@@ -15,7 +15,7 @@
     </com.baidu.mapapi.map.MapView>
 
     <Button
-        android:id="@+id/btn_locate2"
+        android:id="@+id/btn_logout"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_alignParentEnd="true"
@@ -43,6 +43,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="300dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginLeft="200dp">
 
         <LinearLayout

@@ -57,10 +57,10 @@ public class RecordEntryDialog {
                     Record record = new Record();
                     record.createRecord(gender, age, job, edu, area, date, duration, members);
                     record.objectToFile(record, dateForFile);
-                    Toast.makeText(context, "已储存记录", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "已保存接触人员信息，谢谢。", Toast.LENGTH_LONG).show();
                     recordDialog.dismiss();
                 } else {
-                    Toast.makeText(context, "請填寫所有欄位", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "请填写全部信息", Toast.LENGTH_LONG).show();
                 }
             }
         });
