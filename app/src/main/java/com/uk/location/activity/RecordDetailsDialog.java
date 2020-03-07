@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -25,14 +26,15 @@ public class RecordDetailsDialog {
     public void init(final Context context, final String rawData) {
 
         final Dialog recordDetailsDialog = new Dialog(context);
-
+        recordDetailsDialog.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
         recordDetailsDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         recordDetailsDialog.setContentView(R.layout.dialog_past_record_view);
         recordDetailsDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        recordDetailsDialog.show();
         recordDetailsDialog.setCanceledOnTouchOutside(false);
         Window window = recordDetailsDialog.getWindow();
         window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        window.setGravity(Gravity.CENTER);
+        recordDetailsDialog.show();
 
         Gson gson = new Gson();
         Record record = gson.fromJson(rawData, Record.class);

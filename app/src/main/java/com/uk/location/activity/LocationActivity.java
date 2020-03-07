@@ -83,6 +83,7 @@ public class LocationActivity extends Activity {
             @Override
             public void onClick(View v) {
                 new RecordEntryDialog(LocationActivity.this);
+
             }
         });
 

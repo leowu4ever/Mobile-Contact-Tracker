@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
@@ -37,12 +38,16 @@ public class RegisterDialog {
 
     public void init(final Context context) {
         final Dialog registerDialog = new Dialog(context);
+        registerDialog.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
+
         registerDialog.setContentView(R.layout.dialog_register);
         registerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        registerDialog.show();
         registerDialog.setCanceledOnTouchOutside(false);
         Window window = registerDialog.getWindow();
         window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        window.setGravity(Gravity.CENTER);
+        registerDialog.show();
+
 
         tv_age = registerDialog.findViewById(R.id.tv_age);
         btnSubmit = registerDialog.findViewById(R.id.btn_submit);
@@ -55,12 +60,12 @@ public class RegisterDialog {
             }
         });
 
-
         btn_privacy = registerDialog.findViewById(R.id.btn_privacy);
         btn_privacy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 privacyDialog = new Dialog(context);
+                privacyDialog.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
                 privacyDialog.setContentView(R.layout.dialog_privacy);
                 privacyDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 Button btn_privacy_return = privacyDialog.findViewById(R.id.btn_return);
@@ -70,11 +75,11 @@ public class RegisterDialog {
                         privacyDialog.dismiss();
                     }
                 });
-                privacyDialog.show();
                 privacyDialog.setCanceledOnTouchOutside(false);
                 Window window = privacyDialog.getWindow();
                 window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-            }
+                privacyDialog.show();
+             }
         });
 
         btn_abort = registerDialog.findViewById(R.id.btn_Tnc3);
@@ -115,6 +120,8 @@ public class RegisterDialog {
         ArrayAdapter aa_edu = new ArrayAdapter(context, android.R.layout.simple_spinner_item, sp_item_education);
         aa_edu.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sp_edu.setAdapter(aa_edu);
+
+
 
 
     }

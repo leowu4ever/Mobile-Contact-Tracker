@@ -19,7 +19,8 @@
         android:name="com.uk.location.activity.LocationApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:theme="@android:style/Theme.NoTitleBar">
+        android:theme="@android:style/Theme.NoTitleBar"
+        >
         <activity android:name="com.uk.location.activity.MyBroadcastReceiver"></activity>
 
         <service

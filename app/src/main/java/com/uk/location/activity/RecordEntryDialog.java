@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
@@ -27,17 +28,20 @@ public class RecordEntryDialog {
     private String[] sp_item_job = {"服务业", "农民/工人", "医务人员", "退休人员", "其他"};
     private String gender;
 
-    public RecordEntryDialog(Context context) { init(context); }
+    public RecordEntryDialog(Context context) {
+        init(context);
+    }
 
     public void init(final Context context) {
         gender = "男";
         final Dialog recordDialog = new Dialog(context);
+        recordDialog.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
         recordDialog.setContentView(R.layout.dialog_record);
         recordDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        recordDialog.show();
         recordDialog.setCanceledOnTouchOutside(false);
         Window window = recordDialog.getWindow();
         window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        recordDialog.show();
 
         btn_submit = recordDialog.findViewById(R.id.btn_RecordSubmit);
         btn_submit.setOnClickListener(new View.OnClickListener() {

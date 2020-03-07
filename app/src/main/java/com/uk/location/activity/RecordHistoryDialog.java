@@ -32,6 +32,7 @@ public class RecordHistoryDialog {
 
     public void init(final Context context) {
         Dialog recordListDialog = new Dialog(context);
+        recordListDialog.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
         recordListDialog.setContentView(R.layout.dialog_past_record_list);
         recordListDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -41,10 +42,12 @@ public class RecordHistoryDialog {
         LinearLayout parentLayout = recordListDialog.findViewById(R.id.layout_RecordView);
         parentLayout.removeAllViews();
 
-        recordListDialog.show();
+
         recordListDialog.setCanceledOnTouchOutside(false);
         Window window = recordListDialog.getWindow();
         window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        recordListDialog.show();
+
         if (files != null) {
         List<String> colList = new ArrayList(Arrays.asList(files));
         Collections.sort(colList);

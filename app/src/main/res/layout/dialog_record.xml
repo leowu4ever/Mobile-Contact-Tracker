@@ -5,25 +5,31 @@
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
     android:orientation="vertical"
-    tools:context="com.uk.location.activity.RecordEntryDialog">
+    tools:context="com.uk.location.activity.RecordEntryDialog"
+    android:gravity="center">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="20dp"
         android:background="@drawable/windowshape"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingTop="15dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        >
 
         <TextView
             android:id="@+id/textView8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:paddingTop="20dp"
             android:text="接触人员记录"
             android:textColor="#55578A"
             android:textSize="36sp"
@@ -48,14 +54,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="0dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
                 android:alpha="1"
                 android:orientation="vertical"
-                android:paddingLeft="20dp"
-
-                android:paddingRight="20dp"
-                android:paddingBottom="15dp">
+>
 
                 <TextView
                     android:id="@+id/textView15"
