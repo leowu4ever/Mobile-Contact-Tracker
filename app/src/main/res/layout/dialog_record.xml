@@ -47,7 +47,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:scrollbars="none"
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
