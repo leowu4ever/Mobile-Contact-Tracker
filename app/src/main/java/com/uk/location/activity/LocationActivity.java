@@ -32,7 +32,7 @@ import java.util.Date;
 
 public class LocationActivity extends Activity {
 
-    public static final int LOCATION_UPLOAD_INTERVAL = 1 * 1000 * 60 * 5; //5min
+    public static final int LOCATION_UPLOAD_INTERVAL = 1 * 1000 * 10; //5min
     public static Runnable countdownRunnbale;
     public static Handler handler;
     private Button btnReport, btnViewReport, btnUpload, btnLocate;
@@ -167,7 +167,7 @@ public class LocationActivity extends Activity {
 
         LocationClientOption uploadOption = new LocationClientOption();
         uploadOption.setOpenGps(true);
-//        uploadOption.setScanSpan(LOCATION_UPLOAD_INTERVAL);
+        //uploadOption.setScanSpan(LOCATION_UPLOAD_INTERVAL);
         uploadOption.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
         uploadOption.setCoorType("bd09ll");
 
@@ -180,9 +180,14 @@ public class LocationActivity extends Activity {
                     double latitude = location.getLatitude();
                     double longitude = location.getLongitude();
                     Log.d(DEBUG_TAG, "upload client" + latitude + "," + longitude);
-                    Date currentTime = Calendar.getInstance().getTime();
-                    tvTest.append(currentTime.toString() + " " + latitude + " " + latitude + "\n");
+                    Calendar currentTime = Calendar.getInstance();
+                    tvTest.append("("+currentTime.get(Calendar.HOUR) + " : "
+                            + currentTime.get(Calendar.MINUTE)+  " : "
+                            + currentTime.get(Calendar.SECOND)+  ")  "
+                            + latitude + " " + longitude + "\n");
                     uploadClient.stop();
+                    uploadClient.enableLocInForeground(1001, notification);// 调起前台定位
+
                 } else {
                     Log.d(DEBUG_TAG, "Cant find your location");
                 }
@@ -246,6 +251,7 @@ public class LocationActivity extends Activity {
                     countDown = LOCATION_UPLOAD_INTERVAL;
                     handler.postDelayed(this, 0);
                     uploadClient.start();
+
                 }
             }
         };
