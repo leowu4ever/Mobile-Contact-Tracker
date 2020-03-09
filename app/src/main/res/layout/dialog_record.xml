@@ -8,7 +8,6 @@
     android:orientation="vertical"
     tools:context="com.uk.location.activity.RecordEntryDialog">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -32,7 +31,7 @@
             android:text="接触人员记录"
             android:textColor="#55578A"
             android:textSize="36sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <View
             android:id="@+id/view1"
@@ -41,15 +40,14 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:alpha="0.1"
-            android:background="@android:color/darker_gray" />
+            android:background="@android:color/darker_gray"/>
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:orientation="vertical"
-            android:scrollbars="none"
-            >
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -63,10 +61,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="性别"
-                    android:textColor="#55578A" />
+                    android:textColor="#55578A"/>
 
                 <Spinner
-                    android:id="@+id/sp_occupation2"
+                    android:id="@+id/sp_gender"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -77,11 +75,19 @@
                     android:text="年龄"
                     android:textColor="#55578A" />
 
-
-                <Spinner
-                    android:id="@+id/sp_occupation4"
+                <TextView
+                    android:id="@+id/tv_spinnerage"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="0岁"
+                    android:textColor="#55578A"
+                    android:gravity="center"/>
+
+                <SeekBar
+                    android:id="@+id/sb_age"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="100"/>
 
                 <TextView
                     android:id="@+id/textView11"
@@ -120,13 +126,13 @@
                     android:orientation="horizontal">
 
                     <Spinner
-                        android:id="@+id/sp_edu6"
+                        android:id="@+id/sp_approach_datemonth"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1" />
 
                     <Spinner
-                        android:id="@+id/sp_edu7"
+                        android:id="@+id/sp_approach_dateday"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1" />
@@ -145,14 +151,14 @@
                     android:orientation="horizontal">
 
                     <Spinner
-                        android:id="@+id/sp_edu6"
-                        android:layout_width="match_parent"
+                        android:id="@+id/sp_approach_timehour"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1" />
 
                     <Spinner
-                        android:id="@+id/sp_edu7"
-                        android:layout_width="match_parent"
+                        android:id="@+id/sp_approach_timeminute"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1" />
                 </LinearLayout>
@@ -165,7 +171,7 @@
                     android:textColor="#55578A" />
 
                 <Spinner
-                    android:id="@+id/sp_edu4"
+                    android:id="@+id/sp_duration"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -177,7 +183,7 @@
                     android:textColor="#55578A" />
 
                 <Spinner
-                    android:id="@+id/sp_edu3"
+                    android:id="@+id/sp_area"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -189,7 +195,7 @@
                     android:textColor="#55578A" />
 
                 <Spinner
-                    android:id="@+id/sp_edu5"
+                    android:id="@+id/sp_familycount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -213,7 +219,7 @@
                         android:orientation="horizontal">
 
                         <Button
-                            android:id="@+id/btn_RecordSubmit"
+                            android:id="@+id/btn_record_submit"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:layout_marginRight="5dp"
@@ -225,7 +231,7 @@
                             android:textStyle="bold" />
 
                         <Button
-                            android:id="@+id/btn_RecordSubmit2"
+                            android:id="@+id/btn_record_dismiss"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:layout_marginLeft="5dp"
@@ -236,11 +242,8 @@
                             android:textSize="14sp"
                             android:textStyle="bold" />
                     </LinearLayout>
-
                 </RelativeLayout>
-
             </LinearLayout>
-
         </ScrollView>
     </LinearLayout>
 </RelativeLayout>

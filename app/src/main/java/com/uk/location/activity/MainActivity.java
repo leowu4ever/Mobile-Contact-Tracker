@@ -38,37 +38,40 @@ public class MainActivity extends Activity {
     }
 
     private void initUIs() {
-        etUserName = findViewById(R.id.et_Main_userName);
-        etPassword = findViewById(R.id.et_Main_Password);
+        etUserName = findViewById(R.id.et_main_username);
+        etPassword = findViewById(R.id.et_main_password);
 
         btnLogin = findViewById(R.id.btn_login);
         btnLogin.setOnClickListener(new View.OnClickListener() {//Need to validate not null later
             @Override
             public void onClick(View v) {
-                // password check
-                String input = "{\"userName\": \"" + etUserName.getText().toString() + "\",\n" + "\"password\": \"" + etPassword.getText().toString() + "\n" + "}";
+                if (!(etUserName.getText().toString().matches("") )&& !(etPassword.getText().toString().matches(""))) {
+                    // password check
+                    String input = "{\"userName\": \"" + etUserName.getText().toString() + "\",\n" + "\"password\": \"" + etPassword.getText().toString() + "\n" + "}";
 
-                DateFormat formatter = new SimpleDateFormat("ddMMyyyyHHmmss");
-                String sysDate = formatter.format(Calendar.getInstance().getTime());
-                String PATH_LOCAL = Environment.getExternalStorageDirectory() + "/VirTrack/";
+                    DateFormat formatter = new SimpleDateFormat("ddMMyyyyHHmmss");
+                    String sysDate = formatter.format(Calendar.getInstance().getTime());
+                    String PATH_LOCAL = Environment.getExternalStorageDirectory() + "/VirTrack/";
 
-                File rootfolder = new File(PATH_LOCAL);
-                if (!rootfolder.exists()) {
-                    rootfolder.mkdir();
+                    File rootfolder = new File(PATH_LOCAL);
+                    if (!rootfolder.exists()) {
+                        rootfolder.mkdir();
+                    }
+
+                    new File(rootfolder, "userdetails");
+
+                    try (FileWriter writer = new FileWriter(PATH_LOCAL + "userdetails")) {
+                        writer.write(input);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    Intent intent = new Intent(MainActivity.this, LocationActivity.class);
+                    startActivity(intent);
+                    Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "登录失敗, 請重試", Toast.LENGTH_SHORT).show();
                 }
-
-                new File(rootfolder, "userdetails");
-
-                try (FileWriter writer = new FileWriter(PATH_LOCAL + "userdetails")) {
-                    writer.write(input);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                Intent intent = new Intent(MainActivity.this, LocationActivity.class);
-                startActivity(intent);
-                Toast.makeText(getApplicationContext(),"登录成功", Toast.LENGTH_SHORT).show();
-
             }
         });
 

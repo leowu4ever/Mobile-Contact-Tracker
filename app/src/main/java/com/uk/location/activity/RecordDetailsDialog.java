@@ -58,31 +58,10 @@ public class RecordDetailsDialog {
         tv_area.setText(record.getArea());
 
         tv_duration = recordDetailsDialog.findViewById(R.id.tv_pr_duration);
-        String duration = "";
-        int durationFromData = record.getDuration();
-        if (durationFromData == 0) {
-            duration = "30分钟或以下";
-        } else if (durationFromData > 0 && durationFromData < 19) {
-            duration = (durationFromData + 1) / 2 + "小时";
-            if ((durationFromData + 1) % 2 == 1) {
-                duration += "30分钟";
-            }
-        } else if (durationFromData == 19) {
-            duration = "10小时或以上";
-        }
-        tv_duration.setText(duration);
+        tv_duration.setText(record.getDuration());
 
         tv_members = recordDetailsDialog.findViewById(R.id.tv_pr_members);
-        String membercount = "";
-        int memberFromData = record.getMembers();
-        if (memberFromData == 0) {
-            membercount = "无";
-        } else if (memberFromData >= 1 && memberFromData <= 9) {
-            membercount = memberFromData + "名";
-        } else if (memberFromData >= 10) {
-            membercount = memberFromData + "名或以上";
-        }
-        tv_members.setText(membercount);
+        tv_members.setText(record.getMembers());
 
         btn_close = recordDetailsDialog.findViewById(R.id.btn_contact_detail_close);
         btn_close.setOnClickListener(new View.OnClickListener() {

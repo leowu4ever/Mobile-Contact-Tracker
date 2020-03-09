@@ -25,6 +25,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 public class RecordHistoryDialog {
@@ -54,15 +55,22 @@ public class RecordHistoryDialog {
         window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         recordListDialog.show();
 
-        if (files != null) {
-            List<String> colList = new ArrayList(Arrays.asList(files));
-            Collections.sort(colList);
+        List<String> colList = new ArrayList(Arrays.asList(files));
+        List<String> workableList = new ArrayList();
+        for (String str : colList){
+            if (str.startsWith("record_")){
+                workableList.add(str);
+                Log.d("FILE",str);
+            }
+        }
 
+        Collections.sort(colList);
+
+        if (workableList.size() != 0) {
             String date = "";
             int seq = 0;
 
-            for (String str : colList) {
-                if (str.startsWith("record_")) {
+            for (String str : workableList) {
                     LinearLayout recordContainer = new LinearLayout(context);
                     Button btnTag = new Button(context);
                     TextView tvRecord = new TextView(context);
@@ -81,7 +89,7 @@ public class RecordHistoryDialog {
                         date = str.substring(7, 15);
                         seq = 0;
                         TextView tvDateSep = new TextView(context);
-                        tvDateSep.setText(str.substring(7, 11) + "-" + str.substring(11, 13) + "-" + str.substring(13, 15));
+                        tvDateSep.setText(str.substring(7, 9) + "-" + str.substring(9, 11));
                         tvDateSep.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
                         tvDateSep.setTextColor(Color.parseColor("#55578A"));
                         tvDateSep.setTypeface(tvDateSep.getTypeface(), Typeface.BOLD);
@@ -149,7 +157,7 @@ public class RecordHistoryDialog {
                     parentLayout.addView(recordContainer);
 
                 }
-            }
+
         } else {
             TextView tvNullMessage = new TextView(context);
             tvNullMessage.setText("没有已上报接触人员");
@@ -169,7 +177,7 @@ public class RecordHistoryDialog {
         });
 
 
-        btnDismissHisory = recordListDialog.findViewById(R.id.btn_dismiss_history);
+        btnDismissHisory = recordListDialog.findViewById(R.id.btn_dismiss_historylist);
         btnDismissHisory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

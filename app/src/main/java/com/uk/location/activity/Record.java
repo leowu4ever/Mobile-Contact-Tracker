@@ -12,16 +12,17 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class Record {
-    private String gender, job, education, area, date;
-    private int age, duration, members;
+    private String gender, job, education, area, date, time, duration, members;
+    private int age;
 
-    public void createRecord(String gender, int age, String job, String edu, String area, String date, int duration, int members) {
+    public void createRecord(String gender, int age, String job, String edu, String area, String date, String time, String duration, String members) {
         this.gender = gender;
         this.age = age;
         this.job = job;
         this.education = edu;
         this.area = area;
         this.date = date;
+        this.time = time;
         this.duration = duration;
         this.members = members;
     }
@@ -50,11 +51,15 @@ public class Record {
         return this.date;
     }
 
-    public int getDuration() {
+    public String getTime() {
+        return this.time;
+    }
+
+    public String getDuration() {
         return this.duration;
     }
 
-    public int getMembers() {
+    public String getMembers() {
         return this.members;
     }
 
