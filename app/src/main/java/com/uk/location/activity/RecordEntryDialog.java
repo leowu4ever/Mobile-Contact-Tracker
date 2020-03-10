@@ -65,9 +65,10 @@ public class RecordEntryDialog {
                     String duration = spDuration.getSelectedItem().toString();
                     String members = spFamilycount.getSelectedItem().toString();
 
+                    String dateForFilename = String.format("%02d",Integer.parseInt(spApproachDateMonth.getSelectedItem().toString().replaceAll("[^\\d.]", "")))+String.format("%02d",Integer.parseInt(spApproachDateDay.getSelectedItem().toString().replaceAll("[^\\d.]", "")));
                     Record record = new Record();
                     record.createRecord(gender, age, job, edu, area, date, time, duration, members);
-                    record.objectToFile(record, date.replaceAll("[^\\d.]", ""));
+                    record.objectToFile(record, dateForFilename);
                     Toast.makeText(context, "已保存接触人员信息，谢谢。", Toast.LENGTH_LONG).show();
                     recordDialog.dismiss();
                 } else {

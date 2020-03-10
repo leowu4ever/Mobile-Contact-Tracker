@@ -83,13 +83,16 @@ public class RecordHistoryDialog {
                     recordContainer.setLayoutParams(params);
                     recordContainer.setWeightSum(1);
                     recordContainer.setGravity(Gravity.CENTER_VERTICAL);
+                    recordContainer.setPadding(10,2,0,2);
 
                     btnTag.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                    if (!(str.substring(7, 15).equals(date))) {
-                        date = str.substring(7, 15);
+                    if (!(str.substring(7, 11).equals(date))) {
+                        date = str.substring(7, 11);
                         seq = 0;
                         TextView tvDateSep = new TextView(context);
-                        tvDateSep.setText(str.substring(7, 9) + "-" + str.substring(9, 11));
+                        String dateSeperator = str.substring(str.indexOf("_") + 1);
+                        dateSeperator = dateSeperator.substring(0, dateSeperator.indexOf("_"));
+                        tvDateSep.setText(dateSeperator.substring(0, 2).replaceFirst("^0+(?!$)", "") + "月" + dateSeperator.substring(2, 4).replaceFirst("^0+(?!$)", "") + "日");
                         tvDateSep.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
                         tvDateSep.setTextColor(Color.parseColor("#55578A"));
                         tvDateSep.setTypeface(tvDateSep.getTypeface(), Typeface.BOLD);

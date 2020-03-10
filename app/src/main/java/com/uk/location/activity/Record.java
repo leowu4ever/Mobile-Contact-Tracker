@@ -77,7 +77,7 @@ public class Record {
 
         new File(rootfolder, "record_" + dateForFile + sysDate);
 
-        try (FileWriter writer = new FileWriter(PATH_LOCAL + "record_" + dateForFile + sysDate)) {
+        try (FileWriter writer = new FileWriter(PATH_LOCAL + "record_" + dateForFile + "_" + sysDate)) {
             gson.toJson(record, writer);
 
         } catch (IOException e) {
