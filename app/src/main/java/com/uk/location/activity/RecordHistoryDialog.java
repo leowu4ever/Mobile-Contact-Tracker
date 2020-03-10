@@ -57,7 +57,7 @@ public class RecordHistoryDialog {
             }
         }
 
-        Collections.sort(colList);
+        Collections.sort(workableList);
 
         if (workableList.size() != 0) {
             String date = "";
