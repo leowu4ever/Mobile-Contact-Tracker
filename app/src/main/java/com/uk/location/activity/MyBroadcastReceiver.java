@@ -9,16 +9,36 @@ import android.util.Log;
 
 public class MyBroadcastReceiver extends BroadcastReceiver {
 
+    private final String ALARM_ACTION_LABEL = "LOCATION_ALARM";
     private AlarmManager am;
-    private Intent i;
+    private Intent intent;
     private PendingIntent pi;
 
-    public void onReceive(Context context, Intent intent) {
+    public MyBroadcastReceiver() {
+    }
 
-        if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
-            Intent i = new Intent(context, LocationActivity.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(i);
-        }
+    public void onReceive(Context context, Intent intent) {
+        startAlarm(context);
+        LocationActivity.locationHelper.getLocation(true);
+        Log.d("loa1", "alarm calling");
+    }
+
+    public void startAlarm(Context context) {
+        am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        intent = new Intent(context, MyBroadcastReceiver.class);
+        intent.setAction(ALARM_ACTION_LABEL);
+        pi = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, (System.currentTimeMillis() + (1000 * 5)), pi); //Next alarm in 5s
+        LocationHelper.setTrackingState(true);
+    }
+
+    public void stopAlarm(Context context) {
+        am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        intent = new Intent(context, MyBroadcastReceiver.class);
+        intent.setAction(ALARM_ACTION_LABEL);
+        pi = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        am.cancel(pi);
+        pi.cancel();
+        LocationHelper.setTrackingState(false);
     }
 }
