@@ -49,7 +49,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="- 你也可以为扼制疫情发展出一份力 -" />
+            android:text="- 你也可以为扼制疫情发展出一份力 -"
+            android:textStyle="bold" />
     </LinearLayout>
 
 
@@ -71,7 +72,8 @@
             android:gravity="center_horizontal|center_vertical"
             android:hint="账号"
             android:inputType="textPersonName"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="#55578A"
+            android:textColorHint="#55578A"
             android:textSize="14sp" />
 
         <EditText
@@ -83,7 +85,8 @@
             android:gravity="center_horizontal|center_vertical"
             android:hint="密码"
             android:inputType="textPassword"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="#55578A"
+            android:textColorHint="#55578A"
             android:textSize="14sp" />
 
     </LinearLayout>
@@ -125,9 +128,9 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="40dp"
                 android:layout_weight="1"
-                android:background="@drawable/buttonshape"
+                android:background="@drawable/spinnershape"
                 android:text="注册"
-                android:textColor="@android:color/background_light"
+                android:textColor="#55578A"
                 android:textSize="14sp"
                 android:textStyle="bold" />
         </LinearLayout>

@@ -95,9 +95,9 @@
                     android:layout_width="250dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:background="@drawable/buttonshape"
+                    android:background="@drawable/spinnershape"
                     android:text="看完了"
-                    android:textColor="@android:color/background_light"
+                    android:textColor="#55578A"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
