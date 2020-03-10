@@ -148,6 +148,7 @@
 
             </LinearLayout>
         </ScrollView>
+
         <View
             android:id="@+id/view3"
             android:layout_width="match_parent"
@@ -156,6 +157,7 @@
             android:layout_marginBottom="10dp"
             android:alpha="0.1"
             android:background="@android:color/darker_gray" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

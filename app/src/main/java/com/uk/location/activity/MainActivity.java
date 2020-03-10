@@ -27,10 +27,29 @@ import java.io.InputStreamReader;
 
 public class MainActivity extends Activity {
 
+    public static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private Button btnLogin, btnRegister;
     private EditText etUserName, etPassword;
-    public static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
 
+    public static void getLocationPermission(Context context) {
+        // TO DO need permission check on later screens
+        if (ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.ACCESS_NETWORK_STATE) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.ACCESS_WIFI_STATE) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+
+        } else {
+            String[] permissions = {android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION,
+                    android.Manifest.permission.ACCESS_NETWORK_STATE,
+                    android.Manifest.permission.ACCESS_WIFI_STATE,
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE};
+            ActivityCompat.requestPermissions((Activity) context, permissions, PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +68,7 @@ public class MainActivity extends Activity {
         btnLogin.setOnClickListener(new View.OnClickListener() {//Need to validate not null later
             @Override
             public void onClick(View v) {
-                if (!(etUserName.getText().toString().matches("") )&& !(etPassword.getText().toString().matches(""))) {
+                if (!(etUserName.getText().toString().matches("")) && !(etPassword.getText().toString().matches(""))) {
                     // password check
                     //if success
                     Login login = new Login();
@@ -89,27 +108,7 @@ public class MainActivity extends Activity {
         });
     }
 
-    public static void getLocationPermission(Context context) {
-        // TO DO need permission check on later screens
-        if (ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.ACCESS_NETWORK_STATE) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.ACCESS_WIFI_STATE) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-
-        } else {
-            String[] permissions = {android.Manifest.permission.ACCESS_COARSE_LOCATION,
-                    android.Manifest.permission.ACCESS_FINE_LOCATION,
-                    android.Manifest.permission.ACCESS_NETWORK_STATE,
-                    android.Manifest.permission.ACCESS_WIFI_STATE,
-                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    android.Manifest.permission.READ_EXTERNAL_STORAGE};
-            ActivityCompat.requestPermissions((Activity) context, permissions, PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-        }
-    }
-
-    private void autoLogin(){
+    private void autoLogin() {
         String readings = "";
         FileInputStream fis = null;
         try {
@@ -123,7 +122,7 @@ public class MainActivity extends Activity {
                 sb.append(readinText);
             }
             readings = sb.toString();
-            Log.d("DETAILS",readings);
+            Log.d("DETAILS", readings);
             Gson gson = new Gson();
             Login logindetails = gson.fromJson(readings, Login.class);
             //Login checks
@@ -144,16 +143,22 @@ public class MainActivity extends Activity {
         }
     }
 
-    private void startAcivity(){
+    private void startAcivity() {
         Intent intent = new Intent(MainActivity.this, LocationActivity.class);
         startActivity(intent);
         Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
     }
 
-    class Login{
+    class Login {
         private String username;
         private String password;
-        private void setUsername(String input){username = input;}
-        private void setPassword(String input){password = input;}
+
+        private void setUsername(String input) {
+            username = input;
+        }
+
+        private void setPassword(String input) {
+            password = input;
+        }
     }
 }

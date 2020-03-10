@@ -8,9 +8,10 @@ import android.view.Window;
 import android.widget.LinearLayout;
 
 public class DialogHelper {
-    public DialogHelper(){}
+    public DialogHelper() {
+    }
 
-    public void displayDialog(Dialog dialog){
+    public void displayDialog(Dialog dialog) {
         dialog.setCanceledOnTouchOutside(false);
         Window window = dialog.getWindow();
         window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
