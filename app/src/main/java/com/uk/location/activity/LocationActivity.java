@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +27,7 @@ import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.UiSettings;
 import com.baidu.mapapi.model.LatLng;
 
+import java.io.File;
 import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -139,6 +141,14 @@ public class LocationActivity extends Activity {
                 //to do adding a double check dialog
                 Intent intent = new Intent(LocationActivity.this, MainActivity.class);
                 startActivity(intent);
+                File file = new File(Environment.getExternalStorageDirectory() + "/VirTrack/userdetails");
+
+                if(file.delete()){
+                    System.out.println("File deleted successfully");
+                }
+                else{
+                    System.out.println("Failed to delete the file");
+                }
 
                 Toast.makeText(getApplicationContext(),"退登成功", Toast.LENGTH_SHORT).show();
 
