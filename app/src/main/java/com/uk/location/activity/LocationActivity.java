@@ -151,6 +151,11 @@ public class LocationActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         mapView.onDestroy();
+
+        locationHelper.stopClientListener();
+        locationHelper.disableNoti();
+        broadcastReceiver.stopAlarm(getApplicationContext());
+
         Log.d(DEBUG_TAG, "destory");
     }
 

@@ -70,6 +70,8 @@ public class LocationHelper {
             public void onReceiveLocation(BDLocation location) {
                 if (!isForTracking) {
                     Toast.makeText(context, "定位中...", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "后台定位中...", Toast.LENGTH_SHORT).show();
                 }
                 if (location != null) {
                     if (isForTracking) {
@@ -105,6 +107,10 @@ public class LocationHelper {
 
     public void stopClientService() {
         client.stop();
+    }
+
+    public void stopClientListener () {
+        client.unRegisterLocationListener(listener);
     }
 
     public void enableNoti() {
