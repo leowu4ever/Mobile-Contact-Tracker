@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="接触记录"
+            android:text="接触历史"
             android:textColor="#55578A"
             android:textSize="36sp"
             android:textStyle="bold" />

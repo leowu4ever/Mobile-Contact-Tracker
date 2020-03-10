@@ -126,7 +126,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/buttonshape"
-                android:text="查看接触记录"
+                android:text="查看接触历史"
                 android:textColor="@android:color/background_light"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -144,7 +144,7 @@
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:background="@drawable/buttonshape"
-                android:text="上报已接触人员"
+                android:text="上报接触人员信息"
                 android:textColor="@android:color/background_light"
                 android:textSize="14sp"
                 android:textStyle="bold" />

@@ -178,7 +178,7 @@
                             android:id="@+id/tv_pr_label_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="，接触了"
+                            android:text="接触"
                             android:textColor="#55578A"
                             android:textSize="14sp" />
 
@@ -212,7 +212,7 @@
                             android:id="@+id/tv_pr_label_duration"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="他/她的教育程度为"
+                            android:text="其教育程度为"
                             android:textColor="#55578A"
                             android:textSize="14sp" />
 
