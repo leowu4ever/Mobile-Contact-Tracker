@@ -1,9 +1,7 @@
 package com.uk.location.activity;
 
 import android.os.Environment;
-
 import com.google.gson.Gson;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
