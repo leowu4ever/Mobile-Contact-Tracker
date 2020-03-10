@@ -13,9 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="100dp"
         android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="100dp"
         android:alpha="1"
         android:background="@drawable/windowshape"
         android:orientation="vertical"
@@ -48,8 +48,7 @@
             android:layout_height="1dp"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:scrollbars="none"
-            >
+            android:scrollbars="none">
 
             <LinearLayout
                 android:id="@+id/layout_RecordView"

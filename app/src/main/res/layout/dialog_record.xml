@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent"
     android:gravity="center"
     android:orientation="vertical"
     tools:context="com.uk.location.activity.RecordEntryDialog">
@@ -13,9 +12,9 @@
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="100dp"
         android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="100dp"
         android:background="@drawable/windowshape"
         android:orientation="vertical"
         android:paddingLeft="20dp"
@@ -31,7 +30,7 @@
             android:text="接触人员记录"
             android:textColor="#55578A"
             android:textSize="36sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <View
             android:id="@+id/view1"
@@ -40,20 +39,19 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:alpha="0.1"
-            android:background="@android:color/darker_gray"/>
+            android:background="@android:color/darker_gray" />
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
+            android:layout_height="1dp"
+            android:layout_margin="0dp"
+            android:layout_weight="1"
             android:orientation="vertical"
             android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="0dp"
-                android:alpha="1"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <TextView
@@ -61,7 +59,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="性别"
-                    android:textColor="#55578A"/>
+                    android:textColor="#55578A" />
 
                 <Spinner
                     android:id="@+id/sp_gender"
@@ -79,15 +77,15 @@
                     android:id="@+id/tv_spinnerage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="0岁"
-                    android:textColor="#55578A"
-                    android:gravity="center"/>
+                    android:textColor="#55578A" />
 
                 <SeekBar
                     android:id="@+id/sb_age"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:max="100"/>
+                    android:max="100" />
 
                 <TextView
                     android:id="@+id/textView11"
@@ -122,7 +120,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <Spinner
@@ -147,7 +145,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <Spinner
@@ -199,51 +197,52 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <View
-                    android:id="@+id/view2"
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_weight="1"
-                    android:alpha="0.1"
-                    android:background="@android:color/darker_gray" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <Button
-                            android:id="@+id/btn_record_submit"
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:layout_marginRight="5dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/buttonshape"
-                            android:text="提交并保存"
-                            android:textColor="@android:color/background_light"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-
-                        <Button
-                            android:id="@+id/btn_record_dismiss"
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:layout_marginLeft="5dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/buttonshape"
-                            android:text="放弃编辑"
-                            android:textColor="@android:color/background_light"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-                </RelativeLayout>
             </LinearLayout>
         </ScrollView>
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:alpha="0.1"
+            android:background="@android:color/darker_gray" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_record_submit"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonshape"
+                    android:text="提交并保存"
+                    android:textColor="@android:color/background_light"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btn_record_dismiss"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonshape"
+                    android:text="放弃编辑"
+                    android:textColor="@android:color/background_light"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
 </RelativeLayout>
