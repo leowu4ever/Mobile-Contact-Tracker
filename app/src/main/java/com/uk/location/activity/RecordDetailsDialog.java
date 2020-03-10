@@ -17,7 +17,7 @@ import com.google.gson.Gson;
 public class RecordDetailsDialog {
 
     private Record record;
-    private TextView tv_name, tv_gender, tv_age, tv_job, tv_edu, tv_date, tv_area, tv_duration, tv_members;
+    private TextView tv_name, tv_gender, tv_age, tv_job, tv_edu, tv_date, tv_time, tv_area, tv_duration, tv_members;
     private Button btn_close;
     public RecordDetailsDialog(Context context, String data) {
         init(context, data);
@@ -48,6 +48,9 @@ public class RecordDetailsDialog {
 
         tv_date = recordDetailsDialog.findViewById(R.id.tv_pr_date);
         tv_date.setText(record.getDate());
+
+        tv_time = recordDetailsDialog.findViewById(R.id.tv_pr_time);
+        tv_time.setText(record.getTime());
 
         tv_area = recordDetailsDialog.findViewById(R.id.tv_pr_area);
         tv_area.setText(record.getArea());
