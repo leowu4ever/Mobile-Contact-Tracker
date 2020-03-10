@@ -27,14 +27,9 @@ public class RecordDetailsDialog {
 
         final Dialog recordDetailsDialog = new Dialog(context);
         recordDetailsDialog.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
-        recordDetailsDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         recordDetailsDialog.setContentView(R.layout.dialog_record_detail);
-        recordDetailsDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        recordDetailsDialog.setCanceledOnTouchOutside(false);
-        Window window = recordDetailsDialog.getWindow();
-        window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        window.setGravity(Gravity.CENTER);
-        recordDetailsDialog.show();
+
+        new DialogHelper().displayDialog(recordDetailsDialog);
 
         Gson gson = new Gson();
         Record record = gson.fromJson(rawData, Record.class);

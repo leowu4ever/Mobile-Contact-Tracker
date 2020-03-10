@@ -102,6 +102,5 @@ public class MainActivity extends Activity {
                     android.Manifest.permission.READ_EXTERNAL_STORAGE};
             ActivityCompat.requestPermissions((Activity) context, permissions, PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
         }
-
     }
 }

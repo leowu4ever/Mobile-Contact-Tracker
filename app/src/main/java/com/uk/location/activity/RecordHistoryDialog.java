@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -41,19 +42,14 @@ public class RecordHistoryDialog {
         final Dialog recordListDialog = new Dialog(context);
         recordListDialog.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
         recordListDialog.setContentView(R.layout.dialog_record_history);
-        recordListDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        new DialogHelper().displayDialog(recordListDialog);
 
         File rootDircectory = new File(Environment.getExternalStorageDirectory() + "/VirTrack/");
         String[] files = rootDircectory.list();
 
         LinearLayout parentLayout = recordListDialog.findViewById(R.id.layout_RecordView);
         parentLayout.removeAllViews();
-
-
-        recordListDialog.setCanceledOnTouchOutside(false);
-        Window window = recordListDialog.getWindow();
-        window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        recordListDialog.show();
 
         List<String> colList = new ArrayList(Arrays.asList(files));
         List<String> workableList = new ArrayList();
@@ -118,7 +114,6 @@ public class RecordHistoryDialog {
                     btnTag.setBackgroundResource(R.drawable.buttonround);
                     btnTag.setTextColor(context.getResources().getColor(android.R.color.background_light));
                     btnTag.setLayoutParams(new LinearLayout.LayoutParams((int) (60 * context.getResources().getDisplayMetrics().density), (int) (30 * context.getResources().getDisplayMetrics().density)));
-                    btnTag.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
                     btnTag.setGravity(Gravity.CENTER);
                     btnTag.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -158,7 +153,6 @@ public class RecordHistoryDialog {
                     recordContainer.addView(tvRecord);
                     recordContainer.addView(btnTag);
                     parentLayout.addView(recordContainer);
-
                 }
 
         } else {

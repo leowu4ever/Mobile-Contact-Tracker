@@ -31,20 +31,19 @@ public class RecordEntryDialog {
     private String[] sp_item_gender = {"请选择","男", "女"};
     private String[] sp_item_family_size = {"请选择","1名", "2名", "3名", "4名", "5名", "6名", "7名", "8名", "其他"};
     private String[] sp_item_time_spent = {"请选择","0.5小时", "1小时", "1.5小时", "2小时", "2.5小时", "3小时", "3.5小时", "4小时", "4.5小时", "5小时", "5.5小时", "6小时", "6.5小时", "7小时", "7.5小时", "8小时", "8.5小时", "9小时", "9.5小时", "10小时或以上"};
+    private SpinnerHelper spinnerHelper;
 
     public RecordEntryDialog(Context context) {
         init(context);
     }
 
     public void init(final Context context) {
+        spinnerHelper = new SpinnerHelper();
         final Dialog recordDialog = new Dialog(context);
         recordDialog.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
         recordDialog.setContentView(R.layout.dialog_record);
-        recordDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        recordDialog.setCanceledOnTouchOutside(false);
-        Window window = recordDialog.getWindow();
-        window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        recordDialog.show();
+
+        new DialogHelper().displayDialog(recordDialog);
 
         tvAge = recordDialog.findViewById(R.id.tv_spinnerage);
 
@@ -135,10 +134,7 @@ public class RecordEntryDialog {
         ArrayAdapter aa_gender = new ArrayAdapter<CharSequence>(context, android.R.layout.simple_spinner_item, sp_item_gender){
             @Override
             public boolean isEnabled(int position) {
-                if (position == 0) {
-                    return false;
-                }
-                return true;
+                return spinnerHelper.disableDefaultItem(position);
             }
         };
         aa_gender.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -148,10 +144,7 @@ public class RecordEntryDialog {
         ArrayAdapter aa_edu = new ArrayAdapter<CharSequence>(context, android.R.layout.simple_spinner_item, sp_item_education){
             @Override
             public boolean isEnabled(int position) {
-                if (position == 0) {
-                    return false;
-                }
-                return true;
+                return spinnerHelper.disableDefaultItem(position);
             }
         };
         aa_edu.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -161,10 +154,7 @@ public class RecordEntryDialog {
         ArrayAdapter aa_job = new ArrayAdapter<CharSequence>(context, android.R.layout.simple_spinner_item, sp_item_occupation){
             @Override
             public boolean isEnabled(int position) {
-                if (position == 0) {
-                    return false;
-                }
-                return true;
+                return spinnerHelper.disableDefaultItem(position);
             }
         };
         aa_job.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -174,10 +164,7 @@ public class RecordEntryDialog {
         ArrayAdapter aa_datemonth = new ArrayAdapter<CharSequence>(context, android.R.layout.simple_spinner_item, sp_item_month){
             @Override
             public boolean isEnabled(int position) {
-                if (position == 0) {
-                    return false;
-                }
-                return true;
+                return spinnerHelper.disableDefaultItem(position);
             }
         };
         aa_datemonth.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -187,10 +174,7 @@ public class RecordEntryDialog {
         ArrayAdapter aa_dateday = new ArrayAdapter<CharSequence>(context, android.R.layout.simple_spinner_item, sp_item_day){
             @Override
             public boolean isEnabled(int position) {
-                if (position == 0) {
-                    return false;
-                }
-                return true;
+                return spinnerHelper.disableDefaultItem(position);
             }
         };
         aa_dateday.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -200,10 +184,7 @@ public class RecordEntryDialog {
         ArrayAdapter aa_timehour = new ArrayAdapter<CharSequence>(context, android.R.layout.simple_spinner_item, sp_item_hour){
             @Override
             public boolean isEnabled(int position) {
-                if (position == 0) {
-                    return false;
-                }
-                return true;
+                return spinnerHelper.disableDefaultItem(position);
             }
         };
         aa_timehour.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -213,10 +194,7 @@ public class RecordEntryDialog {
         ArrayAdapter aa_timeminute = new ArrayAdapter<CharSequence>(context, android.R.layout.simple_spinner_item, sp_item_min){
             @Override
             public boolean isEnabled(int position) {
-                if (position == 0) {
-                    return false;
-                }
-                return true;
+                return spinnerHelper.disableDefaultItem(position);
             }
         };
         aa_timeminute.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -226,10 +204,7 @@ public class RecordEntryDialog {
         ArrayAdapter aa_duration = new ArrayAdapter<CharSequence>(context, android.R.layout.simple_spinner_item, sp_item_time_spent){
             @Override
             public boolean isEnabled(int position) {
-                if (position == 0) {
-                    return false;
-                }
-                return true;
+                return spinnerHelper.disableDefaultItem(position);
             }
         };
         aa_duration.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -239,10 +214,7 @@ public class RecordEntryDialog {
         ArrayAdapter aa_location = new ArrayAdapter<CharSequence>(context, android.R.layout.simple_spinner_item, sp_item_contact_location){
             @Override
             public boolean isEnabled(int position) {
-                if (position == 0) {
-                    return false;
-                }
-                return true;
+                return spinnerHelper.disableDefaultItem(position);
             }
         };
         aa_location.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -252,13 +224,12 @@ public class RecordEntryDialog {
         ArrayAdapter aa_family_size = new ArrayAdapter<CharSequence>(context, android.R.layout.simple_spinner_item, sp_item_family_size){
             @Override
             public boolean isEnabled(int position) {
-                if (position == 0) {
-                    return false;
-                }
-                return true;
+                return spinnerHelper.disableDefaultItem(position);
             }
         };
         aa_family_size.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spFamilycount.setAdapter(aa_family_size);
     }
+
+
 }

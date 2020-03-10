@@ -33,6 +33,7 @@ public class RegisterDialog {
     private String[] sp_item_occupation = {"请选择", "服务业", "农民/工人", "医务人员", "退休人员", "其他"};
     private String[] sp_item_education = {"请选择", "小学或以下", "初中", "高中", "大学", "硕士", "博士或其他"};
     private Dialog privacyDialog;
+    private SpinnerHelper spinnerHelper;
 
     public RegisterDialog(Context context) {
         init(context);
@@ -43,13 +44,11 @@ public class RegisterDialog {
         final Dialog registerDialog = new Dialog(context);
         registerDialog.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
 
+        spinnerHelper = new SpinnerHelper();
+
         registerDialog.setContentView(R.layout.dialog_register);
-        registerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        registerDialog.setCanceledOnTouchOutside(false);
-        Window window = registerDialog.getWindow();
-        window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        window.setGravity(Gravity.CENTER);
-        registerDialog.show();
+
+        new DialogHelper().displayDialog(registerDialog);
 
         btnSubmit = registerDialog.findViewById(R.id.btn_submit);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
@@ -121,10 +120,7 @@ public class RegisterDialog {
         ArrayAdapter aa_gender = new ArrayAdapter<CharSequence>(context, android.R.layout.simple_spinner_item, sp_item_gender) {
             @Override
             public boolean isEnabled(int position) {
-                if (position == 0) {
-                    return false;
-                }
-                return true;
+                return spinnerHelper.disableDefaultItem(position);
             }
         };
         aa_gender.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -134,10 +130,7 @@ public class RegisterDialog {
         ArrayAdapter aa_occupation = new ArrayAdapter<CharSequence>(context, android.R.layout.simple_spinner_item, sp_item_occupation) {
             @Override
             public boolean isEnabled(int position) {
-                if (position == 0) {
-                    return false;
-                }
-                return true;
+                return spinnerHelper.disableDefaultItem(position);
             }
         };
         aa_occupation.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -147,14 +140,10 @@ public class RegisterDialog {
         ArrayAdapter aa_edu = new ArrayAdapter<CharSequence>(context, android.R.layout.simple_spinner_item, sp_item_education) {
             @Override
             public boolean isEnabled(int position) {
-                if (position == 0) {
-                    return false;
-                }
-                return true;
+                return spinnerHelper.disableDefaultItem(position);
             }
         };
         aa_edu.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spEdu.setAdapter(aa_edu);
-
     }
 }
