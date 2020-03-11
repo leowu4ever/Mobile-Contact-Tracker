@@ -68,6 +68,7 @@ public class LocationHelper {
         listener = new BDAbstractLocationListener() {
             @Override
             public void onReceiveLocation(BDLocation location) {
+                LocationActivity.tvTest.append(Integer.toString(location.getLocType()) + "\n");
                 if (!isForTracking) {
                     Toast.makeText(context, "定位中...", Toast.LENGTH_SHORT).show();
                 } else {
