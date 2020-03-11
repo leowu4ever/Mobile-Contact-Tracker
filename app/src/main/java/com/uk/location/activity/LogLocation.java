@@ -9,8 +9,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class LogLocation {
-    public void LogLocation(String lon, String lat, String time, boolean istracking){
-        LogLocation.Location loc = new LogLocation.Location(lon);
+    public void LogLocation(String input){
+//        LogLocation.Location loc = new LogLocation.Location(lon, lat , time, isTracking);
 
         Gson gson = new Gson();
 
@@ -23,22 +23,25 @@ public class LogLocation {
 
         new File(rootfolder, "locationdetails.txt");
 
-        try (FileWriter writer = new FileWriter(PATH_LOCAL + "locationdetails.txt")) {
-            gson.toJson(loc, writer);
+        try (FileWriter writer = new FileWriter(PATH_LOCAL + "locationdetails.txt",true)) {
+            writer.write(input);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
 
-    class Location {
+    /*class Location {
         private String longitude;
         private String latitude;
         private String time;
         private boolean isTracking;
 
-        public Location(String lon){
+        public Location(String lon, String lat, String time, boolean isTracking){
             this.longitude = lon;
+            this.latitude = lat;
+            this.time = time;
+            this.isTracking = false;
         };
 
         private void setTrackingState(Boolean input) {
@@ -47,5 +50,5 @@ public class LogLocation {
         private boolean getTrackingState() {
             return isTracking;
         }
-    }
+    }*/
 }
