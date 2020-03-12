@@ -13,7 +13,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
     private AlarmManager am;
     private Intent intent;
     private PendingIntent pi;
-    private final int LOCATION_UPLOAD_INTERVAL = 1000 * 60;
+    private final int LOCATION_UPLOAD_INTERVAL = 1000 * 60 * 5;
 
     public static LocationHelper locationHelper;
 
