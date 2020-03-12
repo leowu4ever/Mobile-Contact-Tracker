@@ -28,6 +28,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
         intent = new Intent(context, MyBroadcastReceiver.class);
         intent.setAction(ALARM_ACTION_LABEL);
         pi = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        am.cancel(pi);
         am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, (System.currentTimeMillis() + LOCATION_UPLOAD_INTERVAL), pi); //Next alarm in 5s
 
         LocationHelper.setTrackingState(true);
