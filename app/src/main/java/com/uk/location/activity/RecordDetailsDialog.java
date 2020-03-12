@@ -13,7 +13,7 @@ import com.google.gson.Gson;
 public class RecordDetailsDialog {
 
     private Record record;
-    private TextView tv_name, tv_gender, tv_age, tv_job, tv_edu, tv_date, tv_time, tv_area, tv_duration, tv_members;
+    private TextView tv_gender, tv_age, tv_job, tv_edu, tv_date, tv_time, tv_area, tv_duration, tv_members;
     private Button btn_close;
 
     public RecordDetailsDialog(Context context, String data) {

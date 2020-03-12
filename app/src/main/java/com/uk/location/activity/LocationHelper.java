@@ -29,11 +29,12 @@ public class LocationHelper {
     private NotificationUtils mNotificationUtils;
     private Notification notification;
     private boolean isForTracking = false;
-
+    private LogLocation log;
 
     public LocationHelper(Context context) {
         initClient(context);
         initNotification(context);
+        log = new LogLocation();
     }
 
     public static boolean getTrackingState() {
@@ -81,10 +82,18 @@ public class LocationHelper {
                         double longitude = location.getLongitude();
                         Log.d(DEBUG_TAG, "upload client" + latitude + "," + longitude);
                         Calendar currentTime = Calendar.getInstance();
-                        LocationActivity.tvTest.append("(" + currentTime.get(Calendar.HOUR) + " : "
-                                + currentTime.get(Calendar.MINUTE) + " : "
-                                + currentTime.get(Calendar.SECOND) + ")  "
-                                + latitude + " " + longitude + "\n");
+                        LocationActivity.tvTest.append("(" + currentTime.get(Calendar.HOUR) + ":"
+                                + currentTime.get(Calendar.MINUTE) + ":" + currentTime.get(Calendar.SECOND) + ")" + latitude + " " + longitude + "\n");
+
+                        //Log by String
+                        /*log.LogLocation(latitude, longitude, currentTime.get(Calendar.HOUR) + ":"
+                                + currentTime.get(Calendar.MINUTE) + ":"
+                                + currentTime.get(Calendar.SECOND));*/
+                        //Log by Object
+                        log.addLocationToObject(Double.toString(latitude), Double.toString(longitude),currentTime.get(Calendar.MONTH) + String.valueOf(currentTime.get(Calendar.DAY_OF_MONTH)),
+                                currentTime.get(Calendar.HOUR) + ":" + currentTime.get(Calendar.MINUTE) + ":"  + currentTime.get(Calendar.SECOND));
+                        log.LogLocationViaObject();
+
                     } else {
                         // move camera
                         setPosition2Center(LocationActivity.baiduMap, location);
