@@ -20,27 +20,24 @@ public class LocationActivity extends Activity {
 
     public static BaiduMap baiduMap = null;
     public static TextView tvTest = null;
-    public static LocationHelper locationHelper;
-    private Button btnReport, btnViewReport, btnUpload, btnLocate, btnLogout;
+    public static Button btnUpload;
+    private Button btnReport, btnViewReport, btnLocate, btnLogout;
     private MapView mapView = null;
-    private String DEBUG_TAG = "loa1";
     private MyBroadcastReceiver broadcastReceiver;
+
+    private LocationHelper lh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(DEBUG_TAG, "create");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
 
-        locationHelper = new LocationHelper(this);
-
-        tvTest = findViewById(R.id.tv_test);
         broadcastReceiver = new MyBroadcastReceiver();
-
+        lh = new LocationHelper(this);
         initMap();
         initUIs();
+        lh.getLocation(false);
 
-        locationHelper.getLocation(false);
     }
 
     private void initUIs() {
@@ -58,19 +55,12 @@ public class LocationActivity extends Activity {
             @Override
             public void onClick(View v) {
                 if (LocationHelper.getTrackingState()) {
-                    locationHelper.disableNoti();
                     btnUpload.setText("开启后台定位采集");
                     btnUpload.setBackgroundResource(R.drawable.buttonshape);
-
-                    // start alarm
                     broadcastReceiver.stopAlarm(getApplicationContext());
                 } else {
-                    locationHelper.enableNoti();
                     btnUpload.setText("关闭后台定位采集");
                     btnUpload.setBackgroundResource(R.drawable.buttonshape_red);
-                    LocationActivity.this.moveTaskToBack(true);
-
-                    // stop alarm
                     broadcastReceiver.startAlarm(getApplicationContext());
                 }
             }
@@ -88,8 +78,7 @@ public class LocationActivity extends Activity {
         btnLocate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                locationHelper.getLocation(false);
+                lh.getLocation(false);
             }
         });
 
@@ -97,8 +86,6 @@ public class LocationActivity extends Activity {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // todo
-                //to do adding a double check dialog
                 Intent intent = new Intent(LocationActivity.this, MainActivity.class);
                 startActivity(intent);
                 File file = new File(Environment.getExternalStorageDirectory() + "/VirTrack/userdetails");
@@ -114,14 +101,12 @@ public class LocationActivity extends Activity {
         });
     }
 
-
     private void initMap() {
         mapView = findViewById(R.id.bmapView);
         mapView.showZoomControls(false);
         mapView.showScaleControl(false);
         baiduMap = mapView.getMap();
         baiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
-        //baiduMap.setMyLocationEnabled(true);
         UiSettings uiSetting = baiduMap.getUiSettings();
         uiSetting.setZoomGesturesEnabled(false);
         uiSetting.setOverlookingGesturesEnabled(false);
@@ -130,37 +115,23 @@ public class LocationActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d(DEBUG_TAG, "start");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         mapView.onResume();
-        Log.d(DEBUG_TAG, "resume");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         mapView.onPause();
-        Log.d(DEBUG_TAG, "pause");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mapView.onDestroy();
-
-        locationHelper.stopClientListener();
-        locationHelper.disableNoti();
-        broadcastReceiver.stopAlarm(getApplicationContext());
-
-        Log.d(DEBUG_TAG, "destory");
-    }
-
-    @Override
-    public void onBackPressed() {
-        LocationActivity.this.moveTaskToBack(true);
     }
 }

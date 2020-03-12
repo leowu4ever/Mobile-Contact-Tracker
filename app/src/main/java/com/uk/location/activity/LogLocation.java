@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class LogLocation {
+
     public void LogLocation(String input){
 //        LogLocation.Location loc = new LogLocation.Location(lon, lat , time, isTracking);
 

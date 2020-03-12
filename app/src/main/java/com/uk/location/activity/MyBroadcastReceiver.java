@@ -6,7 +6,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
 public class MyBroadcastReceiver extends BroadcastReceiver {
 
@@ -14,16 +13,14 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
     private AlarmManager am;
     private Intent intent;
     private PendingIntent pi;
-    private final int LOCATION_UPLOAD_INTERVAL = 1000 * 60 * 5;
+    private final int LOCATION_UPLOAD_INTERVAL = 1000 * 60;
 
-    public MyBroadcastReceiver() {
-    }
+    public static LocationHelper locationHelper;
 
     public void onReceive(Context context, Intent intent) {
+        locationHelper = new LocationHelper(context);
+        locationHelper.getLocation(true);
         startAlarm(context);
-        LocationActivity.locationHelper.getLocation(true);
-        Log.d("loa1", "alarm calling");
-
     }
 
     public void startAlarm(Context context) {
@@ -32,7 +29,9 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
         intent.setAction(ALARM_ACTION_LABEL);
         pi = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, (System.currentTimeMillis() + LOCATION_UPLOAD_INTERVAL), pi); //Next alarm in 5s
+
         LocationHelper.setTrackingState(true);
+        Log.d("loa1", "alarm starts");
     }
 
     public void stopAlarm(Context context) {
@@ -42,6 +41,8 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
         pi = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         am.cancel(pi);
         pi.cancel();
+
         LocationHelper.setTrackingState(false);
+        Log.d("loa1", "alarm stops");
     }
 }
