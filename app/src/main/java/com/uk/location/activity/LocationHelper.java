@@ -1,10 +1,5 @@
 package com.uk.location.activity;
-
-import android.app.Notification;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -26,15 +21,11 @@ public class LocationHelper {
     private LocationClient client;
     private BDAbstractLocationListener listener;
     private String DEBUG_TAG = "loa1";
-    private NotificationUtils mNotificationUtils;
-    private Notification notification;
-    private boolean isForTracking = false;
-    private LogLocation log;
+    private boolean forTracking = false;
+
 
     public LocationHelper(Context context) {
         initClient(context);
-        initNotification(context);
-        log = new LogLocation();
     }
 
     public static boolean getTrackingState() {
@@ -45,7 +36,7 @@ public class LocationHelper {
         isTracking = trackingState;
     }
 
-    public void setPosition2Center(BaiduMap map, BDLocation bdLocation) {
+    public void zoomMapTo(BaiduMap map, BDLocation bdLocation) {
         MyLocationData locData = new MyLocationData.Builder()
                 .accuracy(bdLocation.getRadius())
                 .direction(bdLocation.getRadius()).latitude(bdLocation.getLatitude())
@@ -60,7 +51,6 @@ public class LocationHelper {
 
     private void initClient(final Context context) {
 
-        final Context c = context;
         LocationClientOption option = new LocationClientOption();
         option.setOpenGps(true);
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
@@ -69,37 +59,28 @@ public class LocationHelper {
         listener = new BDAbstractLocationListener() {
             @Override
             public void onReceiveLocation(BDLocation location) {
-                LocationActivity.tvTest.append(Integer.toString(location.getLocType()) + "\n");
-                if (!isForTracking) {
-                    Toast.makeText(context, "定位中...", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(context, "后台定位中...", Toast.LENGTH_SHORT).show();
-                }
+                Calendar currentTime = Calendar.getInstance();
+                String time = currentTime.get(Calendar.HOUR_OF_DAY) + ":" + currentTime.get(Calendar.MINUTE) + ":" + currentTime.get(Calendar.SECOND);
                 if (location != null) {
-                    if (isForTracking) {
-                        // do database here
+                    if(forTracking) {
                         double latitude = location.getLatitude();
                         double longitude = location.getLongitude();
-                        Log.d(DEBUG_TAG, "upload client" + latitude + "," + longitude);
-                        Calendar currentTime = Calendar.getInstance();
-                        LocationActivity.tvTest.append("(" + currentTime.get(Calendar.HOUR) + ":"
-                                + currentTime.get(Calendar.MINUTE) + ":" + currentTime.get(Calendar.SECOND) + ")" + latitude + " " + longitude + "\n");
+                        String errorCode = "error code:" + location.getLocType() + "\n";
+                        String prompt = time + " - "+ latitude + "," + longitude + " - "+  errorCode;
+                        Log.d(DEBUG_TAG, prompt);
 
-                        //Log by String
-                        /*log.LogLocation(latitude, longitude, currentTime.get(Calendar.HOUR) + ":"
-                                + currentTime.get(Calendar.MINUTE) + ":"
-                                + currentTime.get(Calendar.SECOND));*/
-                        //Log by Object
-                        log.addLocationToObject(Double.toString(latitude), Double.toString(longitude),currentTime.get(Calendar.MONTH) + String.valueOf(currentTime.get(Calendar.DAY_OF_MONTH)),
-                                currentTime.get(Calendar.HOUR) + ":" + currentTime.get(Calendar.MINUTE) + ":"  + currentTime.get(Calendar.SECOND));
-                        log.LogLocationViaObject();
+                        Toast.makeText(context, prompt, Toast.LENGTH_SHORT).show();
+
+                        LogLocation log = new LogLocation();
+                        log.LogLocation(prompt);
 
                     } else {
-                        // move camera
-                        setPosition2Center(LocationActivity.baiduMap, location);
+                        zoomMapTo(LocationActivity.baiduMap, location);
                     }
+
                 } else {
-                    Toast.makeText(c, "暂时无法定位到你", Toast.LENGTH_SHORT).show();
+                    String prompt = time  + " , (locating failed)";
+                    Toast.makeText(context, prompt, Toast.LENGTH_SHORT).show();
                 }
                 stopClientService();
             }
@@ -110,8 +91,8 @@ public class LocationHelper {
         client.registerLocationListener(listener);
     }
 
-    public void getLocation(boolean tracking) {
-        this.isForTracking = tracking;
+    public void getLocation(boolean forTracking) {
+        this.forTracking = forTracking;
         client.start();
     }
 
@@ -119,41 +100,4 @@ public class LocationHelper {
         client.stop();
     }
 
-    public void stopClientListener () {
-        client.unRegisterLocationListener(listener);
-    }
-
-    public void enableNoti() {
-        client.enableLocInForeground(1001, getNoti());
-    }
-
-    public void disableNoti() {
-        client.disableLocInForeground(true);
-    }
-
-    private void initNotification(Context context) {
-        if (Build.VERSION.SDK_INT >= 26) {
-            mNotificationUtils = new NotificationUtils(context);
-            Notification.Builder builder2 = mNotificationUtils.getAndroidChannelNotification
-                    ("疫迹 - 你也可以为扼制疫情发展出一份力", "已开启后台定位采集");
-            notification = builder2.build();
-        } else {
-            //获取一个Notification构造器
-            Notification.Builder builder = new Notification.Builder(context);
-            Intent nfIntent = new Intent(context, LocationActivity.class);
-
-            builder.setContentIntent(PendingIntent.
-                    getActivity(context, 0, nfIntent, 0)) // 设置PendingIntent
-                    .setContentTitle("疫迹 - 你也可以为扼制疫情发展出一份力") // 设置下拉列表里的标题
-                    .setSmallIcon(R.drawable.ic_launcher) // 设置状态栏内的小图标
-                    .setContentText("已开启后台定位采集") // 设置上下文内容
-                    .setWhen(System.currentTimeMillis()); // 设置该通知发生的时间
-            notification = builder.build(); // 获取构建好的Notification
-        }
-        notification.defaults = Notification.DEFAULT_SOUND; //设置为默认的声音
-    }
-
-    public Notification getNoti() {
-        return notification;
-    }
 }
