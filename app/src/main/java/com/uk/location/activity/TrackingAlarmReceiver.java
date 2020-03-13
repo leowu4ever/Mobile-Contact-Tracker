@@ -5,11 +5,10 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.PowerManager;
 import android.util.Log;
 
-public class MyBroadcastReceiver extends BroadcastReceiver {
+public class TrackingAlarmReceiver extends BroadcastReceiver {
 
     private final String ALARM_ACTION_LABEL = "LOCATION_ALARM";
     private AlarmManager am;
@@ -27,7 +26,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 
     public void startAlarm(Context context) {
         am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        intent = new Intent(context, MyBroadcastReceiver.class);
+        intent = new Intent(context, TrackingAlarmReceiver.class);
         intent.setAction(ALARM_ACTION_LABEL);
         pi = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         am.cancel(pi);
@@ -41,7 +40,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 
     public void stopAlarm(Context context) {
         am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        intent = new Intent(context, MyBroadcastReceiver.class);
+        intent = new Intent(context, TrackingAlarmReceiver.class);
         intent.setAction(ALARM_ACTION_LABEL);
         pi = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         am.cancel(pi);

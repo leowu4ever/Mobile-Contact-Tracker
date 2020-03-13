@@ -26,7 +26,7 @@
         android:theme="@android:style/Theme.NoTitleBar"
         android:label="疫迹"
         >
-        <activity android:name="com.uk.location.activity.MyBroadcastReceiver"></activity>
+        <activity android:name="com.uk.location.activity.TrackingAlarmReceiver"></activity>
 
         <service
             android:name="com.baidu.location.f"
@@ -52,7 +52,7 @@
         <activity android:name="com.uk.location.activity.RecordDetailsDialog" />
 
         <receiver
-            android:name="com.uk.location.activity.MyBroadcastReceiver"
+            android:name="com.uk.location.activity.TrackingAlarmReceiver"
             android:enabled="true"
             android:exported="true"
             android:process=":service"
