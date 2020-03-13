@@ -135,4 +135,9 @@ public class LocationActivity extends Activity {
         super.onDestroy();
         mapView.onDestroy();
     }
+
+    @Override
+    public void onBackPressed() {
+        
+    }
 }
