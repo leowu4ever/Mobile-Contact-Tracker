@@ -2,8 +2,10 @@ package com.uk.location.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -37,7 +39,6 @@ public class LocationActivity extends Activity {
         initMap();
         initUIs();
         lh.getLocation(false);
-
     }
 
     private void initUIs() {
