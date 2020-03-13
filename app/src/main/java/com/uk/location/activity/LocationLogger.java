@@ -17,7 +17,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
-public class LogLocation {
+public class LocationLogger {
     Location loco = new Location(false);
     Calendar currentTime = Calendar.getInstance();
     String PATH_LOCAL = Environment.getExternalStorageDirectory() + "/VirTrack/";
@@ -80,17 +80,34 @@ public class LogLocation {
         }
     }
 
-    public void LogLocationViaObject() {
+    public void LogLocationViaObject(String lat, String lon, String date, String time) {
         Gson gson = new Gson();
 
-        File rootfolder = new File(PATH_LOCAL);
-        if (!rootfolder.exists()) {
-            rootfolder.mkdir();
+        File rootDircectory = new File(PATH_LOCAL);
+        if (!rootDircectory.exists()) {
+            rootDircectory.mkdir();
         }
 
-        String fileobjname = "locationdetails_obj_" + currentTime.get(Calendar.HOUR) + currentTime.get(Calendar.MINUTE) + currentTime.get(Calendar.SECOND) + ".txt";
+        String fileobjname = "locationdetails_obj.txt";
 
-        new File(rootfolder, fileobjname);
+        new File(rootDircectory, fileobjname);
+
+        FileHelper fh = new FileHelper();
+
+        String[] files = rootDircectory.list();
+
+        List<String> colList = new ArrayList(Arrays.asList(files));
+        List<String> workableList = new ArrayList();
+        for (String str : colList) {
+            if (str.startsWith("locationdetails_")) {
+                workableList.add(str);
+            }
+        }
+        if (workableList.size() > 0) {
+            String readings = fh.readFile("locationdetails_obj.txt");
+            loco = gson.fromJson(readings, Location.class);
+        }
+        loco.addTripData(lat, lon, date, time);
 
         try (FileWriter writer = new FileWriter(PATH_LOCAL + fileobjname)) {
             gson.toJson(loco, writer);
@@ -106,11 +123,17 @@ public class LogLocation {
 
     class Location {
         private boolean isTracking;
-        private ArrayList<trip> tripData;
+        private ArrayList<String> lat;
+        private ArrayList<String> lon;
+        private ArrayList<String> date;
+        private ArrayList<String> time;
 
         public Location(boolean isTracking) {
             this.isTracking = false;
-            tripData = new ArrayList<trip>();
+            lat = new ArrayList<String>();
+            lon = new ArrayList<String>();
+            date = new ArrayList<String>();
+            time = new ArrayList<String>();
         }
 
         private void setTrackingState(Boolean input) {
@@ -122,37 +145,10 @@ public class LogLocation {
         }
 
         private void addTripData(String lat, String lon, String date, String time) {
-            tripData.add(new trip(lat, lon, date, time));
-        }
-    }
-
-    class trip {
-        private String lat;
-        private String lon;
-        private String date;
-        private String time;
-
-        public trip(String lat, String lon, String date, String time) {
-            setLat(lat);
-            setLong(lon);
-            setDate(date);
-            setTime(time);
-        }
-
-        private void setLat(String lat) {
-            this.lat = lat;
-        }
-
-        private void setLong(String lon) {
-            this.lon = lon;
-        }
-
-        private void setDate(String lon) {
-            this.lon = lon;
-        }
-
-        private void setTime(String time) {
-            this.time = time;
+            this.lat.add(lat);
+            this.lon.add(lon);
+            this.date.add(date);
+            this.time.add(time);
         }
     }
 }

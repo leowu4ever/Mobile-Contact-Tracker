@@ -71,8 +71,8 @@ public class LocationHelper {
 
                         Toast.makeText(context, prompt, Toast.LENGTH_SHORT).show();
 
-                        LogLocation log = new LogLocation();
-                        log.LogLocation(prompt);
+                        LocationLogger log = new LocationLogger();
+                        log.LogLocationViaObject(String.valueOf(latitude), String.valueOf(longitude),String.valueOf(currentTime.get(Calendar.MONTH)+1) + String.valueOf(currentTime.get(Calendar.DAY_OF_MONTH)) , time);
 
                     } else {
                         zoomMapTo(LocationActivity.baiduMap, location);
