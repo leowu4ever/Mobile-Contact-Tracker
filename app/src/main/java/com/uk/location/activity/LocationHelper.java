@@ -1,5 +1,6 @@
 package com.uk.location.activity;
 import android.content.Context;
+import android.location.Location;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -22,10 +23,12 @@ public class LocationHelper {
     private BDAbstractLocationListener listener;
     private String DEBUG_TAG = "loa1";
     private boolean forTracking = false;
+    public JsonFileHelper jsonFileHelper;
 
 
     public LocationHelper(Context context) {
         initClient(context);
+        jsonFileHelper = new JsonFileHelper();
     }
 
     public static boolean getTrackingState() {
@@ -60,27 +63,32 @@ public class LocationHelper {
             @Override
             public void onReceiveLocation(BDLocation location) {
                 Calendar currentTime = Calendar.getInstance();
-                String time = currentTime.get(Calendar.HOUR_OF_DAY) + ":" + currentTime.get(Calendar.MINUTE) + ":" + currentTime.get(Calendar.SECOND);
                 if (location != null) {
                     if(forTracking) {
+
+
+                        // write location log
+                        LocationLogData locationLogData = jsonFileHelper.readLocationLogDataFromLocal();
+                        String date = (currentTime.get(Calendar.MONTH)+1) + "-" + currentTime.get(Calendar.DATE);
+                        String time = currentTime.get(Calendar.HOUR_OF_DAY) + ":" + currentTime.get(Calendar.MINUTE) + ":" + currentTime.get(Calendar.SECOND);
+                        int errorcode = location.getLocType();
                         double latitude = location.getLatitude();
                         double longitude = location.getLongitude();
-                        String errorCode = "error code:" + location.getLocType() + "\n";
-                        String prompt = time + " - "+ latitude + "," + longitude + " - "+  errorCode;
-                        Log.d(DEBUG_TAG, prompt);
 
+                        locationLogData.addLocationLogData(date, time, latitude, longitude, errorcode);
+                        jsonFileHelper.saveLocationLogDataToLocal(locationLogData);
+
+                        String prompt = time + " - "+ latitude + "," + longitude + " - "+  errorcode;
+                        Log.d(DEBUG_TAG, prompt);
                         Toast.makeText(context, prompt, Toast.LENGTH_SHORT).show();
 
-                        LocationLogger log = new LocationLogger();
-                        log.LogLocationViaObject(String.valueOf(latitude), String.valueOf(longitude),String.valueOf(currentTime.get(Calendar.MONTH)+1) + String.valueOf(currentTime.get(Calendar.DAY_OF_MONTH)) , time);
 
                     } else {
                         zoomMapTo(LocationActivity.baiduMap, location);
                     }
 
                 } else {
-                    String prompt = time  + " , (locating failed)";
-                    Toast.makeText(context, prompt, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "定位失败", Toast.LENGTH_SHORT).show();
                 }
                 stopClientService();
             }
@@ -99,5 +107,4 @@ public class LocationHelper {
     public void stopClientService() {
         client.stop();
     }
-
 }
