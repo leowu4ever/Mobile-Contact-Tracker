@@ -2,11 +2,8 @@ package com.uk.location.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.Settings;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -25,20 +22,23 @@ public class LocationActivity extends Activity {
     public static Button btnUpload;
     private Button btnReport, btnViewReport, btnLocate, btnLogout;
     private MapView mapView = null;
-    private MyBroadcastReceiver broadcastReceiver;
+    private TrackingAlarmReceiver broadcastReceiver;
 
-    private LocationHelper lh;
+    private LocationHelper locationHelper;
+    private JsonFileHelper jsonFileHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
 
-        broadcastReceiver = new MyBroadcastReceiver();
-        lh = new LocationHelper(this);
+        jsonFileHelper = new JsonFileHelper();
+        broadcastReceiver = new TrackingAlarmReceiver();
+        locationHelper = new LocationHelper(this);
         initMap();
         initUIs();
-        lh.getLocation(false);
+
+        locationHelper.getLocation(false);
     }
 
     private void initUIs() {
@@ -51,18 +51,41 @@ public class LocationActivity extends Activity {
             }
         });
 
+        // update tracking state since tracking process won't stop even reboot.
+        RegistrationData registrationData = jsonFileHelper.readRegistrationDataFromLocal();
         btnUpload = findViewById(R.id.btn_upload);
+        boolean trackingState = registrationData.getTrackingState();
+        if (trackingState) {
+            btnUpload.setText("关闭后台定位采集");
+            btnUpload.setBackgroundResource(R.drawable.buttonshape_red);
+        } else {
+            btnUpload.setText("开启后台定位采集");
+            btnUpload.setBackgroundResource(R.drawable.buttonshape);
+        }
+
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (LocationHelper.getTrackingState()) {
+                RegistrationData registrationData = jsonFileHelper.readRegistrationDataFromLocal();
+                boolean trackingState = registrationData.getTrackingState();
+
+                if (trackingState) {
+                    // turn off tracking
                     btnUpload.setText("开启后台定位采集");
                     btnUpload.setBackgroundResource(R.drawable.buttonshape);
                     broadcastReceiver.stopAlarm(getApplicationContext());
+
+                    registrationData.setTrackingState(false);
+                    jsonFileHelper.saveRegistrationDataFromLocal(registrationData);
+
                 } else {
                     btnUpload.setText("关闭后台定位采集");
                     btnUpload.setBackgroundResource(R.drawable.buttonshape_red);
                     broadcastReceiver.startAlarm(getApplicationContext());
+
+                    // update tracking state since tracking process won't stop even reboot.
+                    registrationData.setTrackingState(true);
+                    jsonFileHelper.saveRegistrationDataFromLocal(registrationData);
                 }
             }
         });
@@ -79,7 +102,7 @@ public class LocationActivity extends Activity {
         btnLocate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                lh.getLocation(false);
+                locationHelper.getLocation(false);
             }
         });
 
@@ -138,6 +161,6 @@ public class LocationActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        
+
     }
 }
