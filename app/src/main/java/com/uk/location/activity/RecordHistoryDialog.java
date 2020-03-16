@@ -29,8 +29,10 @@ import java.util.List;
 public class RecordHistoryDialog {
 
     private Button btnUploadHistory, btnDismissHisory;
+    private String currentUser;
 
-    public RecordHistoryDialog(Context context) {
+    public RecordHistoryDialog(String currentID, Context context) {
+        currentUser = currentID;
         init(context);
     }
 
@@ -42,7 +44,7 @@ public class RecordHistoryDialog {
 
         new DialogHelper().displayDialog(recordListDialog);
 
-        File rootDircectory = new File(Environment.getExternalStorageDirectory() + "/疫迹");
+        File rootDircectory = new File(Environment.getExternalStorageDirectory() + "/疫迹/" + currentUser + "/");
         String[] files = rootDircectory.list();
 
         LinearLayout parentLayout = recordListDialog.findViewById(R.id.layout_RecordView);
@@ -51,9 +53,8 @@ public class RecordHistoryDialog {
         List<String> colList = new ArrayList(Arrays.asList(files));
         List<String> workableList = new ArrayList();
         for (String str : colList) {
-            if (str.startsWith("record_")) {
+            if (str.contains("_location_log")) {
                 workableList.add(str);
-                Log.d("FILE", str);
             }
         }
 

@@ -1,6 +1,5 @@
 package com.uk.location.activity;
 import android.content.Context;
-import android.location.Location;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -26,9 +25,9 @@ public class LocationHelper {
     public JsonFileHelper jsonFileHelper;
 
 
-    public LocationHelper(Context context) {
+    public LocationHelper(String currentID, Context context) {
+        jsonFileHelper = new JsonFileHelper(currentID);
         initClient(context);
-        jsonFileHelper = new JsonFileHelper();
     }
 
     public static boolean getTrackingState() {
@@ -53,7 +52,6 @@ public class LocationHelper {
     }
 
     private void initClient(final Context context) {
-
         LocationClientOption option = new LocationClientOption();
         option.setOpenGps(true);
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
@@ -65,8 +63,6 @@ public class LocationHelper {
                 Calendar currentTime = Calendar.getInstance();
                 if (location != null) {
                     if(forTracking) {
-
-
                         // write location log
                         LocationLogData locationLogData = jsonFileHelper.readLocationLogDataFromLocal();
                         String date = (currentTime.get(Calendar.MONTH)+1) + "-" + currentTime.get(Calendar.DATE);
@@ -74,19 +70,14 @@ public class LocationHelper {
                         int errorcode = location.getLocType();
                         double latitude = location.getLatitude();
                         double longitude = location.getLongitude();
-
                         locationLogData.addLocationLogData(date, time, latitude, longitude, errorcode);
                         jsonFileHelper.saveLocationLogDataToLocal(locationLogData);
-
-                        String prompt = time + " - "+ latitude + "," + longitude + " - "+  errorcode;
+                        String prompt = time + " - "+ latitude + "," + longitude + " - " + errorcode;
                         Log.d(DEBUG_TAG, prompt);
                         Toast.makeText(context, prompt, Toast.LENGTH_SHORT).show();
-
-
                     } else {
                         zoomMapTo(LocationActivity.baiduMap, location);
                     }
-
                 } else {
                     Toast.makeText(context, "定位失败", Toast.LENGTH_SHORT).show();
                 }

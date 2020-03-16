@@ -14,23 +14,23 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Calendar;
 
+
 public class JsonFileHelper {
 
     // - app folder
-    //  - user 1
-    //      - registration information
-    //      - location log 1 (year_month_day_location_log.json)
+    //   - user 1
+    //       - registration information
+    //       - location log 1 (year_month_day_location_log.json)
 
     public final String PATH_ROOT_FOLDER = Environment.getExternalStorageDirectory() + "/疫迹";
-    public final String PATH_USER_FOLDER = PATH_ROOT_FOLDER + "/";  // need to get user name here
+    public String PATH_USER_FOLDER;
     public final String LOCATION_LOG_FILENAME_SUFFIX = "_location_log.json";
-
-
-
     public final String REGISTRATION_FILE_NAME = "registration.json";
-    public final String REGISTRATION_FILE_PATH = PATH_USER_FOLDER + REGISTRATION_FILE_NAME;
+    public String REGISTRATION_FILE_PATH;
 
-    public JsonFileHelper() {
+    public JsonFileHelper(String userName) {
+        PATH_USER_FOLDER = PATH_ROOT_FOLDER + "/" + userName + "/";
+        REGISTRATION_FILE_PATH = PATH_USER_FOLDER + REGISTRATION_FILE_NAME;
         initDir();
     }
 
@@ -46,10 +46,9 @@ public class JsonFileHelper {
     }
 
     public RegistrationData readRegistrationDataFromLocal() {
-
         File overallDataFile = new File(REGISTRATION_FILE_PATH);
         if (!overallDataFile.exists()) {
-            RegistrationData emptyRegistrationData = new RegistrationData();
+            RegistrationData emptyRegistrationData = new RegistrationData(null,null);
             saveRegistrationDataFromLocal(emptyRegistrationData);
         }
 
@@ -62,7 +61,6 @@ public class JsonFileHelper {
         Calendar currentTime = Calendar.getInstance();
         String date = (currentTime.get(Calendar.MONTH)+1)+ "_" + currentTime.get(Calendar.DATE);
         String path = PATH_USER_FOLDER + date + LOCATION_LOG_FILENAME_SUFFIX;
-
         Gson gson = new Gson();
         try (FileWriter writer = new FileWriter(path)) {
             gson.toJson(locationLog, writer);
@@ -76,7 +74,6 @@ public class JsonFileHelper {
         Calendar currentTime = Calendar.getInstance();
         String date = (currentTime.get(Calendar.MONTH)+1) + "_" + currentTime.get(Calendar.DATE);
         String path = PATH_USER_FOLDER + date + LOCATION_LOG_FILENAME_SUFFIX;
-
         File overallDataFile = new File(path);
         if (!overallDataFile.exists()) {
             LocationLogData emptyLocationLog = new LocationLogData();

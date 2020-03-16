@@ -30,6 +30,7 @@ public class MainActivity extends Activity {
     public static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private Button btnLogin, btnRegister;
     private EditText etUserName, etPassword;
+    private static String currentUser;
 
     public static void getLocationPermission(Context context) {
         // TO DO need permission check on later screens
@@ -39,7 +40,6 @@ public class MainActivity extends Activity {
                 && ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.ACCESS_WIFI_STATE) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-
         } else {
             String[] permissions = {android.Manifest.permission.ACCESS_COARSE_LOCATION,
                     android.Manifest.permission.ACCESS_FINE_LOCATION,
@@ -58,6 +58,7 @@ public class MainActivity extends Activity {
         initUIs();
         getLocationPermission(this);
         autoLogin();
+        currentUser = "";
     }
 
     private void initUIs() {
@@ -74,7 +75,7 @@ public class MainActivity extends Activity {
                     Login login = new Login();
                     login.setUsername(etUserName.getText().toString());
                     login.setPassword(etPassword.getText().toString());
-
+                    currentUser = etUserName.getText().toString();
                     Gson gson = new Gson();
 
                     String PATH_LOCAL = Environment.getExternalStorageDirectory() + "/疫迹";
@@ -84,9 +85,9 @@ public class MainActivity extends Activity {
                         rootfolder.mkdir();
                     }
 
-                    new File(rootfolder, "userdetails.json");
+                    new File(rootfolder, "autologin_userdetails.json");
 
-                    try (FileWriter writer = new FileWriter(PATH_LOCAL + "/userdetails.json")) {
+                    try (FileWriter writer = new FileWriter(PATH_LOCAL + "/autologin_userdetails.json")) {
                         gson.toJson(login, writer);
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -112,7 +113,7 @@ public class MainActivity extends Activity {
         String readings = "";
         FileInputStream fis = null;
         try {
-            fis = new FileInputStream(new File(Environment.getExternalStorageDirectory() + "/疫迹/userdetails.json"));  // 2nd line
+            fis = new FileInputStream(new File(Environment.getExternalStorageDirectory() + "/疫迹/autologin_userdetails.json"));  // 2nd line
             InputStreamReader isr = new InputStreamReader(fis);
             BufferedReader br = new BufferedReader(isr);
             StringBuilder sb = new StringBuilder();
@@ -122,9 +123,9 @@ public class MainActivity extends Activity {
                 sb.append(readinText);
             }
             readings = sb.toString();
-            Log.d("DETAILS", readings);
             Gson gson = new Gson();
             Login logindetails = gson.fromJson(readings, Login.class);
+            currentUser = logindetails.getUsername();
             //Login checks
             startAcivity();
 
@@ -145,8 +146,17 @@ public class MainActivity extends Activity {
 
     private void startAcivity() {
         Intent intent = new Intent(MainActivity.this, LocationActivity.class);
+        intent.putExtra("USER_ID", currentUser);
         startActivity(intent);
         Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
+    }
+
+    public static void setCurrentUser(String user) {
+        currentUser = user;
+    }
+
+    public static String getCurrentUser() {
+        return currentUser;
     }
 
     class Login {
@@ -157,8 +167,16 @@ public class MainActivity extends Activity {
             username = input;
         }
 
+        private String getUsername() {
+            return username;
+        }
+
         private void setPassword(String input) {
             password = input;
+        }
+
+        private String getPassword() {
+            return password;
         }
     }
 }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -23,18 +24,18 @@ public class LocationActivity extends Activity {
     private Button btnReport, btnViewReport, btnLocate, btnLogout;
     private MapView mapView = null;
     private TrackingAlarmReceiver broadcastReceiver;
-
     private LocationHelper locationHelper;
     private JsonFileHelper jsonFileHelper;
+    private String currentID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
-
-        jsonFileHelper = new JsonFileHelper();
+        currentID = getIntent().getStringExtra("USER_ID");
+        jsonFileHelper = new JsonFileHelper(currentID);
         broadcastReceiver = new TrackingAlarmReceiver();
-        locationHelper = new LocationHelper(this);
+        locationHelper = new LocationHelper(currentID, this);
         initMap();
         initUIs();
 
@@ -47,7 +48,6 @@ public class LocationActivity extends Activity {
             @Override
             public void onClick(View v) {
                 new RecordEntryDialog(LocationActivity.this);
-
             }
         });
 
@@ -73,7 +73,7 @@ public class LocationActivity extends Activity {
                     // turn off tracking
                     btnUpload.setText("开启后台定位采集");
                     btnUpload.setBackgroundResource(R.drawable.buttonshape);
-                    broadcastReceiver.stopAlarm(getApplicationContext());
+                    broadcastReceiver.stopAlarm(currentID, getApplicationContext());
 
                     registrationData.setTrackingState(false);
                     jsonFileHelper.saveRegistrationDataFromLocal(registrationData);
@@ -81,7 +81,7 @@ public class LocationActivity extends Activity {
                 } else {
                     btnUpload.setText("关闭后台定位采集");
                     btnUpload.setBackgroundResource(R.drawable.buttonshape_red);
-                    broadcastReceiver.startAlarm(getApplicationContext());
+                    broadcastReceiver.startAlarm(currentID, getApplicationContext());
 
                     // update tracking state since tracking process won't stop even reboot.
                     registrationData.setTrackingState(true);
@@ -94,7 +94,7 @@ public class LocationActivity extends Activity {
         btnViewReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new RecordHistoryDialog(LocationActivity.this);
+                new RecordHistoryDialog(currentID, LocationActivity.this);
             }
         });
 
@@ -112,7 +112,7 @@ public class LocationActivity extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent(LocationActivity.this, MainActivity.class);
                 startActivity(intent);
-                File file = new File(Environment.getExternalStorageDirectory() + "/疫迹/userdata.json");
+                File file = new File(Environment.getExternalStorageDirectory() + "/疫迹/autologin_userdetails.json");
 
                 if (file.delete()) {
                     System.out.println("File deleted successfully");

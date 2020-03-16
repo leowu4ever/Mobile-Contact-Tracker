@@ -27,6 +27,7 @@ public class RegisterDialog {
     private String[] sp_item_education = {"请选择", "小学或以下", "初中", "高中", "大学", "硕士", "博士或其他"};
     private Dialog privacyDialog;
     private SpinnerHelper spinnerHelper;
+    private JsonFileHelper jsonFileHelper;
 
     public RegisterDialog(Context context) {
         init(context);
@@ -40,6 +41,8 @@ public class RegisterDialog {
         spinnerHelper = new SpinnerHelper();
 
         registerDialog.setContentView(R.layout.dialog_register);
+        etLoginAccount = registerDialog.findViewById(R.id.et_loginaccount);
+        etLoginPassword = registerDialog.findViewById(R.id.et_loginpassword);
 
         new DialogHelper().displayDialog(registerDialog);
 
@@ -48,6 +51,8 @@ public class RegisterDialog {
             @Override
             public void onClick(View v) {
                 if (spOccupation.getSelectedItemPosition() != 0 && spEdu.getSelectedItemPosition() != 0 && spGender.getSelectedItemPosition() != 0 && etLoginAccount.getText() != null && etLoginPassword.getText() != null) {
+                    jsonFileHelper = new JsonFileHelper(etLoginAccount.getText().toString());
+                    jsonFileHelper.saveRegistrationDataFromLocal(new RegistrationData(etLoginAccount.getText().toString(), etLoginPassword.getText().toString()));
                     registerDialog.dismiss();
                     Toast.makeText(context, "已注册成功", Toast.LENGTH_SHORT).show();
                 } else {
@@ -85,9 +90,6 @@ public class RegisterDialog {
                 registerDialog.dismiss();
             }
         });
-
-        etLoginAccount = registerDialog.findViewById(R.id.et_loginaccount);
-        etLoginPassword = registerDialog.findViewById(R.id.et_loginpassword);
 
         tvAge = registerDialog.findViewById(R.id.tv_spinnerage);
 

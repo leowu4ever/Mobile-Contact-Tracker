@@ -1,10 +1,14 @@
 package com.uk.location.activity;
 
 public class RegistrationData {
-    public boolean isTracking;
+    private boolean isTracking;
+    private String userName;
+    private String passWord;
 
-    public RegistrationData () {
+    public RegistrationData (String login, String password) {
         isTracking = false;
+        userName = login;
+        passWord = password;
     }
 
     public void setTrackingState (boolean trackingState) {
