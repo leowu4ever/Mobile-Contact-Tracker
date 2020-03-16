@@ -42,7 +42,7 @@ public class RecordHistoryDialog {
 
         new DialogHelper().displayDialog(recordListDialog);
 
-        File rootDircectory = new File(Environment.getExternalStorageDirectory() + "/VirTrack/");
+        File rootDircectory = new File(Environment.getExternalStorageDirectory() + "/疫迹");
         String[] files = rootDircectory.list();
 
         LinearLayout parentLayout = recordListDialog.findViewById(R.id.layout_RecordView);
@@ -119,7 +119,7 @@ public class RecordHistoryDialog {
                         String readings = "";
                         FileInputStream fis = null;
                         try {
-                            fis = new FileInputStream(new File(Environment.getExternalStorageDirectory() + "/VirTrack/" + b.getTag().toString()));  // 2nd line
+                            fis = new FileInputStream(new File(Environment.getExternalStorageDirectory() + "/疫迹/" + b.getTag().toString()));  // 2nd line
                             InputStreamReader isr = new InputStreamReader(fis);
                             BufferedReader br = new BufferedReader(isr);
                             StringBuilder sb = new StringBuilder();

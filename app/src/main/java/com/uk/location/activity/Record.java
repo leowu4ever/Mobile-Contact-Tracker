@@ -68,7 +68,7 @@ public class Record {
         DateFormat formatter = new SimpleDateFormat("ddMMyyyyHHmmss");
         String sysDate = formatter.format(Calendar.getInstance().getTime());
         Gson gson = new Gson();
-        String PATH_LOCAL = Environment.getExternalStorageDirectory() + "/VirTrack/";
+        String PATH_LOCAL = Environment.getExternalStorageDirectory() + "/疫迹/";
 
         File rootfolder = new File(PATH_LOCAL);
         if (!rootfolder.exists()) {

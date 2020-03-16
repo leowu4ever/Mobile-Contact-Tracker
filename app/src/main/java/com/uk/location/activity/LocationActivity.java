@@ -112,7 +112,7 @@ public class LocationActivity extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent(LocationActivity.this, MainActivity.class);
                 startActivity(intent);
-                File file = new File(Environment.getExternalStorageDirectory() + "/VirTrack/userdetails");
+                File file = new File(Environment.getExternalStorageDirectory() + "/疫迹/userdata.json");
 
                 if (file.delete()) {
                     System.out.println("File deleted successfully");

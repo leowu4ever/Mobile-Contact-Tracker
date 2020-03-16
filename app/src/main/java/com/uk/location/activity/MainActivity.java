@@ -77,16 +77,16 @@ public class MainActivity extends Activity {
 
                     Gson gson = new Gson();
 
-                    String PATH_LOCAL = Environment.getExternalStorageDirectory() + "/VirTrack/";
+                    String PATH_LOCAL = Environment.getExternalStorageDirectory() + "/疫迹";
 
                     File rootfolder = new File(PATH_LOCAL);
                     if (!rootfolder.exists()) {
                         rootfolder.mkdir();
                     }
 
-                    new File(rootfolder, "userdetails");
+                    new File(rootfolder, "userdetails.json");
 
-                    try (FileWriter writer = new FileWriter(PATH_LOCAL + "userdetails")) {
+                    try (FileWriter writer = new FileWriter(PATH_LOCAL + "/userdetails.json")) {
                         gson.toJson(login, writer);
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -112,7 +112,7 @@ public class MainActivity extends Activity {
         String readings = "";
         FileInputStream fis = null;
         try {
-            fis = new FileInputStream(new File(Environment.getExternalStorageDirectory() + "/VirTrack/userdetails/"));  // 2nd line
+            fis = new FileInputStream(new File(Environment.getExternalStorageDirectory() + "/疫迹/userdetails.json"));  // 2nd line
             InputStreamReader isr = new InputStreamReader(fis);
             BufferedReader br = new BufferedReader(isr);
             StringBuilder sb = new StringBuilder();
