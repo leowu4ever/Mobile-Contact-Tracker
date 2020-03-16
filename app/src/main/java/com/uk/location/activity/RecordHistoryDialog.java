@@ -84,9 +84,9 @@ public class RecordHistoryDialog {
                     date = str.substring(7, 11);
                     seq = 0;
                     TextView tvDateSep = new TextView(context);
-                    String dateSeperator = str.substring(str.indexOf("_") + 1);
-                    dateSeperator = dateSeperator.substring(0, dateSeperator.indexOf("_"));
-                    tvDateSep.setText(dateSeperator.substring(0, 2).replaceFirst("^0+(?!$)", "") + "月" + dateSeperator.substring(2, 4).replaceFirst("^0+(?!$)", "") + "日");
+                    String dateSeperator = str.substring(0, str.lastIndexOf("_"));
+                    dateSeperator = ((dateSeperator.substring(0, dateSeperator.lastIndexOf("_")+1)).replaceFirst("_", "月")).replaceFirst("_", "日");
+                    tvDateSep.setText(dateSeperator);
                     tvDateSep.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
                     tvDateSep.setTextColor(Color.parseColor("#55578A"));
                     tvDateSep.setTypeface(tvDateSep.getTypeface(), Typeface.BOLD);
