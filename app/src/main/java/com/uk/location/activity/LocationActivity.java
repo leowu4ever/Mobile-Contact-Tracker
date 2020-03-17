@@ -36,6 +36,7 @@ public class LocationActivity extends Activity {
         jsonFileHelper = new JsonFileHelper(currentID);
         broadcastReceiver = new TrackingAlarmReceiver();
         locationHelper = new LocationHelper(currentID, this);
+        MainActivity.getLocationPermission(this);
         initMap();
         initUIs();
 
