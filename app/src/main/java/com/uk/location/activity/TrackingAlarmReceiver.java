@@ -14,7 +14,7 @@ public class TrackingAlarmReceiver extends BroadcastReceiver {
     private AlarmManager am;
     private Intent intent;
     private PendingIntent pi;
-    private final int LOCATION_UPLOAD_INTERVAL = 1000 * 5;
+    private final int LOCATION_UPLOAD_INTERVAL = 1000 * 1 * 60;
     private PowerManager pm;
     public static LocationHelper locationHelper;
 
