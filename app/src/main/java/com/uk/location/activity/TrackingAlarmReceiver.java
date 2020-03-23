@@ -14,22 +14,24 @@ public class TrackingAlarmReceiver extends BroadcastReceiver {
     private AlarmManager am;
     private Intent intent;
     private PendingIntent pi;
-    private final int LOCATION_UPLOAD_INTERVAL = 1000 * 1 * 60;
+    private final int LOCATION_UPLOAD_INTERVAL = 1000 * 5 * 60;
     private PowerManager pm;
     public static LocationHelper locationHelper;
 
 
     public void onReceive(Context context, Intent intent) {
         String currentID = intent.getStringExtra("USER_ID");
-        locationHelper = new LocationHelper(currentID, context);
+        String token = intent.getStringExtra("USER_TOKEN");
+        locationHelper = new LocationHelper(currentID, token, context);
         locationHelper.getLocation(true);
-        startAlarm(currentID, context);
+        startAlarm(currentID, token, context);
     }
 
-    public void startAlarm(String currentUser, Context context) {
+    public void startAlarm(String currentUser, String token, Context context) {
         am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         intent = new Intent(context, TrackingAlarmReceiver.class);
         intent.putExtra("USER_ID", currentUser);
+        intent.putExtra("USER_TOKEN", token);
         intent.setAction(ALARM_ACTION_LABEL);
         pi = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         am.cancel(pi);
@@ -39,15 +41,15 @@ public class TrackingAlarmReceiver extends BroadcastReceiver {
         Log.d("loa1", "alarm starts");
     }
 
-    public void stopAlarm(String currentUser, Context context) {
+    public void stopAlarm(String currentUser, String token, Context context) {
         am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         intent = new Intent(context, TrackingAlarmReceiver.class);
         intent.putExtra("USER_ID", currentUser);
+        intent.putExtra("USER_TOKEN", token);
         intent.setAction(ALARM_ACTION_LABEL);
         pi = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         am.cancel(pi);
         pi.cancel();
-
         LocationHelper.setTrackingState(false);
         Log.d("loa1", "alarm stops");
     }

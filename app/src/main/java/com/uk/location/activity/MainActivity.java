@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -30,7 +31,7 @@ public class MainActivity extends Activity {
     public static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private Button btnLogin, btnRegister;
     private EditText etUserName, etPassword;
-    private static String currentUser;
+    private static String currentUser, token;
 
     public static void getLocationPermission(Context context) {
         // TO DO need permission check on later screens
@@ -54,11 +55,14 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         setContentView(R.layout.activity_main);
         initUIs();
         getLocationPermission(this);
         autoLogin();
         currentUser = "";
+        token = "";
     }
 
     private void initUIs() {
@@ -70,32 +74,42 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 if (!(etUserName.getText().toString().matches("")) && !(etPassword.getText().toString().matches(""))) {
-                    // password check
-                    //if success
-                    Login login = new Login();
-                    login.setUsername(etUserName.getText().toString());
-                    login.setPassword(etPassword.getText().toString());
-                    currentUser = etUserName.getText().toString();
-                    Gson gson = new Gson();
-
-                    String PATH_LOCAL = Environment.getExternalStorageDirectory() + "/疫迹";
-
-                    File rootfolder = new File(PATH_LOCAL);
-                    if (!rootfolder.exists()) {
-                        rootfolder.mkdir();
+                    String data = "{\"username\":\"" + etUserName.getText().toString() + "\",\"password\":\"" + etPassword.getText().toString() + "\"}";
+                    NetworkHelper nh = new NetworkHelper();
+                    String returnText = "";
+                    try {
+                        returnText = nh.CallAPI("POST", "authentication/login", data, "").get();
+                    }catch(Exception e){
+                        returnText = "Error";
                     }
+                    if (returnText.contains("Error")) {
+                        Toast.makeText(getApplicationContext(), "登录失敗, 請重試", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getApplicationContext(), returnText, Toast.LENGTH_LONG).show();
+                        Login login = new Login();
+                        login.setUsername(etUserName.getText().toString());
+                        login.setPassword(etPassword.getText().toString());
+                        currentUser = etUserName.getText().toString();
+                        token = returnText;
+                        Gson gson = new Gson();
 
-                    new File(rootfolder, "autologin_userdetails.json");
+                        String PATH_LOCAL = Environment.getExternalStorageDirectory() + "/疫迹";
 
-                    try (FileWriter writer = new FileWriter(PATH_LOCAL + "/autologin_userdetails.json")) {
-                        gson.toJson(login, writer);
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                        File rootfolder = new File(PATH_LOCAL);
+                        if (!rootfolder.exists()) {
+                            rootfolder.mkdir();
+                        }
+                        new File(rootfolder, "autologin_userdetails.json");
+
+                        try (FileWriter writer = new FileWriter(PATH_LOCAL + "/autologin_userdetails.json")) {
+                            gson.toJson(login, writer);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        startAcivity();
                     }
-
-                    startAcivity();
                 } else {
-                    Toast.makeText(getApplicationContext(), "登录失敗, 請重試", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "请填写全部信息", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -126,8 +140,21 @@ public class MainActivity extends Activity {
             Gson gson = new Gson();
             Login logindetails = gson.fromJson(readings, Login.class);
             currentUser = logindetails.getUsername();
-            //Login checks
-            startAcivity();
+            String data = "{\"username\":\"" + logindetails.getUsername() + "\",\"password\":\"" + logindetails.getPassword() + "\"}";
+            NetworkHelper nh = new NetworkHelper();
+            String returnText = "";
+            try {
+                returnText = nh.CallAPI("POST", "authentication/login", data, "").get();
+            }catch(Exception e){
+                returnText = "Error";
+            }
+            if (returnText.length()>0 && returnText.contains("Error")) {
+                Toast.makeText(getApplicationContext(), "登录失敗, 請重試", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), returnText, Toast.LENGTH_LONG).show();
+                token = returnText;
+                startAcivity();
+            }
 
         } catch (FileNotFoundException e) {
             Log.e("login activity", "File not found: " + e.toString());
@@ -147,6 +174,7 @@ public class MainActivity extends Activity {
     private void startAcivity() {
         Intent intent = new Intent(MainActivity.this, LocationActivity.class);
         intent.putExtra("USER_ID", currentUser);
+        intent.putExtra("USER_TOKEN", token);
         startActivity(intent);
         Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
     }

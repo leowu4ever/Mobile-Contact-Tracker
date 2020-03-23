@@ -1,5 +1,6 @@
 package com.uk.location.activity;
 import android.content.Context;
+import android.os.StrictMode;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -23,9 +24,14 @@ public class LocationHelper {
     private String DEBUG_TAG = "loa1";
     private boolean forTracking = false;
     public JsonFileHelper jsonFileHelper;
+    private String user;
+    private String token;
 
-
-    public LocationHelper(String currentID, Context context) {
+    public LocationHelper(String currentID, String userToken, Context context) {
+        token = userToken;
+        user = currentID;
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         jsonFileHelper = new JsonFileHelper(currentID);
         initClient(context);
     }
@@ -71,10 +77,18 @@ public class LocationHelper {
                         double latitude = location.getLatitude();
                         double longitude = location.getLongitude();
                         locationLogData.addLocationLogData(date, time, latitude, longitude, errorcode);
-                        jsonFileHelper.saveLocationLogDataToLocal(locationLogData);
+                        int offset = 0;
+                        if ((currentTime.get(Calendar.HOUR_OF_DAY))>=20){
+                            offset = 1;
+                        }
+                        jsonFileHelper.saveLocationLogDataToLocal(locationLogData, offset);
                         String prompt = time + " - "+ latitude + "," + longitude + " - " + errorcode;
                         Log.d(DEBUG_TAG, prompt);
+
+                        /*String data = ("{\"username\": \""+ user +"\",\"date\": \""+ date +"\",\"time\": \""+ time +"\",\"longtitude\": \""+ longitude +"\",\"latitude\": \""+ latitude +"\",\"errorcode\": \""+ errorcode +"\"}");
+                        new NetworkHelper().CallAPI("POST","post/statistics/location", data, token);*/
                         Toast.makeText(context, prompt, Toast.LENGTH_SHORT).show();
+
                     } else {
                         zoomMapTo(LocationActivity.baiduMap, location);
                     }

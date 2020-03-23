@@ -51,10 +51,20 @@ public class RegisterDialog {
             @Override
             public void onClick(View v) {
                 if (spOccupation.getSelectedItemPosition() != 0 && spEdu.getSelectedItemPosition() != 0 && spGender.getSelectedItemPosition() != 0 && etLoginAccount.getText() != null && etLoginPassword.getText() != null) {
-                    jsonFileHelper = new JsonFileHelper(etLoginAccount.getText().toString());
-                    jsonFileHelper.saveRegistrationDataFromLocal(new RegistrationData(etLoginAccount.getText().toString(), etLoginPassword.getText().toString()));
-                    registerDialog.dismiss();
-                    Toast.makeText(context, "已注册成功", Toast.LENGTH_SHORT).show();
+                    String data = "{\"username\":\"" + etLoginAccount.getText().toString() + "\",\"password\":\"" + etLoginPassword.getText().toString() + "\"}";
+                    NetworkHelper nh = new NetworkHelper();
+                    String returnText = "";
+                    try {
+                        returnText = nh.CallAPI("POST", "authentication/login", data, "").get();
+                    }catch(Exception e){returnText = "Error";}
+                    if (returnText.contains("Error")) {
+                        Toast.makeText(context, "注册失敗, 請重試", Toast.LENGTH_SHORT).show();
+                    }else {
+                        jsonFileHelper = new JsonFileHelper(etLoginAccount.getText().toString());
+                        jsonFileHelper.saveRegistrationDataFromLocal(new RegistrationData(etLoginAccount.getText().toString(), etLoginPassword.getText().toString()));
+                        registerDialog.dismiss();
+                        Toast.makeText(context, "已注册成功", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(context, "请填写全部信息", Toast.LENGTH_SHORT).show();
                 }

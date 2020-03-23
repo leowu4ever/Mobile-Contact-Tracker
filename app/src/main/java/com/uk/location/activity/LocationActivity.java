@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,22 +25,29 @@ public class LocationActivity extends Activity {
     private Button btnReport, btnViewReport, btnLocate, btnLogout;
     private MapView mapView = null;
     private TrackingAlarmReceiver broadcastReceiver;
+    private UploadAlarmReceiver uploadReceiver;
     private LocationHelper locationHelper;
     private JsonFileHelper jsonFileHelper;
-    private String currentID;
+    private String currentID, token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         currentID = getIntent().getStringExtra("USER_ID");
+        token = getIntent().getStringExtra("USER_TOKEN");
         jsonFileHelper = new JsonFileHelper(currentID);
         broadcastReceiver = new TrackingAlarmReceiver();
-        locationHelper = new LocationHelper(currentID, this);
+        locationHelper = new LocationHelper(currentID, token,this);
         MainActivity.getLocationPermission(this);
         initMap();
         initUIs();
 
+        System.out.println("DDDD"+currentID);
+        uploadReceiver = new UploadAlarmReceiver();
+        uploadReceiver.startAlarm(currentID, token, this);
         locationHelper.getLocation(false);
     }
 
@@ -59,9 +67,11 @@ public class LocationActivity extends Activity {
         if (trackingState) {
             btnUpload.setText("关闭后台定位采集");
             btnUpload.setBackgroundResource(R.drawable.buttonshape_red);
+            broadcastReceiver.startAlarm(currentID, token, getApplicationContext());
         } else {
             btnUpload.setText("开启后台定位采集");
             btnUpload.setBackgroundResource(R.drawable.buttonshape);
+            broadcastReceiver.stopAlarm(currentID, token, getApplicationContext());
         }
 
         btnUpload.setOnClickListener(new View.OnClickListener() {
@@ -74,7 +84,7 @@ public class LocationActivity extends Activity {
                     // turn off tracking
                     btnUpload.setText("开启后台定位采集");
                     btnUpload.setBackgroundResource(R.drawable.buttonshape);
-                    broadcastReceiver.stopAlarm(currentID, getApplicationContext());
+                    broadcastReceiver.stopAlarm(currentID, token, getApplicationContext());
 
                     registrationData.setTrackingState(false);
                     jsonFileHelper.saveRegistrationDataFromLocal(registrationData);
@@ -82,7 +92,7 @@ public class LocationActivity extends Activity {
                 } else {
                     btnUpload.setText("关闭后台定位采集");
                     btnUpload.setBackgroundResource(R.drawable.buttonshape_red);
-                    broadcastReceiver.startAlarm(currentID, getApplicationContext());
+                    broadcastReceiver.startAlarm(currentID, token, getApplicationContext());
 
                     // update tracking state since tracking process won't stop even reboot.
                     registrationData.setTrackingState(true);
@@ -111,6 +121,7 @@ public class LocationActivity extends Activity {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                broadcastReceiver.stopAlarm(currentID, token, getApplicationContext());
                 Intent intent = new Intent(LocationActivity.this, MainActivity.class);
                 startActivity(intent);
                 File file = new File(Environment.getExternalStorageDirectory() + "/疫迹/autologin_userdetails.json");

@@ -15,6 +15,9 @@ public class RegistrationData {
         this.isTracking = trackingState;
     }
 
+    public String getUserName(){return userName;}
+    public String getPassword(){return passWord;}
+
     public boolean getTrackingState () {
         return isTracking;
     }

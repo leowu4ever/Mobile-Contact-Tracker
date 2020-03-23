@@ -52,6 +52,11 @@
         <activity android:name="com.uk.location.activity.RecordDetailsDialog" />
 
         <receiver
+            android:name="com.uk.location.activity.UploadAlarmReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":service" />
+        <receiver
             android:name="com.uk.location.activity.TrackingAlarmReceiver"
             android:enabled="true"
             android:exported="true"

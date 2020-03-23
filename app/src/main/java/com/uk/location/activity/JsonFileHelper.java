@@ -57,9 +57,9 @@ public class JsonFileHelper {
         return g.fromJson(readings, RegistrationData.class);
     }
 
-    public void saveLocationLogDataToLocal(LocationLogData locationLog) {
+    public void saveLocationLogDataToLocal(LocationLogData locationLog, int offSet) {
         Calendar currentTime = Calendar.getInstance();
-        String date = (currentTime.get(Calendar.MONTH)+1)+ "_" + currentTime.get(Calendar.DATE);
+        String date = (currentTime.get(Calendar.MONTH)+1)+ "_" + (currentTime.get(Calendar.DATE)+offSet);
         String path = PATH_USER_FOLDER + date + LOCATION_LOG_FILENAME_SUFFIX;
         Gson gson = new Gson();
         try (FileWriter writer = new FileWriter(path)) {
@@ -77,7 +77,7 @@ public class JsonFileHelper {
         File overallDataFile = new File(path);
         if (!overallDataFile.exists()) {
             LocationLogData emptyLocationLog = new LocationLogData();
-            saveLocationLogDataToLocal(emptyLocationLog);
+            saveLocationLogDataToLocal(emptyLocationLog, 0);
         }
 
         Gson g = new Gson();
