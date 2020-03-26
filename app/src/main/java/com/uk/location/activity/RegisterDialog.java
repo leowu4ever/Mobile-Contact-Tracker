@@ -59,19 +59,19 @@ public class RegisterDialog {
                             returnText = "Error";
                         }
                         if (returnText.equals("Error: incorrect password")) {
-                            Toast.makeText(context, "账户已注册, 請重試", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "账户已存在，请重试", Toast.LENGTH_SHORT).show();
                         }
                         else if (returnText.contains("Error")){
-                            Toast.makeText(context, "注册失敗, 請重試", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "注册失败, 请重试", Toast.LENGTH_SHORT).show();
                         }
                         else {
                             jsonFileHelper = new JsonFileHelper(etLoginAccount.getText().toString());
                             jsonFileHelper.saveRegistrationDataFromLocal(new RegistrationData(etLoginAccount.getText().toString(), etLoginPassword.getText().toString()));
                             registerDialog.dismiss();
-                            Toast.makeText(context, "已注册成功", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "注册成功", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(context, "密码不乎 请重新输入", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "密码不符合要求 请重新输入", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(context, "请填写全部信息", Toast.LENGTH_SHORT).show();
