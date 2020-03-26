@@ -20,11 +20,11 @@ public class TrackingAlarmReceiver extends BroadcastReceiver {
 
 
     public void onReceive(Context context, Intent intent) {
-        String currentID = intent.getStringExtra("USER_ID");
+        String currentUser = intent.getStringExtra("USER_ID");
         String token = intent.getStringExtra("USER_TOKEN");
-        locationHelper = new LocationHelper(currentID, token, context);
+        locationHelper = new LocationHelper(currentUser, token, context);
         locationHelper.getLocation(true);
-        startAlarm(currentID, token, context);
+        startAlarm(currentUser, token, context);
     }
 
     public void startAlarm(String currentUser, String token, Context context) {

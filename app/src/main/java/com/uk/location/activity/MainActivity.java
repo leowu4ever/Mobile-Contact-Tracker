@@ -79,16 +79,15 @@ public class MainActivity extends Activity {
                     String returnText = "";
                     try {
                         returnText = nh.CallAPI("POST", "authentication/login", data, "").get();
+                        System.out.println("OOO"+returnText);
                     }catch(Exception e){
                         returnText = "Error";
                     }
-                    if (returnText.contains("Error")) {
+                    if (returnText.contains("Error")||returnText.equals("")) {
                         Toast.makeText(getApplicationContext(), "登录失敗, 請重試", Toast.LENGTH_SHORT).show();
                     }else{
                         Toast.makeText(getApplicationContext(), returnText, Toast.LENGTH_LONG).show();
-                        Login login = new Login();
-                        login.setUsername(etUserName.getText().toString());
-                        login.setPassword(etPassword.getText().toString());
+                        RegistrationData login = new RegistrationData(etUserName.getText().toString(),etPassword.getText().toString());
                         currentUser = etUserName.getText().toString();
                         token = returnText;
                         Gson gson = new Gson();
@@ -127,7 +126,8 @@ public class MainActivity extends Activity {
         String readings = "";
         FileInputStream fis = null;
         try {
-            fis = new FileInputStream(new File(Environment.getExternalStorageDirectory() + "/疫迹/autologin_userdetails.json"));  // 2nd line
+            File f = new File(Environment.getExternalStorageDirectory() + "/疫迹/autologin_userdetails.json");
+            fis = new FileInputStream(f);  // 2nd line
             InputStreamReader isr = new InputStreamReader(fis);
             BufferedReader br = new BufferedReader(isr);
             StringBuilder sb = new StringBuilder();
@@ -138,18 +138,25 @@ public class MainActivity extends Activity {
             }
             readings = sb.toString();
             Gson gson = new Gson();
-            Login logindetails = gson.fromJson(readings, Login.class);
-            currentUser = logindetails.getUsername();
-            String data = "{\"username\":\"" + logindetails.getUsername() + "\",\"password\":\"" + logindetails.getPassword() + "\"}";
+            RegistrationData logindetails = gson.fromJson(readings, RegistrationData.class);
+            currentUser = logindetails.getUserName();
+            String data = "{\"username\":\"" + logindetails.getUserName() + "\",\"password\":\"" + logindetails.getPassword() + "\"}";
             NetworkHelper nh = new NetworkHelper();
             String returnText = "";
+
             try {
                 returnText = nh.CallAPI("POST", "authentication/login", data, "").get();
             }catch(Exception e){
                 returnText = "Error";
             }
-            if (returnText.length()>0 && returnText.contains("Error")) {
+
+            if (returnText.contains("Error") || (returnText.equals(""))) {
                 Toast.makeText(getApplicationContext(), "登录失敗, 請重試", Toast.LENGTH_SHORT).show();
+                if (f.delete()) {
+                    System.out.println("File deleted successfully");
+                } else {
+                    System.out.println("Failed to delete the file");
+                }
             } else {
                 Toast.makeText(getApplicationContext(), returnText, Toast.LENGTH_LONG).show();
                 token = returnText;
@@ -177,34 +184,5 @@ public class MainActivity extends Activity {
         intent.putExtra("USER_TOKEN", token);
         startActivity(intent);
         Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
-    }
-
-    public static void setCurrentUser(String user) {
-        currentUser = user;
-    }
-
-    public static String getCurrentUser() {
-        return currentUser;
-    }
-
-    class Login {
-        private String username;
-        private String password;
-
-        private void setUsername(String input) {
-            username = input;
-        }
-
-        private String getUsername() {
-            return username;
-        }
-
-        private void setPassword(String input) {
-            password = input;
-        }
-
-        private String getPassword() {
-            return password;
-        }
     }
 }

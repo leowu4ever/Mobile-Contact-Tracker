@@ -50,6 +50,7 @@
         <activity android:name="com.uk.location.activity.LocationActivity" />
         <activity android:name="com.uk.location.activity.RecordHistoryDialog" />
         <activity android:name="com.uk.location.activity.RecordDetailsDialog" />
+        <activity android:name="com.uk.location.activity.Record_webView" />
 
         <receiver
             android:name="com.uk.location.activity.UploadAlarmReceiver"

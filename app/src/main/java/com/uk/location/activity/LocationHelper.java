@@ -27,12 +27,12 @@ public class LocationHelper {
     private String user;
     private String token;
 
-    public LocationHelper(String currentID, String userToken, Context context) {
+    public LocationHelper(String currentUser, String userToken, Context context) {
         token = userToken;
-        user = currentID;
+        user = currentUser;
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        jsonFileHelper = new JsonFileHelper(currentID);
+        jsonFileHelper = new JsonFileHelper(currentUser);
         initClient(context);
     }
 
@@ -70,19 +70,21 @@ public class LocationHelper {
                 if (location != null) {
                     if(forTracking) {
                         // write location log
-                        LocationLogData locationLogData = jsonFileHelper.readLocationLogDataFromLocal();
+                        int offset = 0;
+                        if ((currentTime.get(Calendar.HOUR_OF_DAY))>=20){
+                            offset = 1;
+                        }
+
+                        LocationLogData locationLogData = jsonFileHelper.readLocationLogDataFromLocal(offset);
                         String date = (currentTime.get(Calendar.MONTH)+1) + "-" + currentTime.get(Calendar.DATE);
                         String time = currentTime.get(Calendar.HOUR_OF_DAY) + ":" + currentTime.get(Calendar.MINUTE) + ":" + currentTime.get(Calendar.SECOND);
                         int errorcode = location.getLocType();
                         double latitude = location.getLatitude();
                         double longitude = location.getLongitude();
                         locationLogData.addLocationLogData(date, time, latitude, longitude, errorcode);
-                        int offset = 0;
-                        if ((currentTime.get(Calendar.HOUR_OF_DAY))>=20){
-                            offset = 1;
-                        }
+
                         jsonFileHelper.saveLocationLogDataToLocal(locationLogData, offset);
-                        String prompt = time + " - "+ latitude + "," + longitude + " - " + errorcode;
+                        String prompt = time + " - " + latitude + "," + longitude + " - " + errorcode;
                         Log.d(DEBUG_TAG, prompt);
 
                         /*String data = ("{\"username\": \""+ user +"\",\"date\": \""+ date +"\",\"time\": \""+ time +"\",\"longtitude\": \""+ longitude +"\",\"latitude\": \""+ latitude +"\",\"errorcode\": \""+ errorcode +"\"}");

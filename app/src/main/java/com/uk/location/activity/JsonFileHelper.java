@@ -70,9 +70,9 @@ public class JsonFileHelper {
         }
     }
 
-    public LocationLogData readLocationLogDataFromLocal() {
+    public LocationLogData readLocationLogDataFromLocal(int offSet) {
         Calendar currentTime = Calendar.getInstance();
-        String date = (currentTime.get(Calendar.MONTH)+1) + "_" + currentTime.get(Calendar.DATE);
+        String date = (currentTime.get(Calendar.MONTH)+1) + "_" + (currentTime.get(Calendar.DATE)+offSet);
         String path = PATH_USER_FOLDER + date + LOCATION_LOG_FILENAME_SUFFIX;
         File overallDataFile = new File(path);
         if (!overallDataFile.exists()) {

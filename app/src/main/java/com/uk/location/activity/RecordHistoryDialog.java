@@ -31,8 +31,8 @@ public class RecordHistoryDialog {
     private Button btnUploadHistory, btnDismissHisory;
     private String currentUser;
 
-    public RecordHistoryDialog(String currentID, Context context) {
-        currentUser = currentID;
+    public RecordHistoryDialog(String currentUser, Context context) {
+        this.currentUser = currentUser;
         init(context);
     }
 
