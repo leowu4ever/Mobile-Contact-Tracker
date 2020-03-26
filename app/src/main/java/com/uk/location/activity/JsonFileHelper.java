@@ -77,7 +77,7 @@ public class JsonFileHelper {
         File overallDataFile = new File(path);
         if (!overallDataFile.exists()) {
             LocationLogData emptyLocationLog = new LocationLogData();
-            saveLocationLogDataToLocal(emptyLocationLog, 0);
+            saveLocationLogDataToLocal(emptyLocationLog, offSet);
         }
 
         Gson g = new Gson();
