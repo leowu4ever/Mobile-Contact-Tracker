@@ -20,11 +20,8 @@ public class RegisterDialog {
     private Button btnSubmit, btn_privacy, btn_abort;
     private SeekBar sb_age;
     private TextView tvAge;
-    private EditText etLoginAccount, etLoginPassword;
-    private Spinner spOccupation, spEdu, spGender;
-    private String[] sp_item_gender = {"请选择", "男", "女"};
-    private String[] sp_item_occupation = {"请选择", "服务业", "农民/工人", "医务人员", "退休人员", "其他"};
-    private String[] sp_item_education = {"请选择", "小学或以下", "初中", "高中", "大学", "硕士", "博士或其他"};
+    private EditText etLoginAccount, etLoginPassword, etLoginPasswordConfirm;
+
     private Dialog privacyDialog;
     private SpinnerHelper spinnerHelper;
     private JsonFileHelper jsonFileHelper;
@@ -43,6 +40,7 @@ public class RegisterDialog {
         registerDialog.setContentView(R.layout.dialog_register);
         etLoginAccount = registerDialog.findViewById(R.id.et_loginaccount);
         etLoginPassword = registerDialog.findViewById(R.id.et_loginpassword);
+        etLoginPasswordConfirm = registerDialog.findViewById(R.id.et_loginpasswordconfirm);
 
         new DialogHelper().displayDialog(registerDialog);
 
@@ -50,20 +48,30 @@ public class RegisterDialog {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (spOccupation.getSelectedItemPosition() != 0 && spEdu.getSelectedItemPosition() != 0 && spGender.getSelectedItemPosition() != 0 && etLoginAccount.getText() != null && etLoginPassword.getText() != null) {
-                    String data = "{\"username\":\"" + etLoginAccount.getText().toString() + "\",\"password\":\"" + etLoginPassword.getText().toString() + "\"}";
-                    NetworkHelper nh = new NetworkHelper();
-                    String returnText = "";
-                    try {
-                        returnText = nh.CallAPI("POST", "authentication/login", data, "").get();
-                    }catch(Exception e){returnText = "Error";}
-                    if (returnText.contains("Error")) {
-                        Toast.makeText(context, "注册失敗, 請重試", Toast.LENGTH_SHORT).show();
-                    }else {
-                        jsonFileHelper = new JsonFileHelper(etLoginAccount.getText().toString());
-                        jsonFileHelper.saveRegistrationDataFromLocal(new RegistrationData(etLoginAccount.getText().toString(), etLoginPassword.getText().toString()));
-                        registerDialog.dismiss();
-                        Toast.makeText(context, "已注册成功", Toast.LENGTH_SHORT).show();
+                if (etLoginAccount.getText() != null && etLoginPassword.getText() != null && etLoginPasswordConfirm.getText() != null) {
+                    if (etLoginPassword.getText().toString().equals(etLoginPasswordConfirm.getText().toString())) {
+                        String data = "{\"username\":\"" + etLoginAccount.getText().toString() + "\",\"password\":\"" + etLoginPassword.getText().toString() + "\"}";
+                        NetworkHelper nh = new NetworkHelper();
+                        String returnText = "";
+                        try {
+                            returnText = nh.CallAPI("POST", "authentication/login", data, "").get();
+                        } catch (Exception e) {
+                            returnText = "Error";
+                        }
+                        if (returnText.equals("Error: incorrect password")) {
+                            Toast.makeText(context, "账户已注册, 請重試", Toast.LENGTH_SHORT).show();
+                        }
+                        else if (returnText.contains("Error")){
+                            Toast.makeText(context, "注册失敗, 請重試", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            jsonFileHelper = new JsonFileHelper(etLoginAccount.getText().toString());
+                            jsonFileHelper.saveRegistrationDataFromLocal(new RegistrationData(etLoginAccount.getText().toString(), etLoginPassword.getText().toString()));
+                            registerDialog.dismiss();
+                            Toast.makeText(context, "已注册成功", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(context, "密码不乎 请重新输入", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(context, "请填写全部信息", Toast.LENGTH_SHORT).show();
@@ -100,55 +108,5 @@ public class RegisterDialog {
                 registerDialog.dismiss();
             }
         });
-
-        tvAge = registerDialog.findViewById(R.id.tv_spinnerage);
-
-        sb_age = registerDialog.findViewById(R.id.sb_age);
-        sb_age.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                tvAge.setText("" + progress + "岁");
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-
-        spGender = registerDialog.findViewById(R.id.sp_gender);
-        ArrayAdapter aa_gender = new ArrayAdapter<CharSequence>(context, android.R.layout.simple_spinner_item, sp_item_gender) {
-            @Override
-            public boolean isEnabled(int position) {
-                return spinnerHelper.disableDefaultItem(position);
-            }
-        };
-        aa_gender.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spGender.setAdapter(aa_gender);
-
-        spOccupation = registerDialog.findViewById(R.id.sp_occupation);
-        ArrayAdapter aa_occupation = new ArrayAdapter<CharSequence>(context, android.R.layout.simple_spinner_item, sp_item_occupation) {
-            @Override
-            public boolean isEnabled(int position) {
-                return spinnerHelper.disableDefaultItem(position);
-            }
-        };
-        aa_occupation.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spOccupation.setAdapter(aa_occupation);
-
-        spEdu = registerDialog.findViewById(R.id.sp_edu);
-        ArrayAdapter aa_edu = new ArrayAdapter<CharSequence>(context, android.R.layout.simple_spinner_item, sp_item_education) {
-            @Override
-            public boolean isEnabled(int position) {
-                return spinnerHelper.disableDefaultItem(position);
-            }
-        };
-        aa_edu.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spEdu.setAdapter(aa_edu);
     }
 }

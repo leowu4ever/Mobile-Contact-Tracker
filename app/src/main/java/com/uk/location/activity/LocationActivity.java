@@ -7,6 +7,8 @@ import android.os.Environment;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,7 +58,13 @@ public class LocationActivity extends Activity {
         btnReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new RecordEntryDialog(LocationActivity.this);
+                /*new RecordEntryDialog(LocationActivity.this);*/
+                new Record_webView();
+                Intent intent = new Intent(LocationActivity.this, Record_webView.class);
+                intent.putExtra("USER_ID", currentUser);
+                intent.putExtra("USER_TOKEN", token);
+                startActivity(intent);
+
             }
         });
 
@@ -121,18 +129,7 @@ public class LocationActivity extends Activity {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                broadcastReceiver.stopAlarm(currentID, token, getApplicationContext());
-                Intent intent = new Intent(LocationActivity.this, MainActivity.class);
-                startActivity(intent);
-                File file = new File(Environment.getExternalStorageDirectory() + "/疫迹/autologin_userdetails.json");
-
-                if (file.delete()) {
-                    System.out.println("File deleted successfully");
-                } else {
-                    System.out.println("Failed to delete the file");
-                }
-
-                Toast.makeText(getApplicationContext(), "退登成功", Toast.LENGTH_SHORT).show();
+                new LogoutDialog( LocationActivity.this, currentUser, token, broadcastReceiver);
             }
         });
     }

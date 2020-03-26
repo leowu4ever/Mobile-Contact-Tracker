@@ -96,19 +96,6 @@
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/btn_viewReport"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/buttonshape"
-                android:text="查看接触历史"
-                android:textColor="@android:color/background_light"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -122,7 +109,20 @@
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:background="@drawable/buttonshape"
-                android:text="上报接触人员信息"
+                android:text="接触历史"
+                android:textColor="@android:color/background_light"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_viewReport"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/buttonshape"
+                android:text="日常活动"
                 android:textColor="@android:color/background_light"
                 android:textSize="14sp"
                 android:textStyle="bold" />

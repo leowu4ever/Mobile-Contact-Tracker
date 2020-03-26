@@ -11,9 +11,6 @@ import java.net.URL;
 
 public class NetworkHelper extends AsyncTask<String, String, String> {
 
-    public NetworkHelper() {
-    }
-
     public AsyncTask<String, String, String> NetworkTest(String userName){
         return this.execute("POST", "https://covid-19.dsi.ic.ac.uk/simple_webapp/rest/authentication/login", "{\"username\":\"" + userName + "\",\"password\":\"\"}", "");
     }
@@ -39,7 +36,8 @@ public class NetworkHelper extends AsyncTask<String, String, String> {
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod(method);
             con.setRequestProperty("Content-Type", "application/json");
-            if (params.length == 4 && token != null && (!token.equals(""))) {
+            con.setConnectTimeout(5000);
+            if (token != null && (!token.equals(""))) {
                 con.setRequestProperty("Authorization","Bearer " + token);
             }
 
