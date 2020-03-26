@@ -36,7 +36,7 @@ public class UploadAlarmReceiver extends BroadcastReceiver {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.HOUR_OF_DAY, 20);
-        calendar.set(Calendar.MINUTE, 03);
+        calendar.set(Calendar.MINUTE, 0);
 
         if (calendar.before(Calendar.getInstance())) {
             calendar.add(Calendar.DATE, 1);
@@ -52,15 +52,24 @@ public class UploadAlarmReceiver extends BroadcastReceiver {
         Calendar currentTime = Calendar.getInstance();
         Gson g = new Gson();
         LocationLogData tempLog = new LocationLogData();
-        System.out.println(currentTime.get((Calendar.MONTH)) + "_" + currentTime.get(Calendar.DATE) + "_location_log.json");
+        System.out.println(currentTime.get((Calendar.MONTH)+1) + "_" + currentTime.get(Calendar.DATE) + "_location_log.json");
         String readings = fileReader.readJsonFile(PATH_USER + (currentTime.get(Calendar.MONTH) + 1) + "_" + currentTime.get(Calendar.DATE) + "_location_log.json");
 
+        System.out.println("LLL"+readings);
+        ArrayList<String> logDateList = new ArrayList<>();
+        ArrayList<String> timeList = new ArrayList<>();
+        ArrayList<Double> latitudeList = new ArrayList<>();
+        ArrayList<Double> longitudeList = new ArrayList<>();
+        ArrayList<Integer> errorcodeList = new ArrayList<>();
         LocationLogData logData = g.fromJson(readings, LocationLogData.class);
-        ArrayList<String> logDateList = logData.getDateList();
-        ArrayList<String> timeList = logData.getTimeList();
-        ArrayList<Double> latitudeList = logData.getLatitudeList();
-        ArrayList<Double> longitudeList = logData.getLongitudeList();
-        ArrayList<Integer> errorcodeList = logData.getErrorcodeLIst();
+
+        if (!(readings.equals(""))) {
+            logDateList = logData.getDateList();
+            timeList = logData.getTimeList();
+            latitudeList = logData.getLatitudeList();
+            longitudeList = logData.getLongitudeList();
+            errorcodeList = logData.getErrorcodeLIst();
+        }
 
         if (new NetworkHelper().NetworkTest(currentUser) != null && token != null) {//if connection is possible
             token = tokenRenewal(currentUser);
@@ -102,7 +111,7 @@ public class UploadAlarmReceiver extends BroadcastReceiver {
                     }
                 }
 
-                if (readings != null) {//if today have data
+                if (!(readings.equals(""))) {//if today have data
                     for (int i = 0; i < logDateList.size(); i++) {//process today data
                         try {
                             String data = ("{\"username\": \"" + currentUser + "\",\"date\": \"" + logDateList.get(i) + "\",\"time\": \"" + timeList.get(i) + "\",\"longtitude\": \"" + longitudeList.get(i) + "\",\"latitude\": \"" + latitudeList.get(i) + "\",\"errorcode\": \"" + errorcodeList.get(i) + "\"}");
