@@ -79,14 +79,12 @@ public class MainActivity extends Activity {
                     String returnText = "";
                     try {
                         returnText = nh.CallAPI("POST", "authentication/login", data, "").get();
-                        System.out.println("OOO"+returnText);
                     }catch(Exception e){
                         returnText = "Error";
                     }
                     if (returnText.contains("Error")||returnText.equals("")) {
                         Toast.makeText(getApplicationContext(), "登录失敗, 請重試", Toast.LENGTH_SHORT).show();
                     }else{
-                        Toast.makeText(getApplicationContext(), returnText, Toast.LENGTH_LONG).show();
                         RegistrationData login = new RegistrationData(etUserName.getText().toString(),etPassword.getText().toString());
                         currentUser = etUserName.getText().toString();
                         token = returnText;
@@ -158,8 +156,6 @@ public class MainActivity extends Activity {
                     System.out.println("Failed to delete the file");
                 }
             } else {
-                Toast.makeText(getApplicationContext(), returnText, Toast.LENGTH_LONG).show();
-                token = returnText;
                 startAcivity();
             }
 

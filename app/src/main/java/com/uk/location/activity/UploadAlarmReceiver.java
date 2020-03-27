@@ -52,16 +52,22 @@ public class UploadAlarmReceiver extends BroadcastReceiver {
         Calendar currentTime = Calendar.getInstance();
         Gson g = new Gson();
         LocationLogData tempLog = new LocationLogData();
-        System.out.println(currentTime.get((Calendar.MONTH)+1) + "_" + currentTime.get(Calendar.DATE) + "_location_log.json");
         String readings = fileReader.readJsonFile(PATH_USER + (currentTime.get(Calendar.MONTH) + 1) + "_" + currentTime.get(Calendar.DATE) + "_location_log.json");
-
-        System.out.println("LLL"+readings);
+        //reading todays file
         ArrayList<String> logDateList = new ArrayList<>();
         ArrayList<String> timeList = new ArrayList<>();
         ArrayList<Double> latitudeList = new ArrayList<>();
         ArrayList<Double> longitudeList = new ArrayList<>();
         ArrayList<Integer> errorcodeList = new ArrayList<>();
         LocationLogData logData = g.fromJson(readings, LocationLogData.class);
+        String tempReadings = fileReader.readJsonFile(PATH_USER + "tempdata.json");
+        ArrayList<String> tempLogDateList = new ArrayList<>();
+        ArrayList<String> tempTimeList = new ArrayList<>();
+        ArrayList<Double> tempLatitudeList = new ArrayList<>();
+        ArrayList<Double> tempLongitudeList = new ArrayList<>();
+        ArrayList<Integer> tempErrorcodeList = new ArrayList<>();
+        LocationLogData tempLogData = g.fromJson(tempReadings, LocationLogData.class);
+        LOGLOG(currentUser, "\n" + (currentTime.get(Calendar.MONTH) + 1) + "_" + currentTime.get(Calendar.DATE) + "\n");
 
         if (!(readings.equals(""))) {
             logDateList = logData.getDateList();
@@ -71,32 +77,35 @@ public class UploadAlarmReceiver extends BroadcastReceiver {
             errorcodeList = logData.getErrorcodeLIst();
         }
 
+        if (!(tempReadings.equals(""))) {
+            tempLogDateList = tempLogData.getDateList();
+            tempTimeList = tempLogData.getTimeList();
+            tempLatitudeList = tempLogData.getLatitudeList();
+            tempLongitudeList = tempLogData.getLongitudeList();
+            tempErrorcodeList = tempLogData.getErrorcodeLIst();
+        }
+
         if (new NetworkHelper().NetworkTest(currentUser) != null && token != null) {//if connection is possible
             token = tokenRenewal(currentUser);
             if (token != null) {
                 File f = new File(PATH_USER + "tempdata.json");
-                if (f.exists()) {
+                if (!(tempReadings.equals(""))) {
                     try {//process existing tempdata
-                        String tempReadings = fileReader.readJsonFile(PATH_USER + "tempdata.json");
-                        if (tempReadings != null) {
-                            LocationLogData tempLogData = g.fromJson(tempReadings, LocationLogData.class);
-                            ArrayList<String> tempLogDateList = tempLogData.getDateList();
-                            ArrayList<String> tempTimeList = tempLogData.getTimeList();
-                            ArrayList<Double> tempLatitudeList = tempLogData.getLatitudeList();
-                            ArrayList<Double> tempLongitudeList = tempLogData.getLongitudeList();
-                            ArrayList<Integer> tempErrorcodeList = tempLogData.getErrorcodeLIst();
-                            for (int i = 0; i < tempLogDateList.size(); i++) {
-                                try {
-                                    String data = ("{\"username\": \"" + currentUser + "\",\"date\": \"" + tempLogDateList.get(i) + "\",\"time\": \"" + tempTimeList.get(i) + "\",\"longtitude\": \"" + tempLongitudeList.get(i) + "\",\"latitude\": \"" + tempLatitudeList.get(i) + "\",\"errorcode\": \"" + tempErrorcodeList.get(i) + "\"}");
-                                    String message = new NetworkHelper().CallAPI("POST", "post/statistics/location", data, token).get();
-                                    if (!(message.equals("")) && !(message.equals("Success"))) {// if fail
-                                        tempLog.addLocationLogData(tempLogDateList.get(i), tempTimeList.get(i), tempLatitudeList.get(i), tempLongitudeList.get(i), tempErrorcodeList.get(i));
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                    for (int j = i; j < tempLogDateList.size(); j++) {
-                                        tempLog.addLocationLogData(tempLogDateList.get(j), tempTimeList.get(j), tempLatitudeList.get(j), tempLongitudeList.get(j), tempErrorcodeList.get(j));
-                                    }
+                        for (int i = 0; i < tempLogDateList.size(); i++) {
+                            try {
+                                String data = ("{\"username\": \"" + currentUser + "\",\"date\": \"" + tempLogDateList.get(i) + "\",\"time\": \"" + tempTimeList.get(i) + "\",\"longtitude\": \"" + tempLongitudeList.get(i) + "\",\"latitude\": \"" + tempLatitudeList.get(i) + "\",\"errorcode\": \"" + tempErrorcodeList.get(i) + "\"}");
+                                String message = new NetworkHelper().CallAPI("POST", "post/statistics/location", data, token).get();
+                                if (!(message.equals("Success"))) {// if fail
+                                    tempLog.addLocationLogData(tempLogDateList.get(i), tempTimeList.get(i), tempLatitudeList.get(i), tempLongitudeList.get(i), tempErrorcodeList.get(i));
+                                    LOGLOG(currentUser, "PAST fail " + tempLogDateList.get(i) + " " + tempTimeList.get(i) + " " + message+"\n");
+                                }else{
+                                    LOGLOG(currentUser, "PAST success " + logDateList.get(i) + " " + timeList.get(i) + " " + message+"\n");
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                for (int y = i; y < tempLogDateList.size(); y++) {
+                                    tempLog.addLocationLogData(tempLogDateList.get(y), tempTimeList.get(y), tempLatitudeList.get(y), tempLongitudeList.get(y), tempErrorcodeList.get(y));
+                                    LOGLOG(currentUser, "PAST BULK exception " + tempLogDateList.get(y) + " " + tempTimeList.get(y) + "\n");
                                 }
                             }
                         }
@@ -105,8 +114,10 @@ public class UploadAlarmReceiver extends BroadcastReceiver {
                     } finally {
                         if (f.delete()) {//remove temp file
                             System.out.println("File deleted successfully");
+                            LOGLOG(currentUser, "TEMP deleted \n");
                         } else {
                             System.out.println("Failed to delete the file");
+                            LOGLOG(currentUser, "TEMP NOT deleted \n");
                         }
                     }
                 }
@@ -119,11 +130,15 @@ public class UploadAlarmReceiver extends BroadcastReceiver {
                             String message = new NetworkHelper().CallAPI("POST", "post/statistics/location", data, token).get();
                             if (!(message.equals("Success"))) {// if fail
                                 tempLog.addLocationLogData(logDateList.get(i), timeList.get(i), latitudeList.get(i), longitudeList.get(i), errorcodeList.get(i));
+                                LOGLOG(currentUser, "TODAY fail " + logDateList.get(i) + " " + timeList.get(i) + " " + message+"\n");
+                            }else{
+                                LOGLOG(currentUser, "TODAY success " + logDateList.get(i) + " " + timeList.get(i) + " " + message+"\n");
                             }
                         } catch (Exception e) {//if unable to upload today data, add remainings to tempdata file
                             e.printStackTrace();
                             for (int y = i; y < logDateList.size(); y++) {
                                 tempLog.addLocationLogData(logDateList.get(y), timeList.get(y), latitudeList.get(y), longitudeList.get(y), errorcodeList.get(y));
+                                LOGLOG(currentUser, "TODAY BULK exception " + logDateList.get(y) + " " + timeList.get(y) + "\n");
                             }
                             break;
                         }
@@ -133,6 +148,7 @@ public class UploadAlarmReceiver extends BroadcastReceiver {
         } else {//if connection is unable to establish
             for (int i = 0; i < logDateList.size(); i++) {//convert data in today's file to object and add to tempdata
                 tempLog.addLocationLogData(logDateList.get(i), timeList.get(i), latitudeList.get(i), longitudeList.get(i), errorcodeList.get(i));
+                LOGLOG(currentUser, "CONNECT FAIL OBJ to FILE " + logDateList.get(i) + " " + timeList.get(i) + "\n");
             }
         }//if tempdata exist
         if (tempLog.getDateList().size() > 0 || tempLog.getTimeList().size() > 0 || tempLog.getLatitudeList().size() > 0 || tempLog.getLongitudeList().size() > 0 || tempLog.getErrorcodeLIst().size() > 0) {
@@ -144,9 +160,13 @@ public class UploadAlarmReceiver extends BroadcastReceiver {
 
             try (FileWriter writer = new FileWriter(PATH_USER + "/tempdata.json")) {
                 g.toJson(tempLog, writer);//convert to json and save
+                LOGLOG(currentUser, "TEMP created" + "\n");
             } catch (IOException e) {
                 e.printStackTrace();
+                LOGLOG(currentUser, "TEMP create FAIL" + "\n");
             }
+
+            System.out.println("FINISHED");
         }
     }
 
@@ -157,9 +177,24 @@ public class UploadAlarmReceiver extends BroadcastReceiver {
         String passwordFromLog = registrationData.getPassword();
         String data = "{\"username\":\"" + usernameFromLog + "\",\"password\":\"" + passwordFromLog + "\"}";
         try {
-            return new NetworkHelper().CallAPI("POST", "authentication/login", data, "").get();
+            String TOKEN = new NetworkHelper().CallAPI("POST", "authentication/login", data, "").get();
+            LOGLOG(userName, "TOKEN " + TOKEN + "\n");
+            return TOKEN;
         } catch (Exception e) {
+            LOGLOG(userName, "TOKEN EXCEPTION\n");
             return null;
         }
     }
+
+    private void LOGLOG(String currentUser, String data){
+        String PATH_USER = Environment.getExternalStorageDirectory() + "/疫迹/" + currentUser + "/";
+        File loglog = new File(PATH_USER + "LogLog.txt");
+        System.out.println("DDDRRR");
+        try (FileWriter writer = new FileWriter(PATH_USER + "LogLog.txt", true)) {
+            writer.write(data);
+        } catch (Exception ee) {
+            ee.printStackTrace();
+        }
+    }
+
 }

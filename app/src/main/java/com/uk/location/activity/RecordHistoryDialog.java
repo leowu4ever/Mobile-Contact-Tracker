@@ -36,7 +36,6 @@ public class RecordHistoryDialog {
         init(context);
     }
 
-
     public void init(final Context context) {
         final Dialog recordListDialog = new Dialog(context);
         recordListDialog.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
