@@ -87,9 +87,6 @@ public class LocationHelper {
                         String prompt = time + " - " + latitude + "," + longitude + " - " + errorcode;
                         Log.d(DEBUG_TAG, prompt);
 
-                        /*String data = ("{\"username\": \""+ user +"\",\"date\": \""+ date +"\",\"time\": \""+ time +"\",\"longtitude\": \""+ longitude +"\",\"latitude\": \""+ latitude +"\",\"errorcode\": \""+ errorcode +"\"}");
-                        new NetworkHelper().CallAPI("POST","post/statistics/location", data, token);*/
-                        Toast.makeText(context, prompt, Toast.LENGTH_SHORT).show();
 
                     } else {
                         zoomMapTo(LocationActivity.baiduMap, location);
