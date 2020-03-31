@@ -54,11 +54,11 @@ public class RegisterDialog {
                         NetworkHelper nh = new NetworkHelper();
                         String returnText = "";
                         try {
-                            returnText = nh.CallAPI("POST", "authentication/login", data, "").get();
+                            returnText = nh.CallAPI("POST", "authentication/signup", data, "").get();
                         } catch (Exception e) {
                             returnText = "Error";
                         }
-                        if (returnText.equals("Error: incorrect password")) {
+                        if (returnText.equals("Error: username has been occupied.")) {
                             Toast.makeText(context, "账户已存在，请重试", Toast.LENGTH_SHORT).show();
                         }
                         else if (returnText.contains("Error")){
