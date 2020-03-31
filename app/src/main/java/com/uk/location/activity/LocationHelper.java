@@ -87,6 +87,7 @@ public class LocationHelper {
                         String prompt = time + " - " + latitude + "," + longitude + " - " + errorcode;
                         Log.d(DEBUG_TAG, prompt);
 
+                        new UploadHelper(date, time, user, latitude, longitude, errorcode, token);
 
                     } else {
                         zoomMapTo(LocationActivity.baiduMap, location);
