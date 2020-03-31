@@ -12,6 +12,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.webkit.CookieManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -31,7 +32,7 @@ public class MainActivity extends Activity {
     public static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private Button btnLogin, btnRegister;
     private EditText etUserName, etPassword;
-    private static String currentUser, token;
+    private static String currentUser, token, cookie;
 
     public static void getLocationPermission(Context context) {
         // TO DO need permission check on later screens
@@ -63,6 +64,7 @@ public class MainActivity extends Activity {
         autoLogin();
         currentUser = "";
         token = "";
+        CookieManager.getInstance().setAcceptCookie(true);
     }
 
     private void initUIs() {
@@ -75,10 +77,10 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 if (!(etUserName.getText().toString().matches("")) && !(etPassword.getText().toString().matches(""))) {
                     String data = "{\"username\":\"" + etUserName.getText().toString() + "\",\"password\":\"" + etPassword.getText().toString() + "\"}";
-                    NetworkHelper nh = new NetworkHelper();
                     String returnText = "";
                     try {
-                        returnText = nh.CallAPI("POST", "authentication/login", data, "").get();
+                        returnText = new NetworkHelper().CallAPI("POST", "authentication/login", data, "").get();
+                        cookie = new NetworkHelper().GetCookie(data).get();
                     }catch(Exception e){
                         returnText = "Error";
                     }
@@ -88,6 +90,7 @@ public class MainActivity extends Activity {
                         RegistrationData login = new RegistrationData(etUserName.getText().toString(),etPassword.getText().toString());
                         currentUser = etUserName.getText().toString();
                         token = returnText;
+
                         Gson gson = new Gson();
 
                         String PATH_LOCAL = Environment.getExternalStorageDirectory() + "/疫迹";
@@ -139,16 +142,16 @@ public class MainActivity extends Activity {
             RegistrationData logindetails = gson.fromJson(readings, RegistrationData.class);
             currentUser = logindetails.getUserName();
             String data = "{\"username\":\"" + logindetails.getUserName() + "\",\"password\":\"" + logindetails.getPassword() + "\"}";
-            NetworkHelper nh = new NetworkHelper();
             String returnText = "";
 
             try {
-                returnText = nh.CallAPI("POST", "authentication/login", data, "").get();
+                returnText = new NetworkHelper().CallAPI("POST", "authentication/login", data, "").get();
+                cookie = new NetworkHelper().GetCookie(data).get();
             }catch(Exception e){
                 returnText = "Error";
             }
 
-            if (returnText.contains("Error") || (returnText.equals(""))) {
+            if (returnText == null || returnText.equals("") || returnText.contains("Error") ) {
                 Toast.makeText(getApplicationContext(), "登录失敗, 請重試", Toast.LENGTH_SHORT).show();
                 if (f.delete()) {
                     System.out.println("File deleted successfully");
@@ -178,6 +181,7 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(MainActivity.this, LocationActivity.class);
         intent.putExtra("USER_ID", currentUser);
         intent.putExtra("USER_TOKEN", token);
+        intent.putExtra("COOKIE", cookie);
         startActivity(intent);
         Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
     }

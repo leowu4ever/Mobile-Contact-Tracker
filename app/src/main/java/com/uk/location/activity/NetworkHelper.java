@@ -19,6 +19,10 @@ public class NetworkHelper extends AsyncTask<String, String, String> {
         return this.execute(method, "https://covid-19.dsi.ic.ac.uk/simple_webapp/rest/" + url_suffix, data, token);
     }
 
+    public AsyncTask<String, String, String> GetCookie(String data) {
+        return this.execute("POST", "https://covid-19.dsi.ic.ac.uk/simple_webapp/rest/authentication/login", data, "COOKIE");
+    }
+
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
@@ -64,10 +68,21 @@ public class NetworkHelper extends AsyncTask<String, String, String> {
                 System.out.println("DDDPOST NOT WORKED");
                 return null;
             }
+
+            String cookieValue = con.getHeaderField("set-cookie");
+            if (token.equals("COOKIE")) {
+                if (cookieValue != null) {
+                    System.out.println("DDDP"+ cookieValue);
+                    return (cookieValue);
+                }
+            }
+            System.out.println("DDDM"+cookieValue.substring(cookieValue.indexOf("=") + 1, cookieValue.indexOf(";")));
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+        System.out.println(response.toString());
         return response.toString();
     }
 

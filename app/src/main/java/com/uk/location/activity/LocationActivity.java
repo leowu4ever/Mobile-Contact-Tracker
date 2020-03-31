@@ -18,6 +18,7 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.UiSettings;
 
 import java.io.File;
+import java.util.concurrent.ExecutionException;
 
 public class LocationActivity extends Activity {
 
@@ -27,10 +28,9 @@ public class LocationActivity extends Activity {
     private Button btnReport, btnViewReport, btnLocate, btnLogout;
     private MapView mapView = null;
     private TrackingAlarmReceiver broadcastReceiver;
-    private UploadAlarmReceiver uploadReceiver;
     private LocationHelper locationHelper;
     private JsonFileHelper jsonFileHelper;
-    private String currentUser, token;
+    private String currentUser, token, cookie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,16 +40,13 @@ public class LocationActivity extends Activity {
         StrictMode.setThreadPolicy(policy);
         currentUser = getIntent().getStringExtra("USER_ID");
         token = getIntent().getStringExtra("USER_TOKEN");
+        cookie = getIntent().getStringExtra("COOKIE");
         jsonFileHelper = new JsonFileHelper(currentUser);
         broadcastReceiver = new TrackingAlarmReceiver();
-        locationHelper = new LocationHelper(currentUser, token,this);
+        locationHelper = new LocationHelper(currentUser, token, this);
         MainActivity.getLocationPermission(this);
         initMap();
         initUIs();
-
-        System.out.println("DDDD"+currentUser);
-        uploadReceiver = new UploadAlarmReceiver();
-        uploadReceiver.startAlarm(currentUser, token, this);
         locationHelper.getLocation(false);
     }
 
@@ -58,13 +55,13 @@ public class LocationActivity extends Activity {
         btnReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*new RecordEntryDialog(LocationActivity.this);*/
                 new Record_webView();
                 Intent intent = new Intent(LocationActivity.this, Record_webView.class);
                 intent.putExtra("USER_ID", currentUser);
                 intent.putExtra("USER_TOKEN", token);
+                intent.putExtra("URL_SUFFIX", "contactHistory.jsp");
+                intent.putExtra("COOKIE", cookie);
                 startActivity(intent);
-
             }
         });
 
@@ -113,7 +110,13 @@ public class LocationActivity extends Activity {
         btnViewReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new RecordHistoryDialog(currentUser, LocationActivity.this);
+                new Record_webView();
+                Intent intent = new Intent(LocationActivity.this, Record_webView.class);
+                intent.putExtra("USER_ID", currentUser);
+                intent.putExtra("USER_TOKEN", token);
+                intent.putExtra("URL_SUFFIX", "dailyActivity.jsp");
+                intent.putExtra("COOKIE", cookie);
+                startActivity(intent);
             }
         });
 
@@ -129,7 +132,7 @@ public class LocationActivity extends Activity {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new LogoutDialog( LocationActivity.this, currentUser, token, broadcastReceiver);
+                new LogoutDialog(LocationActivity.this, currentUser, token, broadcastReceiver);
             }
         });
     }
