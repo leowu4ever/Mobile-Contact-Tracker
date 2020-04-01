@@ -20,7 +20,7 @@ public class Record_webView extends Activity {
         String currentUser = getIntent().getStringExtra("USER_ID");
         String token = getIntent().getStringExtra("USER_TOKEN");
         String urlSuffix = getIntent().getStringExtra("URL_SUFFIX");
-        String cookie = getIntent().getStringExtra("COKKIE");
+        String cookie = getIntent().getStringExtra("COOKIE");
         webview = (WebView)findViewById(R.id.activity_main_webview);
         CookieManager.getInstance().setAcceptCookie(true);
         String url="https://covid-19.dsi.ic.ac.uk/simple_webapp/survey/" + urlSuffix;
