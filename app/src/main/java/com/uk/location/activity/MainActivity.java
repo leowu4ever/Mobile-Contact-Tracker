@@ -85,7 +85,7 @@ public class MainActivity extends Activity {
                         returnText = "Error";
                     }
                     if (returnText.contains("Error")||returnText.equals("")) {
-                        Toast.makeText(getApplicationContext(), "登录失敗, 請重試", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "登录失败，请重试", Toast.LENGTH_SHORT).show();
                     }else{
                         RegistrationData login = new RegistrationData(etUserName.getText().toString(),etPassword.getText().toString());
                         currentUser = etUserName.getText().toString();
