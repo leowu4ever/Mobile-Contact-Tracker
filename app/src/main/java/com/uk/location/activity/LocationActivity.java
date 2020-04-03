@@ -55,8 +55,8 @@ public class LocationActivity extends Activity {
         btnReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Record_webView();
-                Intent intent = new Intent(LocationActivity.this, Record_webView.class);
+                new RecordWebView();
+                Intent intent = new Intent(LocationActivity.this, RecordWebView.class);
                 intent.putExtra("USER_ID", currentUser);
                 intent.putExtra("USER_TOKEN", token);
                 intent.putExtra("URL_SUFFIX", "contactHistory.jsp");
@@ -110,8 +110,8 @@ public class LocationActivity extends Activity {
         btnViewReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Record_webView();
-                Intent intent = new Intent(LocationActivity.this, Record_webView.class);
+                new RecordWebView();
+                Intent intent = new Intent(LocationActivity.this, RecordWebView.class);
                 intent.putExtra("USER_ID", currentUser);
                 intent.putExtra("USER_TOKEN", token);
                 intent.putExtra("URL_SUFFIX", "dailyActivity.jsp");

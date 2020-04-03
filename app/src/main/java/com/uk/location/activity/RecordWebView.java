@@ -8,9 +8,9 @@ import android.webkit.WebView;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-public class Record_webView extends Activity {
+public class RecordWebView extends Activity {
 
-    WebView webview;
+    WebView webView;
     CookieManager cookieManager = CookieManager.getInstance();
 
     @Override
@@ -21,7 +21,7 @@ public class Record_webView extends Activity {
         String token = getIntent().getStringExtra("USER_TOKEN");
         String urlSuffix = getIntent().getStringExtra("URL_SUFFIX");
         String cookie = getIntent().getStringExtra("COOKIE");
-        webview = (WebView)findViewById(R.id.activity_main_webview);
+        webView = (WebView)findViewById(R.id.activity_main_webview);
         CookieManager.getInstance().setAcceptCookie(true);
         String url="https://covid-19.dsi.ic.ac.uk/simple_webapp/survey/" + urlSuffix;
         String postData = null;
@@ -31,8 +31,8 @@ public class Record_webView extends Activity {
         } catch (UnsupportedEncodingException e) {
             postData = "";
         }
-
+        webView.getSettings().setJavaScriptEnabled(true);
         cookieManager.setCookie("https://covid-19.dsi.ic.ac.uk", cookie);
-        webview.postUrl(url,postData.getBytes());
+        webView.postUrl(url,postData.getBytes());
     }
 }

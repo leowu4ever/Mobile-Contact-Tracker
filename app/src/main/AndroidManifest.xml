@@ -50,13 +50,8 @@
         <activity android:name="com.uk.location.activity.LocationActivity" />
         <activity android:name="com.uk.location.activity.RecordHistoryDialog" />
         <activity android:name="com.uk.location.activity.RecordDetailsDialog" />
-        <activity android:name="com.uk.location.activity.Record_webView" />
+        <activity android:name="com.uk.location.activity.RecordWebView" />
 
-        <receiver
-            android:name="com.uk.location.activity.UploadAlarmReceiver"
-            android:enabled="true"
-            android:exported="true"
-            android:process=":service" />
         <receiver
             android:name="com.uk.location.activity.TrackingAlarmReceiver"
             android:enabled="true"
